@@ -31,7 +31,20 @@ public class ArrayStorage {
         }
     }
 
+    /**
+     * @return Resume with a given uuid or null if there is no such Resume in storage[].
+     */
     Resume get(String uuid) {
+        if (uuid != null) {
+            int i = 0;
+            int arrSize = size();
+            while (i < arrSize) {
+                if (storage[i].toString().equals(uuid)) {
+                    return storage[i];
+                }
+                i++;
+            }
+        }
         return null;
     }
 
