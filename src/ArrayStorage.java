@@ -25,7 +25,19 @@ public class ArrayStorage {
         return new Resume[0];
     }
 
+    /**
+     * @return int number of contiguous nonnull Resumes of the storage[] array,
+     * starting from the beginning of storage[].
+     */
     int size() {
-        return 0;
+        int i = 0;
+        while (i < RESUME_MAX_QTY) {
+            if (storage[i] != null) {
+                i++;
+            } else {
+                break;
+            }
+        }
+        return i;
     }
 }
