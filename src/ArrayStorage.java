@@ -17,7 +17,18 @@ public class ArrayStorage {
         }
     }
 
-    void save(Resume r) {
+    /**
+     * Adds a Resume with a given uuid to the storage[],
+     * provided such Resume is not there already.
+     */
+    void save(Resume resume) {
+        int arrSize = size();
+        if (arrSize >= RESUME_MAX_QTY) {
+            return;
+        }
+        if (get(resume.toString()) == null) {
+            storage[arrSize] = resume;
+        }
     }
 
     Resume get(String uuid) {
