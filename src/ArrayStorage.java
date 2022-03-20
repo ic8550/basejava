@@ -48,7 +48,32 @@ public class ArrayStorage {
         return null;
     }
 
+    /**
+     * Removes a Resume with a given uuid while squeezing the rest of Resumes
+     * in the storage[] towards the beginning of the storage so that nonnull Resumes
+     * remain contiguous.
+     */
     void delete(String uuid) {
+        if (uuid == null) {
+            return;
+        }
+        int arrSize = size();
+        if (arrSize == 0) {
+            return;
+        }
+        int i = 0;
+        while (i < arrSize) {
+            if (storage[i].toString().equals(uuid)) {
+                int j = i;
+                while (j < arrSize - 1) {
+                    storage[j] = storage[j + 1];
+                    j++;
+                }
+                storage[arrSize - 1] = null;
+                return;
+            }
+            i++;
+        }
     }
 
     /**
