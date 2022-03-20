@@ -5,7 +5,16 @@ public class ArrayStorage {
     private final int RESUME_MAX_QTY = 10000;
     Resume[] storage = new Resume[RESUME_MAX_QTY];
 
+    /**
+     * Replaces all nonnull Resumes in storage[] with the null value.
+     */
     void clear() {
+        int arrSize = size();
+        int i = 0;
+        while (i < arrSize) {
+            storage[i] = null;
+            i++;
+        }
     }
 
     void save(Resume r) {
