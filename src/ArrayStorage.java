@@ -20,10 +20,8 @@ public class ArrayStorage {
      * Replaces all nonnull Resumes in storage[] with the null value.
      */
     void clear() {
-        int i = 0;
-        while (i < size) {
+        for (int i = 0; i < size; i++) {
             storage[i] = null;
-            i++;
         }
         size = 0;
     }
@@ -47,12 +45,10 @@ public class ArrayStorage {
      */
     Resume get(String uuid) {
         if (uuid != null) {
-            int i = 0;
-            while (i < size) {
+            for (int i = 0; i < size; i++) {
                 if (storage[i].toString().equals(uuid)) {
                     return storage[i];
                 }
-                i++;
             }
         }
         return null;
@@ -70,19 +66,15 @@ public class ArrayStorage {
         if (size == 0) {
             return;
         }
-        int i = 0;
-        while (i < size) {
+        for (int i = 0; i < size; i++) {
             if (storage[i].toString().equals(uuid)) {
-                int j = i;
-                while (j < size - 1) {
+                for (int j = i; j < size - 1; j++) {
                     storage[j] = storage[j + 1];
-                    j++;
                 }
                 storage[size - 1] = null;
                 size--;
                 return;
             }
-            i++;
         }
     }
 
@@ -91,10 +83,8 @@ public class ArrayStorage {
      */
     Resume[] getAll() {
         Resume[] all = new Resume[size];
-        int i = 0;
-        while (i < size) {
+        for (int i = 0; i < size; i++) {
             all[i] = storage[i];
-            i++;
         }
         return all;
     }
