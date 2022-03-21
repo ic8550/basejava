@@ -5,20 +5,27 @@ public class ArrayStorage {
     /**
      * final int MAX_SIZE - storage parameter, the maximum capacity of the storage
      */
-    private final int MAX_SIZE = 10000;
+    private final int MAX_SIZE = 3;
 
     Resume[] storage = new Resume[MAX_SIZE];
+
+    /**
+     * Size of nonempty (nonnull) part of storage[] -- Number of contiguous
+     * nonnull Resumes in the storage[] array, starting from the beginning
+     * of storage[].
+     */
+    int size = 0;
 
     /**
      * Replaces all nonnull Resumes in storage[] with the null value.
      */
     void clear() {
-        int arrSize = size();
         int i = 0;
-        while (i < arrSize) {
+        while (i < size) {
             storage[i] = null;
             i++;
         }
+        size = 0;
     }
 
     /**
@@ -26,12 +33,12 @@ public class ArrayStorage {
      * provided such Resume is not there already.
      */
     void save(Resume resume) {
-        int arrSize = size();
-        if (arrSize >= MAX_SIZE) {
+        if (size >= MAX_SIZE) {
             return;
         }
         if (get(resume.toString()) == null) {
-            storage[arrSize] = resume;
+            storage[size] = resume;
+            size++;
         }
     }
 
@@ -41,8 +48,7 @@ public class ArrayStorage {
     Resume get(String uuid) {
         if (uuid != null) {
             int i = 0;
-            int arrSize = size();
-            while (i < arrSize) {
+            while (i < size) {
                 if (storage[i].toString().equals(uuid)) {
                     return storage[i];
                 }
@@ -61,19 +67,19 @@ public class ArrayStorage {
         if (uuid == null) {
             return;
         }
-        int arrSize = size();
-        if (arrSize == 0) {
+        if (size == 0) {
             return;
         }
         int i = 0;
-        while (i < arrSize) {
+        while (i < size) {
             if (storage[i].toString().equals(uuid)) {
                 int j = i;
-                while (j < arrSize - 1) {
+                while (j < size - 1) {
                     storage[j] = storage[j + 1];
                     j++;
                 }
-                storage[arrSize - 1] = null;
+                storage[size - 1] = null;
+                size--;
                 return;
             }
             i++;
@@ -84,10 +90,9 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] all = new Resume[size()];
-        int arrSize = size();
+        Resume[] all = new Resume[size];
         int i = 0;
-        while (i < arrSize) {
+        while (i < size) {
             all[i] = storage[i];
             i++;
         }
@@ -99,14 +104,6 @@ public class ArrayStorage {
      * starting from the beginning of storage[].
      */
     int size() {
-        int i = 0;
-        while (i < MAX_SIZE) {
-            if (storage[i] != null) {
-                i++;
-            } else {
-                break;
-            }
-        }
-        return i;
+        return size;
     }
 }
