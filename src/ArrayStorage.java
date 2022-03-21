@@ -44,11 +44,12 @@ public class ArrayStorage {
      * @return Resume with a given uuid or null if there is no such Resume in storage[].
      */
     Resume get(String uuid) {
-        if (uuid != null) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].toString().equals(uuid)) {
-                    return storage[i];
-                }
+        if (uuid == null) {
+            return null;
+        }
+        for (int i = 0; i < size; i++) {
+            if (storage[i].toString().equals(uuid)) {
+                return storage[i];
             }
         }
         return null;
