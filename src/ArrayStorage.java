@@ -2,8 +2,12 @@
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private final int RESUME_MAX_QTY = 10000;
-    Resume[] storage = new Resume[RESUME_MAX_QTY];
+    /**
+     * final int MAX_SIZE - storage parameter, the maximum capacity of the storage
+     */
+    private final int MAX_SIZE = 10000;
+
+    Resume[] storage = new Resume[MAX_SIZE];
 
     /**
      * Replaces all nonnull Resumes in storage[] with the null value.
@@ -23,7 +27,7 @@ public class ArrayStorage {
      */
     void save(Resume resume) {
         int arrSize = size();
-        if (arrSize >= RESUME_MAX_QTY) {
+        if (arrSize >= MAX_SIZE) {
             return;
         }
         if (get(resume.toString()) == null) {
@@ -96,7 +100,7 @@ public class ArrayStorage {
      */
     int size() {
         int i = 0;
-        while (i < RESUME_MAX_QTY) {
+        while (i < MAX_SIZE) {
             if (storage[i] != null) {
                 i++;
             } else {
