@@ -69,9 +69,7 @@ public class ArrayStorage {
         }
         for (int i = 0; i < size; i++) {
             if (storage[i].toString().equals(uuid)) {
-                for (int j = i; j < size - 1; j++) {
-                    storage[j] = storage[j + 1];
-                }
+                storage[i] = storage[size - 1];
                 storage[size - 1] = null;
                 size--;
                 return;
