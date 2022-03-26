@@ -31,9 +31,13 @@ public class ArrayStorage {
      * provided such Resume is not there already.
      */
     void save(Resume resume) {
+        if (resume == null) {
+            System.out.println("ERROR: save(): resume object is null");
+            return;
+        }
         String uuid = resume.getUuid();
         if (uuid == null) {
-            System.out.println("ERROR: save(): required argument missing");
+            System.out.println("ERROR: save(): resume uuid=null");
             return;
         }
         if (size >= MAX_SIZE) {
@@ -58,9 +62,13 @@ public class ArrayStorage {
      * provided such Resume is not there already.
      */
     void update(Resume resume) {
+        if (resume == null) {
+            System.out.println("ERROR: update(): resume object is null");
+            return;
+        }
         String uuid = resume.getUuid();
         if (uuid == null) {
-            System.out.println("ERROR: save(): required argument missing");
+            System.out.println("ERROR: update(): resume uuid=null");
             return;
         }
         for (int i = 0; i < size; i++) {
@@ -79,7 +87,7 @@ public class ArrayStorage {
      */
     Resume get(String uuid) {
         if (uuid == null) {
-            System.out.println("ERROR: get(): required argument missing");
+            System.out.println("ERROR: get(): uuid=null");
             return null;
         }
         for (int i = 0; i < size; i++) {
@@ -100,7 +108,7 @@ public class ArrayStorage {
      */
     void delete(String uuid) {
         if (uuid == null) {
-            System.out.println("ERROR: delete(): required argument missing");
+            System.out.println("ERROR: delete(): uuid=null");
             return;
         }
         if (size == 0) {
