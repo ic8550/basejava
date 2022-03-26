@@ -66,19 +66,26 @@ public class ArrayStorage {
      */
     void delete(String uuid) {
         if (uuid == null) {
+            System.out.println("ERROR: delete(): required argument missing");
             return;
         }
         if (size == 0) {
+            System.out.println("ERROR: delete(): resume with uuid="
+                    + "\"" + uuid + "\""
+                    + " not found in storage");
             return;
         }
         for (int i = 0; i < size; i++) {
-            if (storage[i].toString().equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 storage[i] = storage[size - 1];
                 storage[size - 1] = null;
                 size--;
                 return;
             }
         }
+        System.out.println("ERROR: delete(): resume with uuid="
+                + "\"" + uuid + "\""
+                + " not found in storage");
     }
 
     /**
