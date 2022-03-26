@@ -58,8 +58,7 @@ public class ArrayStorage {
     }
 
     /**
-     * Adds a Resume with a given uuid to the storage[],
-     * provided such Resume is not there already.
+     * Updates a Resume with a given uuid after checking for its presence in storage[].
      */
     void update(Resume resume) {
         if (resume == null) {
