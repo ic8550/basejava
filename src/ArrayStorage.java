@@ -44,9 +44,8 @@ public class ArrayStorage {
             System.out.println("ERROR: save(): storage is full; cannot add new resume");
             return;
         }
-        String newResumeStringRepresentation = resume.toString();
         for (int i = 0; i < size; i++) {
-            if (storage[i].toString().equals(newResumeStringRepresentation)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 System.out.println("ERROR: save(): resume with uuid="
                         + "\"" + uuid + "\""
                         + " already present in storage");
