@@ -54,6 +54,27 @@ public class ArrayStorage {
     }
 
     /**
+     * Adds a Resume with a given uuid to the storage[],
+     * provided such Resume is not there already.
+     */
+    void update(Resume resume) {
+        String uuid = resume.getUuid();
+        if (uuid == null) {
+            System.out.println("ERROR: save(): required argument missing");
+            return;
+        }
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(uuid)) {
+                storage[i] = resume;
+                return;
+            }
+        }
+        System.out.println("ERROR: update(): resume with uuid="
+                + "\"" + uuid + "\""
+                + " not found in storage");
+    }
+
+    /**
      * @return Resume with a given uuid or null if there is no such Resume in storage[].
      */
     Resume get(String uuid) {
