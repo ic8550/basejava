@@ -45,13 +45,17 @@ public class ArrayStorage {
      */
     Resume get(String uuid) {
         if (uuid == null) {
+            System.out.println("ERROR: get(): required argument missing");
             return null;
         }
         for (int i = 0; i < size; i++) {
-            if (storage[i].toString().equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return storage[i];
             }
         }
+        System.out.println("ERROR: get(): resume with uuid="
+                + "\"" + uuid + "\""
+                + " not found in storage");
         return null;
     }
 
