@@ -31,13 +31,26 @@ public class ArrayStorage {
      * provided such Resume is not there already.
      */
     void save(Resume resume) {
-        if (size >= MAX_SIZE) {
+        String uuid = resume.getUuid();
+        if (uuid == null) {
+            System.out.println("ERROR: save(): required argument missing");
             return;
         }
-        if (get(resume.toString()) == null) {
-            storage[size] = resume;
-            size++;
+        if (size >= MAX_SIZE) {
+            System.out.println("ERROR: save(): storage is full; cannot add new resume");
+            return;
         }
+        String newResumeStringRepresentation = resume.toString();
+        for (int i = 0; i < size; i++) {
+            if (storage[i].toString().equals(newResumeStringRepresentation)) {
+                System.out.println("ERROR: save(): resume with uuid="
+                        + "\"" + uuid + "\""
+                        + " already present in storage");
+                return;
+            }
+        }
+        storage[size] = resume;
+        size++;
     }
 
     /**
