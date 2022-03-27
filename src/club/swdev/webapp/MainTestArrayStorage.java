@@ -1,5 +1,10 @@
+package club.swdev.webapp;
+
+import club.swdev.webapp.model.Resume;
+import club.swdev.webapp.storage.ArrayStorage;
+
 /**
- * Test for your ArrayStorage implementation
+ * Test for your club.swdev.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();

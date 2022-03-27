@@ -1,3 +1,5 @@
+package club.swdev.webapp.model;
+
 /**
  * Initial resume class
  */

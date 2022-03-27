@@ -1,3 +1,7 @@
+package club.swdev.webapp.storage;
+
+import club.swdev.webapp.model.Resume;
+
 import static java.util.Arrays.copyOf;
 import static java.util.Arrays.fill;
 
@@ -10,28 +14,28 @@ public class ArrayStorage {
      */
     private final int MAX_SIZE = 3;
 
-    Resume[] storage = new Resume[MAX_SIZE];
+    private final Resume[] storage = new Resume[MAX_SIZE];
 
     /**
      * Size of nonempty (nonnull) part of storage[] -- Number of contiguous
      * nonnull Resumes in the storage[] array, starting from the beginning
      * of storage[].
      */
-    int size = 0;
+    private int size = 0;
 
     /**
      * Replaces all nonnull Resumes in storage[] with the null value.
      */
-    void clear() {
+    public void clear() {
         fill(storage, 0, size, null);
         size = 0;
     }
 
     /**
-     * Adds a Resume with a given uuid to the storage[],
-     * provided such Resume is not there already.
+     * Adds a club.swdev.webapp.model.Resume with a given uuid to the storage[],
+     * provided such club.swdev.webapp.model.Resume is not there already.
      */
-    void save(Resume resume) {
+    public void save(Resume resume) {
         if (resume == null) {
             System.out.println("ERROR: save(): resume object is null");
             return;
@@ -58,9 +62,9 @@ public class ArrayStorage {
     }
 
     /**
-     * Updates a Resume with a given uuid after checking for its presence in storage[].
+     * Updates a club.swdev.webapp.model.Resume with a given uuid after checking for its presence in storage[].
      */
-    void update(Resume resume) {
+    public void update(Resume resume) {
         if (resume == null) {
             System.out.println("ERROR: update(): resume object is null");
             return;
@@ -82,9 +86,9 @@ public class ArrayStorage {
     }
 
     /**
-     * @return Resume with a given uuid or null if there is no such Resume in storage[].
+     * @return club.swdev.webapp.model.Resume with a given uuid or null if there is no such club.swdev.webapp.model.Resume in storage[].
      */
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         if (uuid == null) {
             System.out.println("ERROR: get(): uuid=null");
             return null;
@@ -101,11 +105,11 @@ public class ArrayStorage {
     }
 
     /**
-     * Removes a Resume with a given uuid while squeezing the rest of Resumes
+     * Removes a club.swdev.webapp.model.Resume with a given uuid while squeezing the rest of Resumes
      * in the storage[] towards the beginning of the storage so that nonnull Resumes
      * remain contiguous.
      */
-    void delete(String uuid) {
+    public void delete(String uuid) {
         if (uuid == null) {
             System.out.println("ERROR: delete(): uuid=null");
             return;
@@ -132,7 +136,7 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         return copyOf(storage, size);
     }
 
@@ -140,7 +144,7 @@ public class ArrayStorage {
      * @return int number of contiguous nonnull Resumes of the storage[] array,
      * starting from the beginning of storage[].
      */
-    int size() {
+    public int size() {
         return size;
     }
 }
