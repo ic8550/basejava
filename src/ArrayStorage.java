@@ -1,3 +1,6 @@
+import static java.util.Arrays.copyOf;
+import static java.util.Arrays.fill;
+
 /**
  * Array based storage for Resumes
  */
@@ -20,9 +23,7 @@ public class ArrayStorage {
      * Replaces all nonnull Resumes in storage[] with the null value.
      */
     void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        fill(storage, 0, size, null);
         size = 0;
     }
 
@@ -132,11 +133,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] all = new Resume[size];
-        for (int i = 0; i < size; i++) {
-            all[i] = storage[i];
-        }
-        return all;
+        return copyOf(storage, size);
     }
 
     /**
