@@ -12,41 +12,176 @@ public class MainTestArrayStorage {
     public static void main(String[] args) {
         Resume r1 = new Resume();
         r1.setUuid("uuid1");
-        r1.setData("111");
+        Resume r11 = new Resume();
+        r11.setUuid("uuid1");
         Resume r2 = new Resume();
         r2.setUuid("uuid2");
-        r2.setData("222");
+        Resume r22 = new Resume();
+        r22.setUuid("uuid2");
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
-        r3.setData("333");
-        Resume r222222 = new Resume();
-        r222222.setUuid("uuid2");
-        r222222.setData("222222");
+        Resume r4 = new Resume();
+        r4.setUuid("uuid4");
 
-        ARRAY_STORAGE.save(r1);
-        ARRAY_STORAGE.save(r2);
-        ARRAY_STORAGE.save(r3);
-
-        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
-        System.out.println("Size: " + ARRAY_STORAGE.size());
-
-        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
+        Resume rNullUuid = new Resume();
+        rNullUuid.setUuid(null);
+        Resume rEmptyUuid = new Resume();
+        rEmptyUuid.setUuid("");
 
         printAll();
-        ARRAY_STORAGE.update(r222222);
-        printAll();
-        ARRAY_STORAGE.delete(r222222.getUuid());
-        printAll();
+        printSize();
+
+        System.out.println("Clear:");
         ARRAY_STORAGE.clear();
         printAll();
+        printSize();
 
-        System.out.println("Size: " + ARRAY_STORAGE.size());
+        System.out.println("Get resume with uuid=null:");
+        System.out.println(ARRAY_STORAGE.get(null));
+        printAll();
+        printSize();
+
+        System.out.println("Get resume with uuid=\"\":");
+        System.out.println(ARRAY_STORAGE.get(""));
+        printAll();
+        printSize();
+
+        System.out.println("Get resume with uuid=\"dummy\":");
+        System.out.println(ARRAY_STORAGE.get("dummy"));
+        printAll();
+        printSize();
+
+        System.out.println("Delete resume with uuid=null:");
+        ARRAY_STORAGE.delete(null);
+        printAll();
+        printSize();
+
+        System.out.println("Delete resume with uuid=\"\":");
+        ARRAY_STORAGE.delete("");
+        printAll();
+        printSize();
+
+        System.out.println("Delete resume with uuid=\"dummy\":");
+        ARRAY_STORAGE.delete("dummy");
+        printAll();
+        printSize();
+
+        System.out.println("Save null:");
+        ARRAY_STORAGE.save(null);
+        printAll();
+        printSize();
+
+        System.out.println("Save resume with uuid=null:");
+        ARRAY_STORAGE.save(rNullUuid);
+        printAll();
+        printSize();
+
+        System.out.println("Save resume with uuid=\"\":");
+        ARRAY_STORAGE.save(rEmptyUuid);
+        printAll();
+        printSize();
+
+        System.out.println("Save r1:");
+        ARRAY_STORAGE.save(r1);
+        printAll();
+        printSize();
+
+        System.out.println("Save r1 again:");
+        ARRAY_STORAGE.save(r11);
+        printAll();
+        printSize();
+
+        System.out.println("Save r2 and r3:");
+        ARRAY_STORAGE.save(r2);
+        ARRAY_STORAGE.save(r3);
+        printAll();
+        printSize();
+
+        System.out.println("Save r4:");
+        ARRAY_STORAGE.save(r4);
+        printAll();
+        printSize();
+
+        System.out.println("Get resume with uuid=null:");
+        System.out.println(ARRAY_STORAGE.get(null));
+        printAll();
+        printSize();
+
+        System.out.println("Get resume with uuid=\"\":");
+        System.out.println(ARRAY_STORAGE.get(""));
+        printAll();
+        printSize();
+
+        System.out.println("Get resume with uuid=\"dummy\":");
+        System.out.println(ARRAY_STORAGE.get("dummy"));
+        printAll();
+        printSize();
+
+        System.out.println("Get r1:");
+        System.out.println(ARRAY_STORAGE.get(r1.getUuid()));
+        printAll();
+        printSize();
+
+        System.out.println("Update null:");
+        ARRAY_STORAGE.update(null);
+        printAll();
+        printSize();
+
+        System.out.println("Update resume with uuid=null:");
+        ARRAY_STORAGE.update(rNullUuid);
+        printAll();
+        printSize();
+
+        System.out.println("Update resume with uuid=\"\":");
+        ARRAY_STORAGE.update(rEmptyUuid);
+        printAll();
+        printSize();
+
+        System.out.println("Update r2:");
+        ARRAY_STORAGE.update(r22);
+        printAll();
+        printSize();
+
+        System.out.println("Delete resume with uuid=null:");
+        ARRAY_STORAGE.delete(null);
+        printAll();
+        printSize();
+
+        System.out.println("Delete resume with uuid=\"\":");
+        ARRAY_STORAGE.delete("");
+        printAll();
+        printSize();
+
+        System.out.println("Delete resume with uuid=\"dummy\":");
+        ARRAY_STORAGE.delete("dummy");
+        printAll();
+        printSize();
+
+        System.out.println("Delete r1:");
+        ARRAY_STORAGE.delete(r1.getUuid());
+        printAll();
+        printSize();
+
+        System.out.println("Clear:");
+        ARRAY_STORAGE.clear();
+        printAll();
+        printSize();
     }
 
     static void printAll() {
-        System.out.println("\nGet All");
-        for (Resume r : ARRAY_STORAGE.getAll()) {
-            System.out.println(r);
+        Resume[] all = ARRAY_STORAGE.getAll();
+        System.out.println("\nStorage state:");
+        System.out.println("----------------------------");
+        if (all.length == 0) {
+            System.out.println("Empty");
+        } else {
+            for (Resume r : all) {
+                System.out.println(r);
+            }
         }
+        System.out.println("----------------------------");
+    }
+    static void printSize() {
+        System.out.println("Storage size: " + ARRAY_STORAGE.size() + "\n\n");
     }
 }
