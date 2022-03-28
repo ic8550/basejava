@@ -7,7 +7,6 @@ public class Resume {
 
     // Unique identifier
     private String uuid;
-    private String data;
 
     public String getUuid() {
         return uuid;
@@ -17,12 +16,8 @@ public class Resume {
         this.uuid = uuid;
     }
 
-    public void setData(String data) {
-        this.data = data;
-    }
-
     @Override
     public String toString() {
-        return data;
+        return uuid;
     }
 }
