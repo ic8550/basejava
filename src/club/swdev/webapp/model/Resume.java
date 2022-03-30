@@ -28,4 +28,9 @@ public class Resume {
         Resume resume = (Resume) obj;
         return uuid.equals(resume.uuid);
     }
+
+    @Override
+    public int hashCode() {
+        return uuid.hashCode();
+    }
 }
