@@ -2,8 +2,7 @@ package club.swdev.webapp.storage;
 
 import club.swdev.webapp.model.Resume;
 
-import static java.util.Arrays.copyOf;
-import static java.util.Arrays.fill;
+import java.util.Arrays;
 
 /**
  * Array based storage for Resumes
@@ -27,7 +26,7 @@ public class ArrayStorage {
      * Replaces all nonnull Resumes in storage[] with the null value.
      */
     public void clear() {
-        fill(storage, 0, size, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
@@ -128,7 +127,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        return copyOf(storage, size);
+        return Arrays.copyOf(storage, size);
     }
 
     /**
