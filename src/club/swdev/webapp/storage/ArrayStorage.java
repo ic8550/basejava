@@ -45,7 +45,7 @@ public class ArrayStorage {
             System.out.println("\nERROR: save(): resume uuid=null\n");
             return;
         }
-        if (uuid.equals("") ) {
+        if (uuid.equals("")) {
             System.out.println("\nERROR: save(): resume uuid=\"\"\n");
             return;
         }
@@ -96,9 +96,8 @@ public class ArrayStorage {
                     + "\"" + uuid + "\""
                     + " not found in storage\n");
             return null;
-        } else {
-            return storage[index];
         }
+        return storage[index];
     }
 
     /**
