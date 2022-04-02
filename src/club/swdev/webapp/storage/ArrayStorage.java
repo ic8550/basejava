@@ -39,29 +39,6 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     /**
-     * Updates a Resume with a given uuid after checking for its presence in storage[].
-     */
-    public void update(Resume resume) {
-        if (resume == null) {
-            System.out.println("\nERROR: update(): resume object is null\n");
-            return;
-        }
-        String uuid = resume.getUuid();
-        if (uuid == null) {
-            System.out.println("\nERROR: update(): resume uuid=null\n");
-            return;
-        }
-        int index = getIndex(resume.getUuid());
-        if (index >= 0) {
-            storage[index] = resume;
-        } else {
-            System.out.println("\nERROR: update(): resume with uuid="
-                    + "\"" + uuid + "\""
-                    + " not found in storage\n");
-        }
-    }
-
-    /**
      * Removes a Resume with a given uuid while making sure that
      * the remaining nonnull Resumes are still contiguous.
      */
