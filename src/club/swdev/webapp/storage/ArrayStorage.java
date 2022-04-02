@@ -7,8 +7,8 @@ import club.swdev.webapp.model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
     /**
-     * Adds a club.swdev.webapp.model.Resume with a given uuid to the storage[],
-     * provided such club.swdev.webapp.model.Resume is not there already.
+     * Adds a Resume with a given uuid to the storage[],
+     * provided such Resume is not there already.
      */
     public void save(Resume resume) {
         if (resume == null) {
@@ -39,7 +39,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     /**
-     * Updates a club.swdev.webapp.model.Resume with a given uuid after checking for its presence in storage[].
+     * Updates a Resume with a given uuid after checking for its presence in storage[].
      */
     public void update(Resume resume) {
         if (resume == null) {
@@ -62,9 +62,8 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     /**
-     * Removes a club.swdev.webapp.model.Resume with a given uuid while squeezing the rest of Resumes
-     * in the storage[] towards the beginning of the storage so that nonnull Resumes
-     * remain contiguous.
+     * Removes a Resume with a given uuid while making sure that
+     * the remaining nonnull Resumes are still contiguous.
      */
     public void delete(String uuid) {
         if (size == 0) {
@@ -85,6 +84,9 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
+    /**
+     * @return an index (a position in the array) of the Resume with a given uuid
+     */
     protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
