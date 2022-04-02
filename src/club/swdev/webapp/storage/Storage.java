@@ -4,17 +4,17 @@ import club.swdev.webapp.model.Resume;
 
 public interface Storage {
 
-    void clear();
-
-    void update(Resume r);
-
-    void save(Resume r);
+    int size();
 
     Resume get(String uuid);
 
-    void delete(String uuid);
-
     Resume[] getAll();
 
-    int size();
+    void save(Resume r);
+
+    void update(Resume r);
+
+    void delete(String uuid);
+
+    void clear();
 }
