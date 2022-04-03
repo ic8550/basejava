@@ -56,7 +56,35 @@ public abstract class AbstractArrayStorage implements Storage {
      * Adds a Resume with a given uuid to the storage[],
      * provided such Resume is not there already.
      */
-    public abstract void save(Resume resume);
+    public void save(Resume resume) {
+        Resume res = new Resume();
+        if (resume == null) {
+            System.out.println("\nERROR: save(): resume object is null\n");
+            return;
+        }
+        String uuid = resume.getUuid();
+        if (uuid == null) {
+            System.out.println("\nERROR: save(): resume uuid=null\n");
+            return;
+        }
+        if (uuid.equals("")) {
+            System.out.println("\nERROR: save(): resume uuid=\"\"\n");
+            return;
+        }
+        if (size >= STORAGE_CAPACITY) {
+            System.out.println("\nERROR: save(): storage is full; cannot add new resume\n");
+            return;
+        }
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            System.out.println("\nERROR: update(): resume with uuid="
+                    + "\"" + uuid + "\""
+                    + " is already in storage\n");
+            return;
+        }
+        insertElement(resume, -index - 1);
+        size++;
+    }
 
     /**
      * Updates a Resume with a given uuid after checking for its presence in storage[].
