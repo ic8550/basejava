@@ -144,4 +144,8 @@ public abstract class AbstractArrayStorage implements Storage {
      * @return an index (a position in the array) of the Resume with a given uuid
      */
     protected abstract int getIndex(String uuid);
+
+    protected abstract void insertElement(Resume resume, int index);
+
+    protected abstract void deleteElement(int index);
 }
