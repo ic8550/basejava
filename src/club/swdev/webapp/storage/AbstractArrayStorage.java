@@ -81,7 +81,7 @@ public abstract class AbstractArrayStorage implements Storage {
                     + " is already in storage\n");
             return;
         }
-        insertElement(resume, -index - 1);
+        insertElement(resume, index);
         size++;
     }
 

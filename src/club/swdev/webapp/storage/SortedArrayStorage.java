@@ -18,10 +18,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     protected void insertElement(Resume resume, int index) {
-        Resume[] newStorage = new Resume[size - index];
-        System.arraycopy(storage, index, newStorage, 0, size - index);
-        storage[index] = resume;
-        System.arraycopy(newStorage, 0, storage, index + 1, size - index);
+        insertItem(resume, -index - 1);
     }
 
     protected void deleteElement(int index) {
@@ -29,5 +26,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         System.arraycopy(storage, index + 1, newStorage, 0, size - index - 1);
         System.arraycopy(newStorage, 0, storage, index, size - index - 1);
         storage[size - 1] = null;
+    }
+
+    private void insertItem(Resume resume, int index) {
+        Resume[] newStorage = new Resume[size - index];
+        System.arraycopy(storage, index, newStorage, 0, size - index);
+        storage[index] = resume;
+        System.arraycopy(newStorage, 0, storage, index + 1, size - index);
     }
 }
