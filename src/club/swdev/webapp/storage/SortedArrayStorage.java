@@ -25,7 +25,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         Resume[] newStorage = new Resume[size - index - 1];
         System.arraycopy(storage, index + 1, newStorage, 0, size - index - 1);
         System.arraycopy(newStorage, 0, storage, index, size - index - 1);
-        storage[size - 1] = null;
     }
 
     private void insertItem(Resume resume, int index) {
