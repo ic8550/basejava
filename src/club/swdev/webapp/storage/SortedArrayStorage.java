@@ -22,15 +22,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     protected void deleteElement(int index) {
-        Resume[] newStorage = new Resume[size - index - 1];
-        System.arraycopy(storage, index + 1, newStorage, 0, size - index - 1);
-        System.arraycopy(newStorage, 0, storage, index, size - index - 1);
+        System.arraycopy(storage, 0, storage, index, size - index - 1);
     }
 
     private void insertItem(Resume resume, int index) {
-        Resume[] newStorage = new Resume[size - index];
-        System.arraycopy(storage, index, newStorage, 0, size - index);
         storage[index] = resume;
-        System.arraycopy(newStorage, 0, storage, index + 1, size - index);
+        System.arraycopy(storage, 0, storage, index + 1, size - index);
     }
 }
