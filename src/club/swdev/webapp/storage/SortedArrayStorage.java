@@ -18,15 +18,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     protected void insertElement(Resume resume, int index) {
-        insertItem(resume, -index - 1);
+        int insertionPoint = -index - 1;
+        System.arraycopy(storage, insertionPoint, storage, insertionPoint + 1, size - insertionPoint);
+        storage[insertionPoint] = resume;
     }
 
     protected void deleteElement(int index) {
-        System.arraycopy(storage, 0, storage, index, size - index - 1);
-    }
-
-    private void insertItem(Resume resume, int index) {
-        storage[index] = resume;
-        System.arraycopy(storage, 0, storage, index + 1, size - index);
+        System.arraycopy(storage, index + 1, storage, index, size - index - 1);
     }
 }
