@@ -57,7 +57,6 @@ public abstract class AbstractArrayStorage implements Storage {
      * provided such Resume is not there already.
      */
     public void save(Resume resume) {
-        Resume res = new Resume();
         if (resume == null) {
             System.out.println("\nERROR: save(): resume object is null\n");
             return;
