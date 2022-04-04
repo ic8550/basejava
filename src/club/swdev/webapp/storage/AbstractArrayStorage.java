@@ -76,7 +76,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
         int index = getIndex(uuid);
         if (index >= 0) {
-            System.out.println("\nERROR: update(): resume with uuid="
+            System.out.println("\nERROR: save(): resume with uuid="
                     + "\"" + uuid + "\""
                     + " is already in storage\n");
             return;
