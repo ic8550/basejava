@@ -113,7 +113,23 @@ public abstract class AbstractArrayStorage implements Storage {
      * Removes a Resume with a given uuid while making sure that
      * the remaining nonnull Resumes are still contiguous.
      */
-    public abstract void delete(String uuid);
+    public void delete(String uuid) {
+        if (size == 0) {
+            System.out.println("\nERROR: delete(): resume with uuid="
+                    + "\"" + uuid + "\""
+                    + " not found in storage\n");
+            return;
+        }
+        int index = getIndex(uuid);
+        if (index < 0) {
+            System.out.println("\nERROR: delete(): resume with uuid="
+                    + "\"" + uuid + "\""
+                    + " not found in storage\n");
+            return;
+        }
+        deleteElement(index);
+        size--;
+    }
 
     /**
      * Removes all Resumes from storage[] by replacing all nonnull Resumes in storage[]
