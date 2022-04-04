@@ -6,66 +6,25 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
     /**
-     * Adds a Resume with a given uuid to the storage[],
-     * provided such Resume is not there already.
-     */
-    public void save(Resume resume) {
-        if (resume == null) {
-            System.out.println("\nERROR: save(): resume object is null\n");
-            return;
-        }
-        String uuid = resume.getUuid();
-        if (uuid == null) {
-            System.out.println("\nERROR: save(): resume uuid=null\n");
-            return;
-        }
-        if (uuid.equals("")) {
-            System.out.println("\nERROR: save(): resume uuid=\"\"\n");
-            return;
-        }
-        if (size >= STORAGE_CAPACITY) {
-            System.out.println("\nERROR: save(): storage is full; cannot add new resume\n");
-            return;
-        }
-        if (getIndex(resume.getUuid()) >= 0) {
-            System.out.println("\nERROR: update(): resume with uuid="
-                    + "\"" + uuid + "\""
-                    + " is already in storage\n");
-            return;
-        }
-        storage[size] = resume;
-        size++;
-    }
-
-    /**
-     * Removes a Resume with a given uuid while making sure that
-     * the remaining nonnull Resumes are still contiguous.
-     */
-    public void delete(String uuid) {
-        if (size == 0) {
-            System.out.println("\nERROR: delete(): resume with uuid="
-                    + "\"" + uuid + "\""
-                    + " not found in storage\n");
-            return;
-        }
-        int index = getIndex(uuid);
-        if (index < 0) {
-            System.out.println("\nERROR: delete(): resume with uuid="
-                    + "\"" + uuid + "\""
-                    + " not found in storage\n");
-        } else {
-            storage[index] = storage[size - 1];
-            storage[size - 1] = null;
-            size--;
-        }
-    }
-
-    /**
      * @return an index (a position in the array) of the Resume with a given uuid
      */
     protected int getIndex(String uuid) {
         Resume resume = new Resume();
         resume.setUuid(uuid);
-        return Arrays.binarySearch(storage, resume);
+        return Arrays.binarySearch(storage, 0, size, resume);
+    }
+
+    protected void insertElement(Resume resume, int index) {
+        Resume[] newStorage = new Resume[size - index];
+        System.arraycopy(storage, index, newStorage, 0, size - index);
+        storage[index] = resume;
+        System.arraycopy(newStorage, 0, storage, index + 1, size - index);
+    }
+
+    protected void deleteElement(int index) {
+        Resume[] newStorage = new Resume[size - index - 1];
+        System.arraycopy(storage, index + 1, newStorage, 0, size - index - 1);
+        System.arraycopy(newStorage, 0, storage, index, size - index - 1);
+        storage[size - 1] = null;
     }
 }
