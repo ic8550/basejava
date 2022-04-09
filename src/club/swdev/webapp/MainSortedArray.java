@@ -1,5 +1,6 @@
 package club.swdev.webapp;
 
+import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.model.Resume;
 import club.swdev.webapp.storage.SortedArrayStorage;
 
@@ -37,20 +38,37 @@ public class MainSortedArray {
                     break;
                 case "save":
                     r = new Resume(uuid);
-                    ARRAY_STORAGE.save(r);
+                    try {
+                        ARRAY_STORAGE.save(r);
+                    } catch (StorageException e) {
+                        System.out.println("Error save(): " + e.getMessage());
+                    }
                     printAll();
                     break;
                 case "update":
                     r = new Resume(uuid);
-                    ARRAY_STORAGE.update(r);
+                    try {
+                        ARRAY_STORAGE.update(r);
+                    } catch (StorageException e) {
+                        System.out.println("Error update(): " + e.getMessage());
+                    }
                     printAll();
                     break;
                 case "delete":
-                    ARRAY_STORAGE.delete(uuid);
+                    try {
+                        ARRAY_STORAGE.delete(uuid);
+                    } catch (StorageException e) {
+                        System.out.println("Error delete(): " + e.getMessage());
+                    }
                     printAll();
                     break;
                 case "get":
-                    System.out.println(ARRAY_STORAGE.get(uuid));
+                    try {
+                        Resume resume = ARRAY_STORAGE.get(uuid);
+                        System.out.println(resume);
+                    } catch (StorageException e) {
+                        System.out.println("Error get(): " + e.getMessage());
+                    }
                     break;
                 case "clear":
                     ARRAY_STORAGE.clear();
