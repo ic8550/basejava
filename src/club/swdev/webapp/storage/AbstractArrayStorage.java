@@ -1,5 +1,8 @@
 package club.swdev.webapp.storage;
 
+import club.swdev.webapp.exception.ItemNotPresentInStorageException;
+import club.swdev.webapp.exception.ItemPresentInStorageException;
+import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -39,8 +42,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Resume " + uuid + " not found");
-            return null;
+            throw new ItemNotPresentInStorageException(uuid);
         }
         return storage[index];
     }
@@ -71,15 +73,11 @@ public abstract class AbstractArrayStorage implements Storage {
             return;
         }
         if (size >= STORAGE_CAPACITY) {
-            System.out.println("\nERROR: save(): storage is full; cannot add new resume\n");
-            return;
+            throw new StorageException("Storage overflow", uuid);
         }
         int index = getIndex(uuid);
         if (index >= 0) {
-            System.out.println("\nERROR: save(): resume with uuid="
-                    + "\"" + uuid + "\""
-                    + " is already in storage\n");
-            return;
+            throw new ItemPresentInStorageException(uuid);
         }
         insertElement(resume, index);
         size++;
@@ -102,9 +100,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             storage[index] = resume;
         } else {
-            System.out.println("\nERROR: update(): resume with uuid="
-                    + "\"" + uuid + "\""
-                    + " not found in storage\n");
+            throw new ItemNotPresentInStorageException(uuid);
         }
     }
 
@@ -114,17 +110,11 @@ public abstract class AbstractArrayStorage implements Storage {
      */
     public void delete(String uuid) {
         if (size == 0) {
-            System.out.println("\nERROR: delete(): resume with uuid="
-                    + "\"" + uuid + "\""
-                    + " not found in storage\n");
-            return;
+            throw new ItemNotPresentInStorageException(uuid);
         }
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("\nERROR: delete(): resume with uuid="
-                    + "\"" + uuid + "\""
-                    + " not found in storage\n");
-            return;
+            throw new ItemNotPresentInStorageException(uuid);
         }
         deleteElement(index);
         storage[size - 1] = null;
