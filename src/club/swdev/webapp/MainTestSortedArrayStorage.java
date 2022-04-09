@@ -60,7 +60,6 @@ public class MainTestSortedArrayStorage {
         printSize();
 
         System.out.println("Delete resume with uuid=null:");
-        // ARRAY_STORAGE.delete(null);
         try {
             ARRAY_STORAGE.delete(null);
         } catch (StorageException e) {
@@ -70,7 +69,6 @@ public class MainTestSortedArrayStorage {
         printSize();
 
         System.out.println("Delete resume with uuid=\"\":");
-        // ARRAY_STORAGE.delete("");
         try {
             ARRAY_STORAGE.delete("");
         } catch (StorageException e) {
@@ -80,7 +78,6 @@ public class MainTestSortedArrayStorage {
         printSize();
 
         System.out.println("Delete resume with uuid=\"dummy\":");
-        // ARRAY_STORAGE.delete("dummy");
         try {
             ARRAY_STORAGE.delete("dummy");
         } catch (StorageException e) {
