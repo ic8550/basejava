@@ -12,8 +12,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         if (uuid == null) {
             return -1;
         }
-        Resume resume = new Resume();
-        resume.setUuid(uuid);
+        Resume resume = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, resume);
     }
 
