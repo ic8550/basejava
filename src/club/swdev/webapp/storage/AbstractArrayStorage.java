@@ -1,7 +1,7 @@
 package club.swdev.webapp.storage;
 
 import club.swdev.webapp.exception.ItemNotPresentInStorageException;
-import club.swdev.webapp.exception.ItemPresentInStorageException;
+import club.swdev.webapp.exception.ItemAlreadyPresentInStorageException;
 import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.model.Resume;
 
@@ -14,7 +14,7 @@ public abstract class AbstractArrayStorage implements Storage {
     /**
      * final int STORAGE_CAPACITY - storage characteristic, the maximum capacity of the storage
      */
-    protected static final int STORAGE_CAPACITY = 3;
+    protected static final int STORAGE_CAPACITY = 10_000;
 
     /**
      * Array based storage for Resumes
@@ -77,7 +77,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
         int index = getIndex(uuid);
         if (index >= 0) {
-            throw new ItemPresentInStorageException(uuid);
+            throw new ItemAlreadyPresentInStorageException(uuid);
         }
         insertElement(resume, index);
         size++;
