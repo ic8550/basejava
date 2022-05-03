@@ -1,10 +1,9 @@
 package club.swdev.webapp.storage;
 
-import club.swdev.webapp.exception.ItemNotPresentInStorageException;
 import club.swdev.webapp.exception.ItemAlreadyPresentInStorageException;
+import club.swdev.webapp.exception.ItemNotPresentInStorageException;
 import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.model.Resume;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,10 +34,6 @@ public abstract class AbstractArrayStorageTest {
         storage.save(RESUME_3);
     }
 
-    @AfterEach
-    public void tearDown() {
-    }
-
     @Test
     public void size() throws Exception {
         assertSize(3);
@@ -53,17 +48,13 @@ public abstract class AbstractArrayStorageTest {
 
     @Test()
     public void getNonExistent() throws Exception {
-        Exception exception = assertThrows(ItemNotPresentInStorageException.class, () -> storage.get("dummy"));
-        assertEquals("Resume dummy not present in storage", exception.getMessage());
+        assertThrows(ItemNotPresentInStorageException.class, () -> storage.get("dummy"));
     }
 
     @Test
     public void getAll() throws Exception {
-        Resume[] array = storage.getAll();
-        assertEquals(3, array.length);
-        assertEquals(RESUME_1, array[0]);
-        assertEquals(RESUME_2, array[1]);
-        assertEquals(RESUME_3, array[2]);
+        Resume[] expectedList = {RESUME_1, RESUME_2, RESUME_3};
+        assertArrayEquals(expectedList, storage.getAll());
     }
 
     @Test
@@ -75,36 +66,43 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void saveExistent() throws Exception {
-        Exception exception = assertThrows(ItemAlreadyPresentInStorageException.class, () -> storage.save(RESUME_1));
-        assertEquals("Resume " + RESUME_1.getUuid() + " already present in storage", exception.getMessage());
+        assertThrows(ItemAlreadyPresentInStorageException.class, () -> storage.save(RESUME_1));
     }
 
     @Test
-    public void saveBeyondLimit() throws Exception {
+    public void saveBeyondCapacity() throws Exception {
         try {
-            for (int i = 4; i < AbstractArrayStorage.STORAGE_CAPACITY; i++) {
+            for (int i = 3; i < AbstractArrayStorage.STORAGE_CAPACITY; i++) {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
-            fail();
+            fail("Error: storage overflow within storage capacity");
         }
-        storage.save(new Resume());
         assertThrows(StorageException.class, () -> storage.save(new Resume()));
     }
 
     @Test
-    void update() throws Exception {
+    public void update() throws Exception {
         Resume newResume = new Resume(UUID_1);
         storage.update(newResume);
-        assertTrue(newResume == storage.get(UUID_1));
+        assertSame(newResume, storage.get(UUID_1));
+    }
+
+    @Test
+    public void updateNonexistent() throws Exception {
+        assertThrows(ItemNotPresentInStorageException.class, () -> storage.update(new Resume("dummy")));
     }
 
     @Test
     public void delete() throws Exception {
         storage.delete(UUID_1);
         assertSize(2);
-        Exception exception = assertThrows(ItemNotPresentInStorageException.class, () -> storage.get(UUID_1));
-        assertEquals("Resume " + UUID_1 + " not present in storage", exception.getMessage());
+        assertThrows(ItemNotPresentInStorageException.class, () -> storage.get(UUID_1));
+    }
+
+    @Test
+    public void deleteNonexistent() throws Exception {
+        assertThrows(ItemNotPresentInStorageException.class, () -> storage.delete("dummy"));
     }
 
     @Test
