@@ -7,9 +7,9 @@ import club.swdev.webapp.model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
     /**
-     * @return an index (a position in the array) of the Resume with a given uuid
+     * @return a "location" (an index, a position in the array) of the Resume with a given uuid
      */
-    protected int getIndex(String uuid) {
+    protected Integer getItemLocation(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;

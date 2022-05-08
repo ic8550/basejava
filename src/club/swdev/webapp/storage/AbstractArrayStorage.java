@@ -1,7 +1,5 @@
 package club.swdev.webapp.storage;
 
-import club.swdev.webapp.exception.ItemNotPresentInStorageException;
-import club.swdev.webapp.exception.ItemAlreadyPresentInStorageException;
 import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.model.Resume;
 
@@ -10,7 +8,7 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     /**
      * final int STORAGE_CAPACITY - storage characteristic, the maximum capacity of the storage
      */
@@ -39,12 +37,8 @@ public abstract class AbstractArrayStorage implements Storage {
     /**
      * @return a Resume object with a given uuid or null if there is no such Resume in storage[].
      */
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new ItemNotPresentInStorageException(uuid);
-        }
-        return storage[index];
+    public Resume doGet(Object index) {
+        return storage[(Integer) index];
     }
 
     /**
@@ -58,65 +52,28 @@ public abstract class AbstractArrayStorage implements Storage {
      * Adds a Resume with a given uuid to the storage[],
      * provided such Resume is not there already.
      */
-    public void save(Resume resume) {
-        if (resume == null) {
-            System.out.println("\nERROR: save(): resume object is null\n");
-            return;
-        }
-        String uuid = resume.getUuid();
-        if (uuid == null) {
-            System.out.println("\nERROR: save(): resume uuid=null\n");
-            return;
-        }
-        if (uuid.equals("")) {
-            System.out.println("\nERROR: save(): resume uuid=\"\"\n");
-            return;
-        }
+    public void doSave(Resume resume, Object index) {
         if (size >= STORAGE_CAPACITY) {
-            throw new StorageException("Storage overflow", uuid);
+            throw new StorageException("Storage overflow", resume.getUuid());
+        } else {
+            insertElement(resume, (Integer) index);
+            size++;
         }
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            throw new ItemAlreadyPresentInStorageException(uuid);
-        }
-        insertElement(resume, index);
-        size++;
     }
 
     /**
      * Updates a Resume with a given uuid after checking for its presence in storage[].
      */
-    public void update(Resume resume) {
-        if (resume == null) {
-            System.out.println("\nERROR: update(): resume object is null\n");
-            return;
-        }
-        String uuid = resume.getUuid();
-        if (uuid == null) {
-            System.out.println("\nERROR: update(): resume uuid=null\n");
-            return;
-        }
-        int index = getIndex(resume.getUuid());
-        if (index >= 0) {
-            storage[index] = resume;
-        } else {
-            throw new ItemNotPresentInStorageException(uuid);
-        }
+    public void doUpdate(Resume resume, Object index) {
+        storage[(Integer) index] = resume;
     }
 
     /**
      * Removes a Resume with a given uuid while making sure that
      * the remaining nonnull Resumes are still contiguous.
      */
-    public void delete(String uuid) {
-        if (size == 0) {
-            throw new ItemNotPresentInStorageException(uuid);
-        }
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new ItemNotPresentInStorageException(uuid);
-        }
-        deleteElement(index);
+    public void doDelete(Object index) {
+        deleteElement((Integer) index);
         storage[size - 1] = null;
         size--;
     }
@@ -130,10 +87,14 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
+    protected boolean isItemLocated(Object index) {
+        return (Integer) index >= 0;
+    }
+
     /**
-     * @return an index (a position in the array) of the Resume with a given uuid
+     * @return a "location" (a position in the array) of the Resume with a given uuid
      */
-    protected abstract int getIndex(String uuid);
+    protected abstract Integer getItemLocation(String uuid);
 
     protected abstract void insertElement(Resume resume, int index);
 

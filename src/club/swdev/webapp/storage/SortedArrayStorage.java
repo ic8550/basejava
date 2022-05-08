@@ -6,9 +6,9 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
     /**
-     * @return an index (a position in the array) of the Resume with a given uuid
+     * @return a "location", (an index, a position in the array) of the Resume with a given uuid
      */
-    protected int getIndex(String uuid) {
+    protected Integer getItemLocation(String uuid) {
         if (uuid == null) {
             return -1;
         }
