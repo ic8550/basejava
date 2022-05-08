@@ -34,7 +34,7 @@ public class MainTestListStorage {
             Resume resume = STORAGE.get(null);
             System.out.println(resume);
         } catch (StorageException e) {
-            System.out.println("Error get(): " + e.getMessage());
+            System.out.println("Error in get(): " + e.getMessage());
         }
         printAll();
         printSize();
@@ -44,7 +44,7 @@ public class MainTestListStorage {
             Resume resume = STORAGE.get("");
             System.out.println(resume);
         } catch (StorageException e) {
-            System.out.println("Error get(): " + e.getMessage());
+            System.out.println("Error in get(): " + e.getMessage());
         }
 
         printAll();
@@ -55,7 +55,7 @@ public class MainTestListStorage {
             Resume resume = STORAGE.get("dummy");
             System.out.println(resume);
         } catch (StorageException e) {
-            System.out.println("Error get(): " + e.getMessage());
+            System.out.println("Error in get(): " + e.getMessage());
         }
 
         printAll();
@@ -165,7 +165,7 @@ public class MainTestListStorage {
             Resume resume = STORAGE.get(null);
             System.out.println(resume);
         } catch (StorageException e) {
-            System.out.println("Error get(): " + e.getMessage());
+            System.out.println("Error in get(): " + e.getMessage());
         }
         printAll();
         printSize();

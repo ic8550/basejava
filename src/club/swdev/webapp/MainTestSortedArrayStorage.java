@@ -5,10 +5,10 @@ import club.swdev.webapp.model.Resume;
 import club.swdev.webapp.storage.SortedArrayStorage;
 
 /**
- * Test for your SortedArrayStorage implementation
+ * Test for your ListStorage implementation
  */
 public class MainTestSortedArrayStorage {
-    static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
+    static final SortedArrayStorage STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         Resume r3 = new Resume("uuid3");
@@ -25,61 +25,63 @@ public class MainTestSortedArrayStorage {
         printSize();
 
         System.out.println("Clear:");
-        ARRAY_STORAGE.clear();
+        STORAGE.clear();
         printAll();
         printSize();
 
         System.out.println("Get resume with uuid=null:");
         try {
-            Resume resume = ARRAY_STORAGE.get(null);
+            Resume resume = STORAGE.get(null);
             System.out.println(resume);
         } catch (StorageException e) {
-            System.out.println("Error get(): " + e.getMessage());
+            System.out.println("Error in get(): " + e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Get resume with uuid=\"\":");
         try {
-            Resume resume = ARRAY_STORAGE.get("");
+            Resume resume = STORAGE.get("");
             System.out.println(resume);
         } catch (StorageException e) {
-            System.out.println("Error get(): " + e.getMessage());
+            System.out.println("Error in get(): " + e.getMessage());
         }
+
         printAll();
         printSize();
 
         System.out.println("Get resume with uuid=\"dummy\":");
         try {
-            Resume resume = ARRAY_STORAGE.get("dummy");
+            Resume resume = STORAGE.get("dummy");
             System.out.println(resume);
         } catch (StorageException e) {
-            System.out.println("Error get(): " + e.getMessage());
+            System.out.println("Error in get(): " + e.getMessage());
         }
+
         printAll();
         printSize();
 
         System.out.println("Delete resume with uuid=null:");
         try {
-            ARRAY_STORAGE.delete(null);
+            STORAGE.delete(null);
         } catch (StorageException e) {
-            System.out.println("Error delete(): " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Delete resume with uuid=\"\":");
         try {
-            ARRAY_STORAGE.delete("");
+            STORAGE.delete("");
         } catch (StorageException e) {
-            System.out.println("Error delete(): " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Delete resume with uuid=\"dummy\":");
         try {
-            ARRAY_STORAGE.delete("dummy");
+            STORAGE.delete("dummy");
         } catch (StorageException e) {
             System.out.println("Error delete(): " + e.getMessage());
         }
@@ -88,43 +90,43 @@ public class MainTestSortedArrayStorage {
 
         System.out.println("Save null:");
         try {
-            ARRAY_STORAGE.save(null);
+            STORAGE.save(null);
         } catch (StorageException e) {
-            System.out.println("Error save(): " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Save resume with uuid=null:");
         try {
-            ARRAY_STORAGE.save(rNullUuid);
+            STORAGE.save(rNullUuid);
         } catch (StorageException e) {
-            System.out.println("Error save(): " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Save resume with uuid=\"\":");
         try {
-            ARRAY_STORAGE.save(rEmptyUuid);
+            STORAGE.save(rEmptyUuid);
         } catch (StorageException e) {
-            System.out.println("Error save(): " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Save r3:");
         try {
-            ARRAY_STORAGE.save(r3);
+            STORAGE.save(r3);
         } catch (StorageException e) {
-            System.out.println("Error save(): " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Save r3 again:");
         try {
-            ARRAY_STORAGE.save(r33);
+            STORAGE.save(r33);
         } catch (StorageException e) {
             System.out.println("Error save(): " + e.getMessage());
         }
@@ -133,7 +135,7 @@ public class MainTestSortedArrayStorage {
 
         System.out.println("Save r2:");
         try {
-            ARRAY_STORAGE.save(r2);
+            STORAGE.save(r2);
         } catch (StorageException e) {
             System.out.println("Error save(): " + e.getMessage());
         }
@@ -142,7 +144,7 @@ public class MainTestSortedArrayStorage {
 
         System.out.println("Save r1:");
         try {
-            ARRAY_STORAGE.save(r1);
+            STORAGE.save(r1);
         } catch (StorageException e) {
             System.out.println("Error save(): " + e.getMessage());
         }
@@ -151,7 +153,7 @@ public class MainTestSortedArrayStorage {
 
         System.out.println("Save r4:");
         try {
-            ARRAY_STORAGE.save(r4);
+            STORAGE.save(r4);
         } catch (StorageException e) {
             System.out.println("Error save(): " + e.getMessage());
         }
@@ -160,124 +162,124 @@ public class MainTestSortedArrayStorage {
 
         System.out.println("Get resume with uuid=null:");
         try {
-            Resume resume = ARRAY_STORAGE.get(null);
+            Resume resume = STORAGE.get(null);
             System.out.println(resume);
         } catch (StorageException e) {
-            System.out.println("Error get(): " + e.getMessage());
+            System.out.println("Error in get(): " + e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Get resume with uuid=\"\":");
         try {
-            Resume resume = ARRAY_STORAGE.get("");
+            Resume resume = STORAGE.get("");
             System.out.println(resume);
         } catch (StorageException e) {
-            System.out.println("Error get(): " + e.getMessage());
+            System.out.println("Error in get(): " + e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Get resume with uuid=\"dummy\":");
         try {
-            Resume resume = ARRAY_STORAGE.get("dummy");
+            Resume resume = STORAGE.get("dummy");
             System.out.println(resume);
         } catch (StorageException e) {
-            System.out.println("Error get(): " + e.getMessage());
+            System.out.println("Error in get(): " + e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Get r1:");
         try {
-            Resume resume = ARRAY_STORAGE.get(r1.getUuid());
+            Resume resume = STORAGE.get(r1.getUuid());
             System.out.println(resume);
         } catch (StorageException e) {
-            System.out.println("Error get(): " + e.getMessage());
+            System.out.println("Error in get(): " + e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Update null:");
         try {
-            ARRAY_STORAGE.update(null);
+            STORAGE.update(null);
         } catch (StorageException e) {
-            System.out.println("Error update(): " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Update resume with uuid=null:");
         try {
-            ARRAY_STORAGE.update(rNullUuid);
+            STORAGE.update(rNullUuid);
         } catch (StorageException e) {
-            System.out.println("Error update(): " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Update resume with uuid=\"\":");
         try {
-            ARRAY_STORAGE.update(rEmptyUuid);
+            STORAGE.update(rEmptyUuid);
         } catch (StorageException e) {
-            System.out.println("Error update(): " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Update r2:");
         try {
-            ARRAY_STORAGE.update(r22);
+            STORAGE.update(r22);
         } catch (StorageException e) {
-            System.out.println("Error update(): " + e.getMessage());
+            System.out.println("Error in update(): " + e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Delete resume with uuid=null:");
         try {
-            ARRAY_STORAGE.delete(null);
+            STORAGE.delete(null);
         } catch (StorageException e) {
-            System.out.println("Error delete(): " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Delete resume with uuid=\"\":");
         try {
-            ARRAY_STORAGE.delete("");
+            STORAGE.delete("");
         } catch (StorageException e) {
-            System.out.println("Error delete(): " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Delete resume with uuid=\"dummy\":");
         try {
-            ARRAY_STORAGE.delete("dummy");
+            STORAGE.delete("dummy");
         } catch (StorageException e) {
-            System.out.println("Error delete(): " + e.getMessage());
+            System.out.println("Error in delete(): " + e.getMessage());
         }
         printAll();
         printSize();
 
-        System.out.println("Delete r1:");
+        System.out.println("Delete r3:");
         try {
-            ARRAY_STORAGE.delete(r1.getUuid());
+            STORAGE.delete(r3.getUuid());
         } catch (StorageException e) {
-            System.out.println("Error delete(): " + e.getMessage());
+            System.out.println("Error in delete(): " + e.getMessage());
         }
         printAll();
         printSize();
 
         System.out.println("Clear:");
-        ARRAY_STORAGE.clear();
+        STORAGE.clear();
         printAll();
         printSize();
     }
 
     static void printAll() {
-        Resume[] all = ARRAY_STORAGE.getAll();
+        Resume[] all = STORAGE.getAll();
         System.out.println("\nStorage state:");
         System.out.println("----------------------------");
         if (all.length == 0) {
@@ -289,8 +291,7 @@ public class MainTestSortedArrayStorage {
         }
         System.out.println("----------------------------");
     }
-
     static void printSize() {
-        System.out.println("Storage size: " + ARRAY_STORAGE.size() + "\n\n");
+        System.out.println("Storage size: " + STORAGE.size() + "\n\n");
     }
 }

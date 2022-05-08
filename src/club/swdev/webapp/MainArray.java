@@ -67,7 +67,7 @@ public class MainArray {
                         Resume resume = ARRAY_STORAGE.get(uuid);
                         System.out.println(resume);
                     } catch (StorageException e) {
-                        System.out.println("Error get(): " + e.getMessage());
+                        System.out.println("Error in get(): " + e.getMessage());
                     }
                     break;
                 case "clear":
