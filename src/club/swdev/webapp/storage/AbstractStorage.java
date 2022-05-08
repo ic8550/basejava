@@ -32,7 +32,7 @@ public abstract class AbstractStorage implements Storage {
             throw new StorageException("Error in save(): resume's uuid is null", null);
         }
         if (resume.getUuid().equals("")) {
-            throw new StorageException("Error in save(): resume uuid is empty (uuid=\"\")", "");
+            throw new StorageException("Error in save(): resume's uuid is empty (uuid=\"\")", "");
         }
         Object itemLocation = getMissingItemLocation(resume.getUuid());
         doSave(resume, itemLocation);
