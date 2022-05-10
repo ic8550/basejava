@@ -9,25 +9,32 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public abstract class AbstractArrayStorageTest {
-    private Storage storage;
+public abstract class AbstractStorageTest {
+    private final Storage storage;
 
     private static final String UUID_1 = "111";
     private static final String UUID_2 = "222";
     private static final String UUID_3 = "333";
     private static final String UUID_4 = "444";
 
-    private static final Resume RESUME_1 = new Resume(UUID_1);
-    private static final Resume RESUME_2 = new Resume(UUID_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3);
-    private static final Resume RESUME_4 = new Resume(UUID_4);
+    private static final Resume RESUME_1;
+    private static final Resume RESUME_2;
+    private static final Resume RESUME_3;
+    private static final Resume RESUME_4;
 
-    protected AbstractArrayStorageTest(Storage storage) {
+    static {
+        RESUME_1 = new Resume(UUID_1);
+        RESUME_2 = new Resume(UUID_2);
+        RESUME_3 = new Resume(UUID_3);
+        RESUME_4 = new Resume(UUID_4);
+    }
+
+    protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         storage.clear();
         storage.save(RESUME_1);
         storage.save(RESUME_2);
@@ -35,7 +42,7 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test
-    public void size() throws Exception {
+    public void size() {
         assertSize(3);
     }
 
@@ -46,76 +53,79 @@ public abstract class AbstractArrayStorageTest {
         assertGet(RESUME_3);
     }
 
-    @Test()
-    public void getNonExistent() throws Exception {
+    @Test
+    public void getNoExistent() {
         assertThrows(ItemNotPresentInStorageException.class, () -> storage.get("dummy"));
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAll() {
         Resume[] expectedList = {RESUME_1, RESUME_2, RESUME_3};
         assertArrayEquals(expectedList, storage.getAll());
     }
 
     @Test
-    public void save() throws Exception {
+    public void save()  {
         storage.save(RESUME_4);
         assertSize(4);
         assertGet(RESUME_4);
     }
 
     @Test
-    public void saveExistent() throws Exception {
+    public void saveExistent() {
         assertThrows(ItemAlreadyPresentInStorageException.class, () -> storage.save(RESUME_1));
     }
 
     @Test
-    public void saveBeyondCapacity() throws Exception {
-        try {
-            for (int i = 3; i < AbstractArrayStorage.STORAGE_CAPACITY; i++) {
-                storage.save(new Resume());
+    public void saveBeyondCapacity()  {
+        if (storage instanceof AbstractArrayStorage) {
+            try {
+                for (int i = 4; i <= AbstractArrayStorage.STORAGE_CAPACITY; i++) {
+                    storage.save(new Resume());
+                }
+            } catch (StorageException e) {
+                fail("Error: storage overflow within storage capacity");
             }
-        } catch (StorageException e) {
-            fail("Error: storage overflow within storage capacity");
+            assertThrows(StorageException.class, () -> storage.save(new Resume()));
         }
-        assertThrows(StorageException.class, () -> storage.save(new Resume()));
     }
 
     @Test
-    public void update() throws Exception {
+    public void update() {
         Resume newResume = new Resume(UUID_1);
         storage.update(newResume);
         assertSame(newResume, storage.get(UUID_1));
     }
 
     @Test
-    public void updateNonexistent() throws Exception {
+    public void updateNonexistent() {
         assertThrows(ItemNotPresentInStorageException.class, () -> storage.update(new Resume("dummy")));
     }
 
     @Test
-    public void delete() throws Exception {
+    public void delete() {
         storage.delete(UUID_1);
         assertSize(2);
         assertThrows(ItemNotPresentInStorageException.class, () -> storage.get(UUID_1));
     }
 
     @Test
-    public void deleteNonexistent() throws Exception {
+    public void deleteNonExistent() {
         assertThrows(ItemNotPresentInStorageException.class, () -> storage.delete("dummy"));
     }
 
     @Test
-    public void clear() throws Exception {
+    public void clear() {
         storage.clear();
         assertSize(0);
+    }
+
+    private void assertGet(Resume r) {
+        assertEquals(r, storage.get(r.getUuid()));
     }
 
     private void assertSize(int size) {
         assertEquals(size, storage.size());
     }
-
-    private void assertGet(Resume resume) {
-        assertEquals(resume, storage.get(resume.getUuid()));
-    }
 }
+
