@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
-    private List<Resume> list = new ArrayList<>();
+    private final List<Resume> list = new ArrayList<>();
 
     public int size() {
         return list.size();
@@ -18,7 +18,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     public Resume[] getAll() {
-        return list.toArray(new Resume[list.size()]);
+        int size = list.size();
+        return list.toArray(new Resume[size]);
     }
 
     protected void doSave(Resume resume, Object itemLocation) {
