@@ -22,7 +22,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     protected void doSave(Resume resume, Object uuid) {
-        map.put((String) uuid, resume);
+        map.put(resume.getUuid(), resume);
     }
 
     protected void doUpdate(Resume resume, Object uuid) {
