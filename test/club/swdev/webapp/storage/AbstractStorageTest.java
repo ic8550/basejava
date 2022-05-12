@@ -54,7 +54,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getNoExistent() {
+    public void getNonexistent() {
         assertThrows(ItemNotPresentInStorageException.class, () -> storage.get("dummy"));
     }
 
@@ -110,7 +110,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void deleteNonExistent() {
+    public void deleteNonexistent() {
         assertThrows(ItemNotPresentInStorageException.class, () -> storage.delete("dummy"));
     }
 
