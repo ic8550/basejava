@@ -19,7 +19,7 @@ public class ListStorage extends AbstractStorage {
 
     public Resume[] getAll() {
         int size = list.size();
-        return list.toArray(new Resume[size]);
+        return list.toArray(Resume[]::new);
     }
 
     protected void doSave(Resume resume, Object itemLocation) {
