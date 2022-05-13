@@ -20,7 +20,7 @@ public abstract class AbstractStorage implements Storage {
     protected abstract boolean isItemLocated(Object itemLocation);
 
     public Resume get(String uuid) {
-        Object itemLocation = getExistingItemLocation(uuid);
+        Object itemLocation = getExistentItemLocation(uuid);
         return doGet(itemLocation);
     }
 
@@ -48,7 +48,7 @@ public abstract class AbstractStorage implements Storage {
         if (resume.getUuid().equals("")) {
             throw new StorageException("Error in update(): resume's uuid is empty (uuid=\"\")", "");
         }
-        Object itemLocation = getExistingItemLocation(resume.getUuid());
+        Object itemLocation = getExistentItemLocation(resume.getUuid());
         doUpdate(resume, itemLocation);
     }
 
@@ -59,11 +59,11 @@ public abstract class AbstractStorage implements Storage {
         if (uuid.equals("")) {
             throw new StorageException("Error in delete(): resume's uuid is empty (uuid=\"\")", "");
         }
-        Object itemLocation = getExistingItemLocation(uuid);
+        Object itemLocation = getExistentItemLocation(uuid);
         doDelete(itemLocation);
     }
 
-    private Object getExistingItemLocation(String uuid) {
+    private Object getExistentItemLocation(String uuid) {
         Object itemLocation = getItemLocation(uuid);
         if (!isItemLocated(itemLocation)) {
             throw new ItemNotPresentInStorageException(uuid);
