@@ -38,10 +38,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     protected String getItemLocation(String uuid) {
-        if (map.containsKey(uuid)) {
-            return uuid;
-        }
-        return null;
+        return map.containsKey(uuid) ? uuid : null;
     }
 
     protected boolean isItemLocated(Object itemLocation) {
