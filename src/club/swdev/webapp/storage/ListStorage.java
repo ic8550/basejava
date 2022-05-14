@@ -18,7 +18,6 @@ public class ListStorage extends AbstractStorage {
     }
 
     public Resume[] getAll() {
-        int size = list.size();
         return list.toArray(Resume[]::new);
     }
 

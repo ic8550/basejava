@@ -17,8 +17,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     public Resume[] getAll() {
-        Object[] objArray = map.values().toArray(Resume[]::new);
-        return (Resume[]) objArray;
+        return map.values().toArray(Resume[]::new);
     }
 
     protected void doSave(Resume resume, Object uuid) {
