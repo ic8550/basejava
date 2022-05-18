@@ -2,8 +2,10 @@ package club.swdev.webapp.storage;
 
 import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.model.Resume;
+import club.swdev.webapp.model.ResumeComparator;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Array based storage for Resumes
@@ -44,8 +46,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     /**
      * @return an array, containing all nonnull/nonempty Resumes in storage[]
      */
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    public List<Resume> getAllSorted() {
+        Resume[] resumesArray = Arrays.copyOf(storage, size);
+        List<Resume> resumesList = Arrays.asList(resumesArray);
+        resumesList.sort(new ResumeComparator());
+        return resumesList;
     }
 
     /**

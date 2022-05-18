@@ -4,6 +4,8 @@ import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.model.Resume;
 import club.swdev.webapp.storage.SortedArrayStorage;
 
+import java.util.List;
+
 /**
  * Test for your ListStorage implementation
  */
@@ -11,12 +13,15 @@ public class MainTestSortedArrayStorage {
     static final SortedArrayStorage STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
-        Resume r3 = new Resume("uuid3");
-        Resume r33 = new Resume("uuid3");
-        Resume r2 = new Resume("uuid2");
-        Resume r22 = new Resume("uuid2");
-        Resume r1 = new Resume("uuid1");
-        Resume r4 = new Resume("uuid4");
+        Resume r3 = new Resume("uuid-3", "Name-3");
+        Resume r33 = new Resume("uuid-3", "Name-3");
+        Resume r2 = new Resume("uuid-2", "Name-2");
+        Resume r22 = new Resume("uuid-2", "Name-22");
+        Resume r1 = new Resume("uuid-1", "Name-1");
+        Resume r4 = new Resume("uuid-4", "Name-4");
+        Resume r5 = new Resume("uuid-5", "Name-N");
+        Resume r6 = new Resume("uuid-6", "Name-N");
+        Resume r7 = new Resume("uuid-7", "Name-N");
 
         Resume rNullUuid = new Resume(null);
         Resume rEmptyUuid = new Resume("");
@@ -160,6 +165,33 @@ public class MainTestSortedArrayStorage {
         printAll();
         printSize();
 
+        System.out.println("Save r7:");
+        try {
+            STORAGE.save(r7);
+        } catch (StorageException e) {
+            System.out.println("Error save(): " + e.getMessage());
+        }
+        printAll();
+        printSize();
+
+        System.out.println("Save r6:");
+        try {
+            STORAGE.save(r6);
+        } catch (StorageException e) {
+            System.out.println("Error save(): " + e.getMessage());
+        }
+        printAll();
+        printSize();
+
+        System.out.println("Save r5:");
+        try {
+            STORAGE.save(r5);
+        } catch (StorageException e) {
+            System.out.println("Error save(): " + e.getMessage());
+        }
+        printAll();
+        printSize();
+
         System.out.println("Get resume with uuid=null:");
         try {
             Resume resume = STORAGE.get(null);
@@ -279,10 +311,10 @@ public class MainTestSortedArrayStorage {
     }
 
     static void printAll() {
-        Resume[] all = STORAGE.getAll();
+        List<Resume> all = STORAGE.getAllSorted();
         System.out.println("\nStorage state:");
         System.out.println("----------------------------");
-        if (all.length == 0) {
+        if (all.size() == 0) {
             System.out.println("Empty");
         } else {
             for (Resume r : all) {

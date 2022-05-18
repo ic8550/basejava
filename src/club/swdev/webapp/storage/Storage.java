@@ -2,13 +2,15 @@ package club.swdev.webapp.storage;
 
 import club.swdev.webapp.model.Resume;
 
+import java.util.List;
+
 public interface Storage {
 
     int size();
 
     Resume get(String uuid);
 
-    Resume[] getAll();
+    List<Resume> getAllSorted();
 
     void save(Resume r);
 

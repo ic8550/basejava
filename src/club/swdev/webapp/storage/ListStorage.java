@@ -1,6 +1,7 @@
 package club.swdev.webapp.storage;
 
 import club.swdev.webapp.model.Resume;
+import club.swdev.webapp.model.ResumeComparator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,9 @@ public class ListStorage extends AbstractStorage {
         return list.get((Integer) itemLocation);
     }
 
-    public Resume[] getAll() {
-        return list.toArray(Resume[]::new);
+    public List<Resume> getAllSorted() {
+        list.sort(new ResumeComparator());
+        return list;
     }
 
     protected void doSave(Resume resume, Object itemLocation) {
