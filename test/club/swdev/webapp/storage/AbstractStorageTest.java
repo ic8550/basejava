@@ -65,10 +65,12 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void save()  {
-        storage.save(RESUME_4);
-        assertSize(4);
-        assertGet(RESUME_4);
+    public void save() {
+        if (storage instanceof AbstractArrayStorage) {
+            storage.clear();
+        }
+        storage.save(RESUME_7);
+        assertGet(RESUME_7);
     }
 
     @Test
@@ -77,10 +79,10 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void saveBeyondCapacity()  {
+    public void saveBeyondCapacity() {
         if (storage instanceof AbstractArrayStorage) {
             try {
-                for (int i = 4; i <= AbstractArrayStorage.STORAGE_CAPACITY; i++) {
+                for (int i = storage.size(); i < STORAGE_CAPACITY; i++) {
                     storage.save(new Resume());
                 }
             } catch (StorageException e) {

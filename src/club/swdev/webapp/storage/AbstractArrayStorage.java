@@ -12,7 +12,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     /**
      * final int STORAGE_CAPACITY - storage characteristic, the maximum capacity of the storage
      */
-    protected static final int STORAGE_CAPACITY = 10_000;
+    protected static final int STORAGE_CAPACITY = 6;
 
     /**
      * Array based storage for Resumes
