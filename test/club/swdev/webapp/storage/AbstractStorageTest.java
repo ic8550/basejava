@@ -2,7 +2,6 @@ package club.swdev.webapp.storage;
 
 import club.swdev.webapp.exception.ItemAlreadyPresentInStorageException;
 import club.swdev.webapp.exception.ItemNotPresentInStorageException;
-import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,11 +9,10 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static club.swdev.webapp.storage.AbstractArrayStorage.STORAGE_CAPACITY;
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
-    private final Storage storage;
+    protected final Storage storage;
 
     private static final String UUID_1 = "111";
     private static final String NAME_1 = "N-1";
@@ -41,7 +39,7 @@ public abstract class AbstractStorageTest {
 
     private static final Resume RESUME_5;
     private static final Resume RESUME_6;
-    private static final Resume RESUME_7;
+    protected static final Resume RESUME_7;
 
     static {
         RESUME_1 = new Resume(UUID_1, NAME_1);
@@ -97,30 +95,15 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        if (storage instanceof AbstractArrayStorage) {
-            storage.clear();
-        }
+        prepareForSave();
         storage.save(RESUME_7);
+        assertSize(7);
         assertGet(RESUME_7);
     }
 
     @Test
     public void saveExistent() {
         assertThrows(ItemAlreadyPresentInStorageException.class, () -> storage.save(RESUME_1));
-    }
-
-    @Test
-    public void saveBeyondCapacity() {
-        if (storage instanceof AbstractArrayStorage) {
-            try {
-                for (int i = storage.size(); i < STORAGE_CAPACITY; i++) {
-                    storage.save(new Resume());
-                }
-            } catch (StorageException e) {
-                fail("Error: storage overflow within storage capacity");
-            }
-            assertThrows(StorageException.class, () -> storage.save(new Resume()));
-        }
     }
 
     @Test
@@ -153,12 +136,14 @@ public abstract class AbstractStorageTest {
         assertSize(0);
     }
 
-    private void assertGet(Resume r) {
+    protected void assertGet(Resume r) {
         assertEquals(r, storage.get(r.getUuid()));
     }
 
-    private void assertSize(int size) {
+    protected void assertSize(int size) {
         assertEquals(size, storage.size());
     }
+
+    protected void prepareForSave() {}
 }
 
