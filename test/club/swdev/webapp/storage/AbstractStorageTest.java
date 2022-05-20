@@ -56,7 +56,7 @@ public abstract class AbstractStorageTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void populateStorageForTesting() {
         storage.clear();
         storage.save(RESUME_6);
         storage.save(RESUME_5);
@@ -95,9 +95,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        prepareForSave();
+        prepareToSave();
         storage.save(RESUME_7);
-        assertSize(7);
+        checkSizeAfterSave();
         assertGet(RESUME_7);
     }
 
@@ -144,6 +144,11 @@ public abstract class AbstractStorageTest {
         assertEquals(size, storage.size());
     }
 
-    protected void prepareForSave() {}
+    protected void prepareToSave() {
+    }
+
+    protected void checkSizeAfterSave() {
+        assertSize(7);
+    }
 }
 

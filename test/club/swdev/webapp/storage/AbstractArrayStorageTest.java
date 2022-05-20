@@ -14,11 +14,6 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
     }
 
     @Test
-    public void prepareForSave() {
-        storage.clear();
-    }
-
-    @Test
     public void saveBeyondCapacity() {
         try {
             for (int i = storage.size(); i < STORAGE_CAPACITY; i++) {
@@ -28,5 +23,15 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
             fail("Error: storage overflow within storage capacity");
         }
         assertThrows(StorageException.class, () -> storage.save(new Resume()));
+    }
+
+    @Override
+    public void prepareToSave() {
+        storage.clear();
+    }
+
+    @Override
+    public void checkSizeAfterSave() {
+        assertSize(1);
     }
 }
