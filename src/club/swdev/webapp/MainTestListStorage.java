@@ -23,9 +23,6 @@ public class MainTestListStorage {
         Resume r6 = new Resume("uuid-6", "Name-N");
         Resume r7 = new Resume("uuid-7", "Name-N");
 
-        Resume rNullUuid = new Resume(null);
-        Resume rEmptyUuid = new Resume("");
-
         printAll();
         printSize();
 
@@ -96,24 +93,6 @@ public class MainTestListStorage {
         System.out.println("Save null:");
         try {
             STORAGE.save(null);
-        } catch (StorageException e) {
-            System.out.println(e.getMessage());
-        }
-        printAll();
-        printSize();
-
-        System.out.println("Save resume with uuid=null:");
-        try {
-            STORAGE.save(rNullUuid);
-        } catch (StorageException e) {
-            System.out.println(e.getMessage());
-        }
-        printAll();
-        printSize();
-
-        System.out.println("Save resume with uuid=\"\":");
-        try {
-            STORAGE.save(rEmptyUuid);
         } catch (StorageException e) {
             System.out.println(e.getMessage());
         }
@@ -235,24 +214,6 @@ public class MainTestListStorage {
         System.out.println("Update null:");
         try {
             STORAGE.update(null);
-        } catch (StorageException e) {
-            System.out.println(e.getMessage());
-        }
-        printAll();
-        printSize();
-
-        System.out.println("Update resume with uuid=null:");
-        try {
-            STORAGE.update(rNullUuid);
-        } catch (StorageException e) {
-            System.out.println(e.getMessage());
-        }
-        printAll();
-        printSize();
-
-        System.out.println("Update resume with uuid=\"\":");
-        try {
-            STORAGE.update(rEmptyUuid);
         } catch (StorageException e) {
             System.out.println(e.getMessage());
         }
