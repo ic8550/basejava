@@ -1,7 +1,6 @@
 package club.swdev.webapp.storage;
 
 import club.swdev.webapp.model.Resume;
-import club.swdev.webapp.model.ResumeComparator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,11 +18,15 @@ public class MapStorage extends AbstractStorage {
         return map.get((String) uuid);
     }
 
-    public List<Resume> getAllSorted() {
-        List<Resume> sortedList = new ArrayList<>(map.values());
-        sortedList.sort(new ResumeComparator());
-        return sortedList;
+    protected List<Resume> getList() {
+        return new ArrayList<>(map.values());
     }
+
+    // public List<Resume> getAllSorted() {
+    //     List<Resume> sortedList = new ArrayList<>(map.values());
+    //     sortedList.sort(new ResumeComparator());
+    //     return sortedList;
+    // }
 
     protected void doSave(Resume resume, Object uuid) {
         map.put(resume.getUuid(), resume);

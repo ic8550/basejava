@@ -24,14 +24,4 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
         }
         assertThrows(StorageException.class, () -> storage.save(new Resume("Name")));
     }
-
-    @Override
-    public void prepareToSave() {
-        storage.clear();
-    }
-
-    @Override
-    public void checkSizeAfterSave() {
-        assertSize(1);
-    }
 }

@@ -9,7 +9,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
      * @return a "location", (an index, a position in the array) of the Resume with a given uuid
      */
     protected Integer getItemLocation(String uuid) {
-        if (uuid == null) {
+        if (uuid == null || uuid.equals("")) {
             return -1;
         }
         Resume resume = new Resume(uuid, "Name");

@@ -16,10 +16,15 @@ public abstract class AbstractStorageTest {
 
     private static final String UUID_1 = "111";
     private static final String NAME_1 = "N-1";
+
     private static final String UUID_2 = "222";
     private static final String NAME_2 = "N-2";
+
     private static final String UUID_3 = "333";
     private static final String NAME_3 = "N-3";
+
+    // The next three resumes will all have the same 'fullName' field
+    // This is to test sorting by 'uuid' when 'fullName' is the same
     private static final String UUID_4 = "444";
     private static final String NAME_4 = "N-N";
 
@@ -29,17 +34,12 @@ public abstract class AbstractStorageTest {
     private static final String UUID_6 = "666";
     private static final String NAME_6 = "N-N";
 
-    private static final String UUID_7 = "777";
-    private static final String NAME_7 = "N-7";
-
     private static final Resume RESUME_1 = new Resume(UUID_1, NAME_1);
     private static final Resume RESUME_2 = new Resume(UUID_2, NAME_2);
     private static final Resume RESUME_3 = new Resume(UUID_3, NAME_3);
     private static final Resume RESUME_4 = new Resume(UUID_4, NAME_4);
-
     private static final Resume RESUME_5 = new Resume(UUID_5, NAME_5);
     private static final Resume RESUME_6 = new Resume(UUID_6, NAME_6);
-    protected static final Resume RESUME_7 = new Resume(UUID_7, NAME_7);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -63,7 +63,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        assertGet(RESUME_1);
+        assertGet(RESUME_4); // try getting a random resume out of the six previously saved
     }
 
     @Test
@@ -80,10 +80,10 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        prepareToSave();
-        storage.save(RESUME_7);
-        checkSizeAfterSave();
-        assertGet(RESUME_7);
+        clear();
+        storage.save(RESUME_1);
+        assertSize(1);
+        assertGet(RESUME_1);
     }
 
     @Test
@@ -127,13 +127,6 @@ public abstract class AbstractStorageTest {
 
     protected void assertSize(int size) {
         assertEquals(size, storage.size());
-    }
-
-    protected void prepareToSave() {
-    }
-
-    protected void checkSizeAfterSave() {
-        assertSize(7);
     }
 }
 
