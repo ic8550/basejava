@@ -12,16 +12,30 @@ public class Resume implements Comparable<Resume> {
 
     private String fullName;
 
-    public Resume() {
-        this(UUID.randomUUID().toString());
-    }
-
-    public Resume(String uuid) {
-        this.uuid = uuid;
-        this.fullName = "";
+    public Resume(String fullName) {
+        if (fullName == null) {
+            throw new RuntimeException("fullName cannot be 'null'");
+        }
+        if (fullName.equals("")) {
+            throw new RuntimeException("fullName cannot be an empty string");
+        }
+        this.fullName = fullName;
+        this.uuid = UUID.randomUUID().toString();
     }
 
     public Resume(String uuid, String fullName) {
+        if (uuid == null) {
+            throw new RuntimeException("uuid cannot be 'null'");
+        }
+        if (uuid.equals("")) {
+            throw new RuntimeException("uuid cannot be an empty string");
+        }
+        if (fullName == null) {
+            throw new RuntimeException("fullName cannot be 'null'");
+        }
+        if (fullName.equals("")) {
+            throw new RuntimeException("fullName cannot be an empty string");
+        }
         this.uuid = uuid;
         this.fullName = fullName;
     }

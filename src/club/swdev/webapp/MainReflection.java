@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 
 public class MainReflection {
     public static void main(String[] args) throws SecurityException, ReflectiveOperationException {
-        Resume resume = new Resume();
+        Resume resume = new Resume("111", "Name-1");
         Class<Resume> resumeClass = Resume.class;
         Field uuidField = resumeClass.getDeclaredFields()[0];
         uuidField.setAccessible(true);

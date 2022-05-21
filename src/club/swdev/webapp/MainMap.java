@@ -2,7 +2,7 @@ package club.swdev.webapp;
 
 import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.model.Resume;
-import club.swdev.webapp.storage.ArrayStorage;
+import club.swdev.webapp.storage.MapStorage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,8 +13,8 @@ import java.util.List;
  * Interactive test for club.swdev.webapp.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
-public class MainArray {
-    private final static ArrayStorage STORAGE = new ArrayStorage();
+public class MainMap {
+    private final static MapStorage STORAGE = new MapStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

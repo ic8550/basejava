@@ -32,24 +32,14 @@ public abstract class AbstractStorageTest {
     private static final String UUID_7 = "777";
     private static final String NAME_7 = "N-7";
 
-    private static final Resume RESUME_1;
-    private static final Resume RESUME_2;
-    private static final Resume RESUME_3;
-    private static final Resume RESUME_4;
+    private static final Resume RESUME_1 = new Resume(UUID_1, NAME_1);
+    private static final Resume RESUME_2 = new Resume(UUID_2, NAME_2);
+    private static final Resume RESUME_3 = new Resume(UUID_3, NAME_3);
+    private static final Resume RESUME_4 = new Resume(UUID_4, NAME_4);
 
-    private static final Resume RESUME_5;
-    private static final Resume RESUME_6;
-    protected static final Resume RESUME_7;
-
-    static {
-        RESUME_1 = new Resume(UUID_1, NAME_1);
-        RESUME_2 = new Resume(UUID_2, NAME_2);
-        RESUME_3 = new Resume(UUID_3, NAME_3);
-        RESUME_4 = new Resume(UUID_4, NAME_4);
-        RESUME_5 = new Resume(UUID_5, NAME_5);
-        RESUME_6 = new Resume(UUID_6, NAME_6);
-        RESUME_7 = new Resume(UUID_7, NAME_7);
-    }
+    private static final Resume RESUME_5 = new Resume(UUID_5, NAME_5);
+    private static final Resume RESUME_6 = new Resume(UUID_6, NAME_6);
+    protected static final Resume RESUME_7 = new Resume(UUID_7, NAME_7);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -74,11 +64,6 @@ public abstract class AbstractStorageTest {
     @Test
     public void get() {
         assertGet(RESUME_1);
-        assertGet(RESUME_2);
-        assertGet(RESUME_3);
-        assertGet(RESUME_4);
-        assertGet(RESUME_5);
-        assertGet(RESUME_6);
     }
 
     @Test

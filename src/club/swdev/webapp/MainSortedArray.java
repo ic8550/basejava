@@ -14,65 +14,65 @@ import java.util.List;
  * (just run, no need to understand)
  */
 public class MainSortedArray {
-    private final static SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
+    private final static SortedArrayStorage STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         while (true) {
-            System.out.print("\nВведите одну из команд - (list | size | save uuid | update uuid | delete uuid | get uuid | clear | exit): ");
+            System.out.print("\nВведите одну из команд - (list | size | save Name | get uuid | update uuid | delete uuid | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
             if (params.length < 1 || params.length > 2) {
                 System.out.println("Неверная команда.");
                 continue;
             }
-            String uuid = null;
+            String userInput = null;
             if (params.length == 2) {
-                uuid = params[1].intern();
+                userInput = params[1].intern();
             }
             switch (params[0]) {
                 case "list":
                     printAll();
                     break;
                 case "size":
-                    System.out.println(ARRAY_STORAGE.size());
+                    System.out.println(STORAGE.size());
                     break;
                 case "save":
-                    r = new Resume(uuid);
+                    r = new Resume(userInput);
                     try {
-                        ARRAY_STORAGE.save(r);
+                        STORAGE.save(r);
                     } catch (StorageException e) {
                         System.out.println("Error save(): " + e.getMessage());
                     }
                     printAll();
                     break;
                 case "update":
-                    r = new Resume(uuid);
+                    r = new Resume(userInput);
                     try {
-                        ARRAY_STORAGE.update(r);
+                        STORAGE.update(r);
                     } catch (StorageException e) {
                         System.out.println("Error update(): " + e.getMessage());
                     }
                     printAll();
                     break;
-                case "delete":
-                    try {
-                        ARRAY_STORAGE.delete(uuid);
-                    } catch (StorageException e) {
-                        System.out.println("Error delete(): " + e.getMessage());
-                    }
-                    printAll();
-                    break;
                 case "get":
                     try {
-                        Resume resume = ARRAY_STORAGE.get(uuid);
+                        Resume resume = STORAGE.get(userInput);
                         System.out.println(resume);
                     } catch (StorageException e) {
                         System.out.println("Error in get(): " + e.getMessage());
                     }
                     break;
+                case "delete":
+                    try {
+                        STORAGE.delete(userInput);
+                    } catch (StorageException e) {
+                        System.out.println("Error delete(): " + e.getMessage());
+                    }
+                    printAll();
+                    break;
                 case "clear":
-                    ARRAY_STORAGE.clear();
+                    STORAGE.clear();
                     printAll();
                     break;
                 case "exit":
@@ -85,7 +85,7 @@ public class MainSortedArray {
     }
 
     static void printAll() {
-        List<Resume> all = ARRAY_STORAGE.getAllSorted();
+        List<Resume> all = STORAGE.getAllSorted();
         System.out.println("----------------------------");
         if (all.size() == 0) {
             System.out.println("Empty");
