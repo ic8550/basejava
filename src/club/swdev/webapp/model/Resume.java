@@ -13,14 +13,7 @@ public class Resume implements Comparable<Resume> {
     private String fullName;
 
     public Resume(String fullName) {
-        if (fullName == null) {
-            throw new RuntimeException("fullName cannot be 'null'");
-        }
-        if (fullName.equals("")) {
-            throw new RuntimeException("fullName cannot be an empty string");
-        }
-        this.fullName = fullName;
-        this.uuid = UUID.randomUUID().toString();
+        this(UUID.randomUUID().toString(),fullName);
     }
 
     public Resume(String uuid, String fullName) {
