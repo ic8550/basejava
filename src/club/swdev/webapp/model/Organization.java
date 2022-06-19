@@ -1,12 +1,25 @@
 package club.swdev.webapp.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Organization {
     private String name;
-    private String url;
-    List<Period> periods;
+    private final String url;
+    private final List<Period> periods;
+
+    public Organization() {
+        this.name = "";
+        this.url = null;
+        this.periods = new ArrayList<>();
+    }
+
+    public Organization(String name, String url, List<Period> periods) {
+        this.name = name;
+        this.url = url;
+        this.periods = periods;
+    }
 
     public Organization(String name, String url, Period[] periods) {
         this.name = name;
@@ -26,15 +39,7 @@ public class Organization {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public List<Period> getPeriods() {
         return periods;
-    }
-
-    public void setPeriods(List<Period> periods) {
-        this.periods = periods;
     }
 }

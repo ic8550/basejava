@@ -1,15 +1,13 @@
 package club.swdev.webapp.model;
 
 public class TextSection extends AbstractSection {
-    private String text;
+    private final String text;
 
     public TextSection() {
-        super();
         this.text = "";
     }
 
     public TextSection(String text) {
-        super();
         if (text == null) {
             throw new RuntimeException("TextSection's text content cannot be 'null'");
         }
@@ -21,9 +19,5 @@ public class TextSection extends AbstractSection {
 
     public String getText() {
         return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 }
