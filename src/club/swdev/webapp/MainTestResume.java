@@ -1,39 +1,37 @@
 package club.swdev.webapp;
 
-import club.swdev.webapp.model.Activity;
-import club.swdev.webapp.model.ActivityInstance;
-import club.swdev.webapp.model.Resume;
-import club.swdev.webapp.model.TextSection;
+import club.swdev.webapp.model.*;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.EnumMap;
+import java.util.List;
 
 public class MainTestResume {
     public static Resume resume = new Resume("Григорий Кислин");
 
     public static void main(String[] args) {
         // Fill Contacts
-        Map<String, String> contacts = new LinkedHashMap<>();
-        contacts.put("Тел.", "+7 (921) 855-0482");
-        contacts.put("Skype", "grigory.kislin");
-        contacts.put("Почта", "gkislin@yandex.ru");
-        contacts.put("Профиль LinkedIn", "https://www.linkedin.com/in/gkislin");
-        contacts.put("Профиль GitHub", "https://github.com/gkislin");
-        contacts.put("Профиль Stackoverflow", "https://stackoverflow.com/users/548473");
-        contacts.put("Домашняя страница", "http://gkislin.ru/");
+        EnumMap<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+        contacts.put(ContactType.PHONE, "+7 (921) 855-0482");
+        contacts.put(ContactType.SKYPE, "grigory.kislin");
+        contacts.put(ContactType.EMAIL, "gkislin@yandex.ru");
+        contacts.put(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+        contacts.put(ContactType.GITHUB, "https://github.com/gkislin");
+        contacts.put(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473");
+        contacts.put(ContactType.HOMEPAGE, "http://gkislin.ru/");
         resume.setContacts(contacts);
 
+        EnumMap<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
+
         // Fill Objective
-        resume.setObjectives(new String[]{
-                "Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"
-        });
+        sections.put(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
 
         // Fill Personal
-        resume.setPersonal(new String[]{
-                "Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."
-        });
+        sections.put(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
 
         // Fill Achievements
-        resume.setAchievements(new String[]{
+        ListSection achievementsSection = new ListSection(new String[]{
                 "Организация команды и успешная реализация Java проектов для сторонних заказчиков: приложения автопарк на стеке Spring Cloud/микросервисы, система мониторинга показателей спортсменов на Spring Boot, участие в проекте МЭШ на Play-2, многомодульный Spring Boot + Vaadin проект для комплексных DIY смет",
                 "С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 3500 выпускников.",
                 "Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
@@ -42,9 +40,10 @@ public class MainTestResume {
                 "Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).",
                 "Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа."
         });
+        sections.put(SectionType.ACHIEVEMENTS, achievementsSection);
 
-        // Fill Skills
-        resume.setSkills(new String[]{
+        // Fill QUALIFICATIONS
+        ListSection qualificationsSection = new ListSection(new String[]{
                 "JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2",
                 "Version control: Subversion, Git, Mercury, ClearCase, Perforce",
                 "DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, SQLite, MS SQL, HSQLDB",
@@ -60,273 +59,258 @@ public class MainTestResume {
                 "Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, функционального программирования",
                 "Родной русский, английский \"upper intermediate\""
         });
+        sections.put(SectionType.QUALIFICATIONS, qualificationsSection);
 
-        // Fill Employments
-        Activity[] activities = {
-                createActivity("Java Online Projects", "http://javaops.ru/",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "10/2013", "по настоящее время",
+        // Fill EXPERIENCE
+        Organization[] experienceOrganizations = {
+                new Organization("Java Online Projects", "http://javaops.ru/",
+                        new Period[]{
+                                new Period(
+                                        "01/10/2013", "",
                                         "Автор проекта",
-                                        new String[]{
-                                                "Создание, организация и проведение Java онлайн проектов и стажировок"
-                                        }
+                                        "Создание, организация и проведение Java онлайн проектов и стажировок"
+
                                 )
                         }
                 ),
-                createActivity("Wrike", "https://www.wrike.com",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "10/2014", "01/2016",
+                new Organization("Wrike", "https://www.wrike.com",
+                        new Period[]{
+                                new Period(
+                                        "01/10/2014", "01/01/2016",
                                         "Старший разработчик (backend)",
-                                        new String[]{
-                                                "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."
-                                        }
+
+                                        "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."
+
                                 )
                         }
                 ),
-                createActivity("RIT Center", null,
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "04/2012", "10/2014",
+                new Organization("RIT Center", null,
+                        new Period[]{
+                                new Period(
+                                        "01/04/2012", "01/10/2014",
                                         "Java архитектор",
-                                        new String[]{
-                                                "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python"
-                                        }
+                                        "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python"
                                 )
                         }
                 ),
-                createActivity("Java Online Projects", "http://javaops.ru/",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "10/2013", "по настоящее время",
-                                        "Автор проекта",
-                                        new String[]{
-                                                "Создание, организация и проведение Java онлайн проектов и стажировок"
-                                        }
-                                )
-                        }
-                ),
-                createActivity("Luxoft (Deutsche Bank)", "http://www.luxoft.ru/",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "12/2010", "04/2012",
+                new Organization("Luxoft (Deutsche Bank)", "http://www.luxoft.ru/",
+                        new Period[]{
+                                new Period("01/12/2010", "01/04/2012",
                                         "Ведущий программист",
-                                        new String[]{
-                                                "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5."
-                                        }
+                                        "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5."
                                 )
                         }
                 ),
-                createActivity("Yota", "https://www.yota.ru/",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "06/2008", "04/2010",
+                new Organization("Yota", "https://www.yota.ru/",
+                        new Period[]{
+                                new Period("01/06/2008", "01/04/2010",
                                         "Ведущий специалист",
-                                        new String[]{
-                                                "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS"
-                                        }
+                                        "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS"
                                 )
                         }
                 ),
-                createActivity("Enkata", "http://enkata.com/",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "03/2007", "06/2008",
+                new Organization("Enkata", "http://enkata.com/",
+                        new Period[]{
+                                new Period(
+                                        "01/03/2007", "01/06/2008",
                                         "Разработчик ПО",
-                                        new String[]{
-                                                "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining)"
-                                        }
+                                        "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining)"
                                 )
                         }
                 ),
-                createActivity("Siemens AG", "https://www.siemens.com/ru/ru/home.html",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "01/2005", "02/2007",
+                new Organization("Siemens AG", "https://www.siemens.com/ru/ru/home.html",
+                        new Period[]{
+                                new Period(
+                                        "01/01/2005", "01/02/2007",
                                         "Разработчик ПО",
-                                        new String[]{
-                                                "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix)"
-                                        }
+                                        "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix)"
+
                                 )
                         }
                 ),
-                createActivity("Alcatel", "http://www.alcatel.ru/",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "09/1997", "01/2005",
+                new Organization("Alcatel", "http://www.alcatel.ru/",
+                        new Period[]{
+                                new Period(
+                                        "01/09/1997", "01/01/2005",
                                         "Инженер по аппаратному и программному тестированию",
-                                        new String[]{
-                                                "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)"
-                                        }
+                                        "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)"
+
                                 )
                         }
                 )
         };
-        resume.setEmployments(activities);
+        sections.put(SectionType.EXPERIENCE, new OrganizationSection(experienceOrganizations));
 
         // Fill Education
-        activities = new Activity[]{
-                createActivity("Coursera", "https://www.coursera.org/course/progfun",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "03/2013", "05/2013",
+        Organization[] educationOrganizations = new Organization[]{
+                new Organization("Coursera", "https://www.coursera.org/course/progfun",
+                        new Period[]{
+                                new Period(
+                                        "01/03/2013", "01/05/2013",
                                         "Functional Programming Principles in Scala' by Martin Odersky",
                                         null
                                 )
                         }
                 ),
-                createActivity("Luxoft (Deutsche Bank)", "http://www.luxoft.ru/",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "03/2011", "04/2011",
+                new Organization("Luxoft (Deutsche Bank)", "http://www.luxoft.ru/",
+                        new Period[]{
+                                new Period(
+                                        "01/03/2011", "01/04/2011",
                                         "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML\"",
                                         null
                                 )
                         }
                 ),
-                createActivity("Siemens AG", "https://www.siemens.com/ru/ru/home.html",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "01/2005", "04/2005",
+                new Organization("Siemens AG", "https://www.siemens.com/ru/ru/home.html",
+                        new Period[]{
+                                new Period(
+                                        "01/01/2005", "01/04/2005",
                                         "3 месяца обучения мобильным IN сетям (Берлин)",
                                         null
                                 )
                         }
                 ),
-                createActivity("Alcatel", "http://www.alcatel.ru/",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "09/1997", "03/1998",
+                new Organization("Alcatel", "http://www.alcatel.ru/",
+                        new Period[]{
+                                new Period(
+                                        "01/09/1997", "01/03/1998",
                                         "6 месяцев обучения цифровым телефонным сетям (Москва)",
                                         null
                                 )
                         }
                 ),
-                createActivity("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "http://www.ifmo.ru/",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "09/1993", "07/1996",
+                new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "http://www.ifmo.ru/",
+                        new Period[]{
+                                new Period(
+                                        "01/09/1993", "01/07/1996",
                                         "Ведущий специалист",
                                         null
                                 ),
-                                new ActivityInstance(
-                                        "09/1987", "07/1993",
+                                new Period(
+                                        "01/09/1987", "01/07/1993",
                                         "Ведущий специалист",
                                         null
                                 )
                         }
 
                 ),
-                createActivity("Заочная физико-техническая школа при МФТИ", "http://www.school.mipt.ru/",
-                        new ActivityInstance[]{
-                                new ActivityInstance(
-                                        "09/1984", "06/1987",
+                new Organization("Заочная физико-техническая школа при МФТИ", "http://www.school.mipt.ru/",
+                        new Period[]{
+                                new Period(
+                                        "01/09/1984", "01/06/1987",
                                         "Закончил с отличием",
                                         null
                                 )
                         }
                 ),
         };
-        resume.setEducation(activities);
+        sections.put(SectionType.EDUCATION, new OrganizationSection(educationOrganizations));
 
+        // Fill all sections
+        resume.setSections(sections);
+
+        // Print resume
         printResume(resume);
-    }
-
-    static Activity createActivity(String orgName, String orgUrl, ActivityInstance[] activityInstances) {
-        return new Activity(orgName, orgUrl, activityInstances);
     }
 
     public static void printFullName(String fullName) {
         System.out.println(fullName);
     }
 
-    public static void printContacts(Map<String, String> contacts) {
+    public static void printContacts(EnumMap<ContactType, String> contacts) {
         System.out.println("CONTACTS:");
         contacts.forEach((key, value) -> System.out.println("    " + key + ": " + value));
     }
 
-    public static void printObjectives(ArrayList<String> objectives) {
-        System.out.println("OBJECTIVES:");
-        printList(objectives, "    ");
-    }
-
-    public static void printPersonal(ArrayList<String> personal) {
-        System.out.println("PERSONAL DATA:");
-        printList(personal, "    ");
-    }
-
-    public static void printAchievements(ArrayList<String> achievements) {
-        System.out.println("ACHIEVEMENTS:");
-        printList(achievements, "    ");
-    }
-
-    public static void printSkills(ArrayList<String> skills) {
-        System.out.println("SKILLS:");
-        printList(skills, "    ");
-    }
-
-    public static void printEmployments(ArrayList<Activity> employments) {
-        System.out.println("PROFESSIONAL EXPERIENCE:");
-        for (int i = 0; i < employments.size(); i++) {
-            printActivity(employments.get(i), "    ");
+    public static void printSection(SectionType sectionType) {
+        switch (sectionType) {
+            case OBJECTIVE -> {
+                System.out.println("OBJECTIVE:");
+                printTextSection(resume.getSections().get(SectionType.OBJECTIVE), "    ");
+            }
+            case PERSONAL -> {
+                System.out.println("\nPERSONAL:");
+                printTextSection(resume.getSections().get(SectionType.PERSONAL), "    ");
+            }
+            case ACHIEVEMENTS -> {
+                System.out.println("\nACHIEVEMENTS:");
+                printListSection((ListSection) resume.getSections().get(SectionType.ACHIEVEMENTS), "    ");
+            }
+            case QUALIFICATIONS -> {
+                System.out.println("\nQUALIFICATIONS:");
+                printListSection((ListSection) resume.getSections().get(SectionType.QUALIFICATIONS), "    ");
+            }
+            case EXPERIENCE -> {
+                System.out.println("\nEXPERIENCE:");
+                printOrganizationSection((OrganizationSection) resume.getSections().get(SectionType.EXPERIENCE), "    ");
+            }
+            case EDUCATION -> {
+                System.out.println("\nEDUCATION:");
+                printOrganizationSection((OrganizationSection) resume.getSections().get(SectionType.EDUCATION), "    ");
+            }
         }
     }
 
-    public static void printEducation(ArrayList<Activity> education) {
-        System.out.println("EDUCATION AND TRAINING:");
-        for (int i = 0; i < education.size(); i++) {
-            printActivity(education.get(i), "    ");
-        }
+    public static void printSections(EnumMap<SectionType, AbstractSection> sections) {
+        sections.forEach((key, value) -> printSection(key));
     }
 
-    public static void printActivity(Activity activity, String indent) {
+    public static void printTextSection(AbstractSection textSection, String indent) {
         System.out.print(indent);
-        System.out.println(activity.getOrgName() + " (" + activity.getOrgUrl() + ")");
-        printActivityInstances(activity.getActivityInstances(), indent + "    ");
+        System.out.println(((TextSection) textSection).getText());
     }
 
-    public static void printActivityInstances(ArrayList<ActivityInstance> activityInstance, String indent) {
-        for (int i = 0; i < activityInstance.size(); i++) {
-            printActivityInstance(activityInstance.get(i), indent);
-        }
-    }
-
-    public static void printActivityInstance(ActivityInstance activityInstance, String indent) {
-        System.out.print(indent);
-        System.out.println(activityInstance.getFormDate() + " - " + activityInstance.getToDate());
-        printTextSection(activityInstance.getOccupation(), indent + "    ");
-    }
-
-    public static void printTextSection(TextSection textSection, String indent) {
-        System.out.print(indent);
-        System.out.println(textSection.getTitle());
-        printList(textSection.getDescriptions(), indent + "    ");
-    }
-
-    public static void printList(List list, String indent) {
-        for (int i = 0; i < list.size(); i++) {
+    public static void printListSection(ListSection listSection, String indent) {
+        List<String> content = listSection.getContent();
+        for (String s : content) {
             System.out.print(indent);
-            System.out.println(list.get(i));
+            System.out.println(s);
+        }
+    }
+
+    public static void printOrganizationSection(OrganizationSection organizationSection, String indent) {
+        List<Organization> organizations = organizationSection.getOrganizations();
+        for (Organization organization : organizations) {
+            printOrganization(organization, indent);
+        }
+    }
+
+    public static void printOrganization(Organization organization, String indent) {
+        String url = organization.getUrl();
+        String name = organization.getName();
+        System.out.print(indent + name);
+        if (url != null) {
+            System.out.println(" (" + url + ")");
+        } else {
+            System.out.println();
+        }
+        List<Period> periods = organization.getPeriods();
+        for (Period period : periods) {
+            printPeriod(period, indent);
+        }
+    }
+
+    public static void printPeriod(Period period, String indent) {
+        String startDateFormatted = period.getStartDate().format(DateTimeFormatter.ofPattern("MM/yyyy"));
+        LocalDate endDate = period.getEndDate();
+        String endDateFormatted = (endDate == null)
+                ? "по настоящее время"
+                : endDate.format(DateTimeFormatter.ofPattern("MM/yyyy"));
+        System.out.println(indent + indent + startDateFormatted + " - " + endDateFormatted);
+        System.out.println(indent + indent + indent + period.getTitle());
+        String description = period.getDescription();
+        if (description != null) {
+            System.out.println(indent + indent + indent + indent + description);
         }
     }
 
     public static void printResume(Resume resume) {
+        System.out.println();
         printFullName(resume.getFullName());
-        System.out.println("\n");
+        System.out.println();
         printContacts(resume.getContacts());
-        System.out.println("\n");
-        printObjectives(resume.getObjectives());
-        System.out.println("\n");
-        printPersonal(resume.getPersonal());
-        System.out.println("\n");
-        printAchievements(resume.getAchievements());
-        System.out.println("\n");
-        printSkills(resume.getSkills());
-        System.out.println("\n");
-        printEmployments(resume.getEmployments());
-        System.out.println("\n");
-        printEducation(resume.getEducation());
+        System.out.println();
+        printSections(resume.getSections());
     }
 }
 
