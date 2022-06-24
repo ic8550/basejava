@@ -3,6 +3,7 @@ package club.swdev.webapp.storage;
 import club.swdev.webapp.exception.ItemAlreadyPresentInStorageException;
 import club.swdev.webapp.exception.ItemNotPresentInStorageException;
 import club.swdev.webapp.model.Resume;
+import club.swdev.webapp.storage.util.Resumes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,12 +35,12 @@ public abstract class AbstractStorageTest {
     private static final String UUID_6 = "666";
     private static final String NAME_6 = "N-N";
 
-    private static final Resume RESUME_1 = new Resume(UUID_1, NAME_1);
-    private static final Resume RESUME_2 = new Resume(UUID_2, NAME_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3, NAME_3);
-    private static final Resume RESUME_4 = new Resume(UUID_4, NAME_4);
-    private static final Resume RESUME_5 = new Resume(UUID_5, NAME_5);
-    private static final Resume RESUME_6 = new Resume(UUID_6, NAME_6);
+    private static final Resume RESUME_1 = Resumes.fillOut(UUID_1, NAME_1);
+    private static final Resume RESUME_2 = Resumes.fillOut(UUID_2, NAME_2);
+    private static final Resume RESUME_3 = Resumes.fillOut(UUID_3, NAME_3);
+    private static final Resume RESUME_4 = Resumes.fillOut(UUID_4, NAME_4);
+    private static final Resume RESUME_5 = Resumes.fillOut(UUID_5, NAME_5);
+    private static final Resume RESUME_6 = Resumes.fillOut(UUID_6, NAME_6);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -68,7 +69,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getNonexistent() {
-        assertThrows(ItemNotPresentInStorageException.class, () -> storage.get("dummy"));
+        assertThrows(ItemNotPresentInStorageException.class, () -> storage.get("foo"));
     }
 
     @Test
@@ -93,14 +94,14 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = new Resume(UUID_1, "N-11");
+        Resume newResume = Resumes.fillOut(UUID_1, "N-11");
         storage.update(newResume);
         assertSame(newResume, storage.get(UUID_1));
     }
 
     @Test
     public void updateNonexistent() {
-        assertThrows(ItemNotPresentInStorageException.class, () -> storage.update(new Resume("dummy")));
+        assertThrows(ItemNotPresentInStorageException.class, () -> storage.update(Resumes.fillOut("foo")));
     }
 
     @Test
@@ -112,7 +113,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void deleteNonexistent() {
-        assertThrows(ItemNotPresentInStorageException.class, () -> storage.delete("dummy"));
+        assertThrows(ItemNotPresentInStorageException.class, () -> storage.delete("foo"));
     }
 
     @Test
