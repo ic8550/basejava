@@ -5,31 +5,31 @@ import club.swdev.webapp.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
     private final List<Resume> list = new ArrayList<>();
 
     public int size() {
         return list.size();
     }
 
-    protected Resume doGet(Object itemLocation) {
-        return list.get((Integer) itemLocation);
+    protected Resume doGet(Integer itemLocation) {
+        return list.get(itemLocation);
     }
 
     public List<Resume> getList() {
         return list;
     }
 
-    protected void doSave(Resume resume, Object itemLocation) {
+    protected void doSave(Resume resume, Integer itemLocation) {
         list.add(resume);
     }
 
-    protected void doUpdate(Resume resume, Object itemLocation) {
-        list.set((Integer) itemLocation, resume);
+    protected void doUpdate(Resume resume, Integer itemLocation) {
+        list.set(itemLocation, resume);
     }
 
-    protected void doDelete(Object itemLocation) {
-        list.remove(((Integer) itemLocation).intValue());
+    protected void doDelete(Integer itemLocation) {
+        list.remove(itemLocation.intValue());
     }
 
     public void clear() {
@@ -45,7 +45,7 @@ public class ListStorage extends AbstractStorage {
         return null;
     }
 
-    protected boolean isItemLocated(Object itemLocation) {
+    protected boolean isItemLocated(Integer itemLocation) {
         return itemLocation != null;
     }
 }

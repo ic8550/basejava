@@ -8,24 +8,24 @@ import club.swdev.webapp.model.Resume;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<Location> implements Storage {
 
-    protected abstract Resume doGet(Object itemLocation);
+    protected abstract Resume doGet(Location itemLocation);
 
-    protected abstract void doSave(Resume resume, Object itemLocation);
+    protected abstract void doSave(Resume resume, Location itemLocation);
 
-    protected abstract void doUpdate(Resume resume, Object itemLocation);
+    protected abstract void doUpdate(Resume resume, Location itemLocation);
 
-    protected abstract void doDelete(Object itemLocation);
+    protected abstract void doDelete(Location itemLocation);
 
-    protected abstract Object getItemLocation(String uuid);
+    protected abstract Location getItemLocation(String uuid);
 
-    protected abstract boolean isItemLocated(Object itemLocation);
+    protected abstract boolean isItemLocated(Location itemLocation);
 
     protected abstract List<Resume> getList();
 
     public Resume get(String uuid) {
-        Object itemLocation = getExistentItemLocation(uuid);
+        Location itemLocation = getExistentItemLocation(uuid);
         return doGet(itemLocation);
     }
 
@@ -39,7 +39,7 @@ public abstract class AbstractStorage implements Storage {
         if (resume == null) {
             throw new StorageException("Error in save(): resume object is null", null);
         }
-        Object itemLocation = getNonexistentItemLocation(resume.getUuid());
+        Location itemLocation = getNonexistentItemLocation(resume.getUuid());
         doSave(resume, itemLocation);
     }
 
@@ -47,7 +47,7 @@ public abstract class AbstractStorage implements Storage {
         if (resume == null) {
             throw new StorageException("Error in update(): resume object is null", null);
         }
-        Object itemLocation = getExistentItemLocation(resume.getUuid());
+        Location itemLocation = getExistentItemLocation(resume.getUuid());
         doUpdate(resume, itemLocation);
     }
 
@@ -58,20 +58,20 @@ public abstract class AbstractStorage implements Storage {
         if (uuid.equals("")) {
             throw new StorageException("Error in delete(): resume's uuid is empty (uuid=\"\")", "");
         }
-        Object itemLocation = getExistentItemLocation(uuid);
+        Location itemLocation = getExistentItemLocation(uuid);
         doDelete(itemLocation);
     }
 
-    private Object getExistentItemLocation(String uuid) {
-        Object itemLocation = getItemLocation(uuid);
+    private Location getExistentItemLocation(String uuid) {
+        Location itemLocation = getItemLocation(uuid);
         if (!isItemLocated(itemLocation)) {
             throw new ItemNotPresentInStorageException(uuid);
         }
         return itemLocation;
     }
 
-    private Object getNonexistentItemLocation(String uuid) {
-        Object itemLocation = getItemLocation(uuid);
+    private Location getNonexistentItemLocation(String uuid) {
+        Location itemLocation = getItemLocation(uuid);
         if (isItemLocated(itemLocation)) {
             throw new ItemAlreadyPresentInStorageException(uuid);
         }

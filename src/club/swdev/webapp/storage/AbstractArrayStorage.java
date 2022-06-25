@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     /**
      * final int STORAGE_CAPACITY - storage characteristic, the maximum capacity of the storage
      */
@@ -38,8 +38,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     /**
      * @return a Resume object with a given uuid or null if there is no such Resume in storage[].
      */
-    public Resume doGet(Object index) {
-        return storage[(Integer) index];
+    public Resume doGet(Integer index) {
+        return storage[index];
     }
 
     /**
@@ -53,11 +53,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
      * Adds a Resume with a given uuid to the storage[],
      * provided such Resume is not there already.
      */
-    public void doSave(Resume resume, Object index) {
+    public void doSave(Resume resume, Integer index) {
         if (size >= STORAGE_CAPACITY) {
             throw new StorageException("Storage overflow", resume.getUuid());
         } else {
-            insertElement(resume, (Integer) index);
+            insertElement(resume, index);
             size++;
         }
     }
@@ -65,16 +65,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     /**
      * Updates a Resume with a given uuid after checking for its presence in storage[].
      */
-    public void doUpdate(Resume resume, Object index) {
-        storage[(Integer) index] = resume;
+    public void doUpdate(Resume resume, Integer index) {
+        storage[index] = resume;
     }
 
     /**
      * Removes a Resume with a given uuid while making sure that
      * the remaining nonnull Resumes are still contiguous.
      */
-    public void doDelete(Object index) {
-        deleteElement((Integer) index);
+    public void doDelete(Integer index) {
+        deleteElement(index);
         storage[size - 1] = null;
         size--;
     }
@@ -88,8 +88,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    protected boolean isItemLocated(Object index) {
-        return (Integer) index >= 0;
+    protected boolean isItemLocated(Integer index) {
+        return index >= 0;
     }
 
     /**

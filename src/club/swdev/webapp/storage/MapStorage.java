@@ -7,31 +7,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage<String> {
     private final Map<String, Resume> map = new HashMap<>();
 
     public int size() {
         return map.size();
     }
 
-    protected Resume doGet(Object uuid) {
-        return map.get((String) uuid);
+    protected Resume doGet(String uuid) {
+        return map.get(uuid);
     }
 
     protected List<Resume> getList() {
         return new ArrayList<>(map.values());
     }
 
-    protected void doSave(Resume resume, Object uuid) {
+    protected void doSave(Resume resume, String uuid) {
         map.put(resume.getUuid(), resume);
     }
 
-    protected void doUpdate(Resume resume, Object uuid) {
-        map.put((String) uuid, resume);
+    protected void doUpdate(Resume resume, String uuid) {
+        map.put(uuid, resume);
     }
 
-    protected void doDelete(Object uuid) {
-        map.remove((String) uuid);
+    protected void doDelete(String uuid) {
+        map.remove(uuid);
     }
 
     public void clear() {
@@ -42,7 +42,7 @@ public class MapStorage extends AbstractStorage {
         return map.containsKey(uuid) ? uuid : null;
     }
 
-    protected boolean isItemLocated(Object itemLocation) {
+    protected boolean isItemLocated(String itemLocation) {
         return itemLocation != null;
     }
 }
