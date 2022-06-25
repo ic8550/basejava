@@ -29,7 +29,15 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     protected void doDelete(Integer itemLocation) {
-        list.remove(itemLocation.intValue());
+        /*
+         * The type casting to int is necessary here because the List<E> interface has two remove() methods:
+         *  1) E remove(int index),
+         *  2) boolean remove(Object o).
+         * If manual casting is omitted the compiler chooses the remove(Object o) version,
+         * which is not what we want here.
+         * We could, however, avoid manual type casting here by using itemLocation.intValue().
+         */
+        list.remove((int) itemLocation);
     }
 
     public void clear() {
