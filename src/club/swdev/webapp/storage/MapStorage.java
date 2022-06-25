@@ -22,12 +22,6 @@ public class MapStorage extends AbstractStorage {
         return new ArrayList<>(map.values());
     }
 
-    // public List<Resume> getAllSorted() {
-    //     List<Resume> sortedList = new ArrayList<>(map.values());
-    //     sortedList.sort(new ResumeComparator());
-    //     return sortedList;
-    // }
-
     protected void doSave(Resume resume, Object uuid) {
         map.put(resume.getUuid(), resume);
     }
