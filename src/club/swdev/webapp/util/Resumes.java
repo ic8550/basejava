@@ -1,4 +1,4 @@
-package club.swdev.webapp.storage.util;
+package club.swdev.webapp.util;
 
 import club.swdev.webapp.model.*;
 

@@ -3,7 +3,7 @@ package club.swdev.webapp.storage;
 import club.swdev.webapp.exception.ItemAlreadyPresentInStorageException;
 import club.swdev.webapp.exception.ItemNotPresentInStorageException;
 import club.swdev.webapp.model.Resume;
-import club.swdev.webapp.storage.util.Resumes;
+import club.swdev.webapp.util.Resumes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
