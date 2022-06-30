@@ -5,6 +5,7 @@ import club.swdev.webapp.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
@@ -23,37 +24,38 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         this.storageDir = storageDir;
     }
 
-    protected abstract Resume doRead(File resumeFile) throws IOException;
-    protected abstract void doWrite(Resume resume, File resumeFile) throws IOException;
+    protected abstract Resume doRead(File file) throws IOException;
 
-    protected Resume doGet(File resumeFile) {
+    protected abstract void doWrite(Resume resume, File file) throws IOException;
+
+    protected Resume doGet(File file) {
         try {
-            return doRead(resumeFile);
+            return doRead(file);
         } catch (IOException e) {
-            throw new StorageException("Error reading from file ", resumeFile.getName(), e);
+            throw new StorageException("Error reading from file ", file.getName(), e);
         }
     }
 
-    protected void doSave(Resume resume, File resumeFile) {
+    protected void doSave(Resume resume, File file) {
         try {
-            resumeFile.createNewFile();
-            doWrite(resume, resumeFile);
+            file.createNewFile();
         } catch (IOException e) {
-            throw new StorageException("Error trying to create file " + resumeFile.getAbsolutePath(), resumeFile.getName(), e);
+            throw new StorageException("Error trying to create file " + file.getAbsolutePath(), file.getName(), e);
+        }
+        doUpdate(resume, file);
+    }
+
+    protected void doUpdate(Resume resume, File file) {
+        try {
+            doWrite(resume, file);
+        } catch (IOException e) {
+            throw new StorageException("Error writing to file " + file.getAbsolutePath(), file.getName(), e);
         }
     }
 
-    protected void doUpdate(Resume resume, File resumeFile) {
-        try {
-            doWrite(resume, resumeFile);
-        } catch (IOException e) {
-            throw new StorageException("Error writing to file " + resumeFile.getAbsolutePath(), resumeFile.getName(), e);
-        }
-    }
-
-    protected void doDelete(File resumeFile) {
-        if (!resumeFile.delete()) {
-            throw new StorageException("Error trying to delete file ", resumeFile.getName());
+    protected void doDelete(File file) {
+        if (!file.delete()) {
+            throw new StorageException("Error trying to delete file ", file.getName());
         }
     }
 
@@ -61,11 +63,19 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         return new File(storageDir, uuid);
     }
 
-    protected boolean isItemLocated(File resumeFile) {
-        return resumeFile.exists();
+    protected boolean isItemLocated(File file) {
+        return file.exists();
     }
 
     protected List<Resume> getList() {
+        List<Resume> resumes = new ArrayList<>();
+        File[] resumeArr = storageDir.listFiles();
+        for (File resume : resumeArr) {
+            if (resume == null) {
+                throw new NullPointerException("Error getting directory's file list: null object in list");
+            }
+            resumes.add(doGet(resume));
+        }
         return null;
     }
 
