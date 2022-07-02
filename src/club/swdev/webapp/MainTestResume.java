@@ -98,21 +98,21 @@ public class MainTestResume {
         } else {
             System.out.println();
         }
-        List<Period> periods = organization.getPeriods();
-        for (Period period : periods) {
-            printPeriod(period, indent);
+        List<Activity> activities = organization.getPeriods();
+        for (Activity activity : activities) {
+            printPeriod(activity, indent);
         }
     }
 
-    public static void printPeriod(Period period, String indent) {
-        String startDateFormatted = period.getStartDate().format(DateTimeFormatter.ofPattern("MM/yyyy"));
-        LocalDate endDate = period.getEndDate();
+    public static void printPeriod(Activity activity, String indent) {
+        String startDateFormatted = activity.getStartDate().format(DateTimeFormatter.ofPattern("MM/yyyy"));
+        LocalDate endDate = activity.getEndDate();
         String endDateFormatted = (endDate == null)
                 ? "по настоящее время"
                 : endDate.format(DateTimeFormatter.ofPattern("MM/yyyy"));
         System.out.println(indent + indent + startDateFormatted + " - " + endDateFormatted);
-        System.out.println(indent + indent + indent + period.getTitle());
-        String description = period.getDescription();
+        System.out.println(indent + indent + indent + activity.getTitle());
+        String description = activity.getDescription();
         if (description != null) {
             System.out.println(indent + indent + indent + indent + description);
         }

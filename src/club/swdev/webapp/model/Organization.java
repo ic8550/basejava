@@ -7,24 +7,24 @@ import java.util.List;
 public class Organization {
     private String name;
     private final String url;
-    private final List<Period> periods;
+    private final List<Activity> activities;
 
     public Organization() {
         this.name = "";
         this.url = null;
-        this.periods = new ArrayList<>();
+        this.activities = new ArrayList<>();
     }
 
-    public Organization(String name, String url, List<Period> periods) {
+    public Organization(String name, String url, List<Activity> activities) {
         this.name = name;
         this.url = url;
-        this.periods = periods;
+        this.activities = activities;
     }
 
-    public Organization(String name, String url, Period[] periods) {
+    public Organization(String name, String url, Activity[] activities) {
         this.name = name;
         this.url = url;
-        this.periods = Arrays.asList(periods);
+        this.activities = Arrays.asList(activities);
     }
 
     public String getName() {
@@ -39,7 +39,7 @@ public class Organization {
         return url;
     }
 
-    public List<Period> getPeriods() {
-        return periods;
+    public List<Activity> getPeriods() {
+        return activities;
     }
 }
