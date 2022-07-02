@@ -69,11 +69,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     protected List<Resume> getList() {
         List<Resume> resumes = new ArrayList<>();
-        File[] resumeArr = storageDir.listFiles();
-        for (File resume : resumeArr) {
-            if (resume == null) {
-                throw new NullPointerException("Error getting directory's file list: null object in list");
-            }
+        File[] resumeArray = storageDir.listFiles();
+        if (resumeArray == null) {
+            throw new NullPointerException("Error getting directory's file list: listFiles() returned null");
+        }
+        for (File resume : resumeArray) {
             resumes.add(doGet(resume));
         }
         return null;
