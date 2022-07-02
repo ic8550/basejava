@@ -98,7 +98,7 @@ public class MainTestResume {
         } else {
             System.out.println();
         }
-        List<Activity> activities = organization.getPeriods();
+        List<Activity> activities = organization.getActivities();
         for (Activity activity : activities) {
             printPeriod(activity, indent);
         }

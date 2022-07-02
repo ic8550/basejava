@@ -39,7 +39,7 @@ public class Organization {
         return url;
     }
 
-    public List<Activity> getPeriods() {
+    public List<Activity> getActivities() {
         return activities;
     }
 }
