@@ -9,22 +9,22 @@ public class Organization {
     private final String url;
     private final List<Activity> activities;
 
-    public Organization() {
-        this.name = "";
-        this.url = null;
-        this.activities = new ArrayList<>();
-    }
-
     public Organization(String name, String url, List<Activity> activities) {
+        if (name == null || name.isBlank()) {
+            throw new RuntimeException("Error creating Organization: name cannot be null or empty");
+        }
         this.name = name;
-        this.url = url;
-        this.activities = activities;
+        this.url = url == null ? "" : url;
+        this.activities = activities == null ? new ArrayList<>() : activities;
     }
 
     public Organization(String name, String url, Activity[] activities) {
+        if (name == null || name.isBlank()) {
+            throw new RuntimeException("Error creating Organization: name cannot be null or empty");
+        }
         this.name = name;
-        this.url = url;
-        this.activities = Arrays.asList(activities);
+        this.url = url == null ? "" : url;
+        this.activities = activities == null ? new ArrayList<>() : Arrays.asList(activities);
     }
 
     public String getName() {

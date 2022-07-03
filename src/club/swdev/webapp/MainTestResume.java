@@ -1,6 +1,7 @@
 package club.swdev.webapp;
 
 import club.swdev.webapp.model.*;
+import club.swdev.webapp.util.Dates;
 import club.swdev.webapp.util.Resumes;
 
 import java.time.LocalDate;
@@ -100,14 +101,15 @@ public class MainTestResume {
         }
         List<Activity> activities = organization.getActivities();
         for (Activity activity : activities) {
-            printPeriod(activity, indent);
+            printActivity(activity, indent);
         }
     }
 
-    public static void printPeriod(Activity activity, String indent) {
-        String startDateFormatted = activity.getStartDate().format(DateTimeFormatter.ofPattern("MM/yyyy"));
-        LocalDate endDate = activity.getEndDate();
-        String endDateFormatted = (endDate == null)
+    public static void printActivity(Activity activity, String indent) {
+        Duration duration = activity.getDuration();
+        String startDateFormatted = duration.getStartDate().format(DateTimeFormatter.ofPattern("MM/yyyy"));
+        LocalDate endDate = duration.getEndDate();
+        String endDateFormatted = (endDate == Dates.NOW)
                 ? "по настоящее время"
                 : endDate.format(DateTimeFormatter.ofPattern("MM/yyyy"));
         System.out.println(indent + indent + startDateFormatted + " - " + endDateFormatted);
