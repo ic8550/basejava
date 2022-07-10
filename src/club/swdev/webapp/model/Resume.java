@@ -1,12 +1,13 @@
 package club.swdev.webapp.model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Initial resume class
  */
-public class Resume implements Comparable<Resume> {
-
+public class Resume implements Comparable<Resume>, Serializable {
+    private static final long serialVersionUID = 1L;
     // Unique identifier
     private final String uuid;
     private String fullName;
@@ -16,7 +17,7 @@ public class Resume implements Comparable<Resume> {
     private EnumMap<SectionType, AbstractSection> sections;
 
     public Resume(String fullName) {
-        this(UUID.randomUUID().toString(),fullName);
+        this(UUID.randomUUID().toString(), fullName);
     }
 
     public Resume(String uuid, String fullName) {

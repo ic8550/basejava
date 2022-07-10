@@ -1,6 +1,9 @@
 package club.swdev.webapp.model;
 
-public class Activity {
+import java.io.Serializable;
+
+public class Activity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Duration duration;
     private String title;
     private String description;

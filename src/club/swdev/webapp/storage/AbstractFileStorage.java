@@ -38,11 +38,14 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     protected void doSave(Resume resume, File file) {
         try {
-            file.createNewFile();
+            if (file.createNewFile()) {
+                doUpdate(resume, file);
+            } else {
+                System.out.println("Error trying to create file " + file.getAbsolutePath() + ": file already exists.");
+            }
         } catch (IOException e) {
             throw new StorageException("Error trying to create file " + file.getAbsolutePath(), file.getName(), e);
         }
-        doUpdate(resume, file);
     }
 
     protected void doUpdate(Resume resume, File file) {
@@ -76,7 +79,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         for (File resume : resumeArray) {
             resumes.add(doGet(resume));
         }
-        return null;
+        return resumes;
     }
 
     public int size() {

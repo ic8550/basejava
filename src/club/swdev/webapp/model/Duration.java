@@ -2,16 +2,17 @@ package club.swdev.webapp.model;
 
 import club.swdev.webapp.util.Dates;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.format.DateTimeFormatter;
 
-public class Duration {
+public class Duration implements Serializable {
+    private static final long serialVersionUID = 1L;
     private LocalDate startDate;
 
     private LocalDate endDate;
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public Duration(LocalDate startDate, LocalDate endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -40,15 +41,15 @@ public class Duration {
         this.endDate = Dates.NOW;
     }
 
-    public Duration(String startDate, String endDate) {
-        this.startDate = LocalDate.parse(startDate, formatter);
-        this.endDate = endDate.equals("") ? Dates.NOW : LocalDate.parse(endDate, formatter);
-    }
+    // public Duration(String startDate, String endDate) {
+    //     this.startDate = LocalDate.parse(startDate, formatter);
+    //     this.endDate = endDate.equals("") ? Dates.NOW : LocalDate.parse(endDate, formatter);
+    // }
 
-    public Duration(String startDate) {
-        this.startDate = LocalDate.parse(startDate, formatter);
-        this.endDate = Dates.NOW;
-    }
+    // public Duration(String startDate) {
+    //     this.startDate = LocalDate.parse(startDate, formatter);
+    //     this.endDate = Dates.NOW;
+    // }
 
     public LocalDate getStartDate() {
         return startDate;
