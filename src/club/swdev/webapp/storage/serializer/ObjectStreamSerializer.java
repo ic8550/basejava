@@ -6,17 +6,17 @@ import club.swdev.webapp.model.Resume;
 import java.io.*;
 
 public class ObjectStreamSerializer implements StreamSerializer {
-    public Resume doRead(InputStream is) throws IOException {
-        try (ObjectInputStream ois = new ObjectInputStream(is)) {
-            return (Resume) ois.readObject();
+    public Resume doRead(InputStream inputStream) throws IOException {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)) {
+            return (Resume) objectInputStream.readObject();
         } catch (ClassNotFoundException e) {
-            throw new StorageException("Error reading resume", null, e);
+            throw new StorageException("Error reading resume from  input stream", null, e);
         }
     }
 
-    public void doWrite(Resume resume, OutputStream os) throws IOException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
-            oos.writeObject(resume);
+    public void doWrite(Resume resume, OutputStream outputStream) throws IOException {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
+            objectOutputStream.writeObject(resume);
         }
     }
 }

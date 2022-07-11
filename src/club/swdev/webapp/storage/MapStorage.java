@@ -18,7 +18,7 @@ public class MapStorage extends AbstractStorage<String> {
         return map.get(uuid);
     }
 
-    protected List<Resume> getList() {
+    protected List<Resume> doCopyAll() {
         return new ArrayList<>(map.values());
     }
 

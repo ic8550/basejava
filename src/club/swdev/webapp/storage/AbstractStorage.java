@@ -22,7 +22,7 @@ public abstract class AbstractStorage<Location> implements Storage {
 
     protected abstract boolean isItemLocated(Location itemLocation);
 
-    protected abstract List<Resume> getList();
+    protected abstract List<Resume> doCopyAll();
 
     public Resume get(String uuid) {
         Location itemLocation = getExistentItemLocation(uuid);
@@ -30,14 +30,14 @@ public abstract class AbstractStorage<Location> implements Storage {
     }
 
     public List<Resume> getAllSorted() {
-        List<Resume> list = getList();
+        List<Resume> list = doCopyAll();
         list.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
         return list;
     }
 
     public void save(Resume resume) {
         if (resume == null) {
-            throw new StorageException("Error in save(): resume object is null", null);
+            throw new StorageException("Error saving resume: resume object is null");
         }
         Location itemLocation = getNonexistentItemLocation(resume.getUuid());
         doSave(resume, itemLocation);
@@ -45,7 +45,7 @@ public abstract class AbstractStorage<Location> implements Storage {
 
     public void update(Resume resume) {
         if (resume == null) {
-            throw new StorageException("Error in update(): resume object is null", null);
+            throw new StorageException("Error updating resume: resume object is null");
         }
         Location itemLocation = getExistentItemLocation(resume.getUuid());
         doUpdate(resume, itemLocation);
@@ -53,10 +53,10 @@ public abstract class AbstractStorage<Location> implements Storage {
 
     public void delete(String uuid) {
         if (uuid == null) {
-            throw new StorageException("Error in delete(): resume's uuid is null", null);
+            throw new StorageException("Error deleting resume: resume's uuid is null");
         }
         if (uuid.equals("")) {
-            throw new StorageException("Error in delete(): resume's uuid is empty (uuid=\"\")", "");
+            throw new StorageException("Error deleting resume: resume's uuid is empty (uuid=\"\")", "");
         }
         Location itemLocation = getExistentItemLocation(uuid);
         doDelete(itemLocation);

@@ -16,7 +16,7 @@ public class ListStorage extends AbstractStorage<Integer> {
         return list.get(itemLocation);
     }
 
-    public List<Resume> getList() {
+    public List<Resume> doCopyAll() {
         return list;
     }
 

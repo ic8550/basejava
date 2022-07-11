@@ -5,11 +5,10 @@ import java.io.IOException;
 
 public class MainTestFile {
     public static void main(String[] args) {
-        // printDir("./src/club/swdev/webapp");
-        printDir("./src", getOffset(4), 2);
+        printDir("./src", getIndent(0), 4);
     }
 
-    public static void printDir(String dirPath, String indent, int offsetSize) {
+    public static void printDir(String dirPath, String indent, int indentValue) {
         File dir = new File(dirPath);
         File[] files = dir.listFiles();
         if (files == null) {
@@ -21,7 +20,7 @@ public class MainTestFile {
             } else if (inode.isDirectory()) {
                 System.out.println(indent + inode.getName() + "/");
                 try {
-                    printDir(inode.getCanonicalPath(), indent + getOffset(offsetSize), offsetSize);
+                    printDir(inode.getCanonicalPath(), indent + getIndent(indentValue), indentValue);
                 } catch (IOException e) {
                     throw new RuntimeException("Error getting directory's canonical path", e);
                 }
@@ -29,9 +28,9 @@ public class MainTestFile {
         }
     }
 
-    public static String getOffset(int offsetSize) {
-        char[] arrayOfChar = new char[offsetSize];
-        for (int i = 0; i < offsetSize; i++) {
+    public static String getIndent(int indentValue) {
+        char[] arrayOfChar = new char[indentValue];
+        for (int i = 0; i < indentValue; i++) {
             arrayOfChar[i] = ' ';
         }
         return String.valueOf(arrayOfChar);
