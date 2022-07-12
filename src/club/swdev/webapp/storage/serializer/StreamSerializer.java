@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public interface StreamSerializer {
-    Resume doRead(InputStream is) throws IOException;
+    Resume doRead(InputStream inputStream) throws IOException;
 
-    void doWrite(Resume resume, OutputStream os) throws IOException;
+    void doWrite(Resume resume, OutputStream outputStream) throws IOException;
 }

@@ -2,22 +2,19 @@ package club.swdev.webapp.storage;
 
 import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.model.Resume;
-import club.swdev.webapp.storage.serializer.ObjectStreamSerializer;
+import club.swdev.webapp.storage.serializer.StreamSerializer;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File storageDir;
+    private final StreamSerializer streamSerializer;
 
-    protected FileStorage(File storageDir) {
-        if (storageDir == null) {
-            throw new StorageException("Error initializing storage: storage directory is null");
-        }
+    protected FileStorage(File storageDir, StreamSerializer streamSerializer) {
+        Objects.requireNonNull(storageDir, "Error initializing storage: storage directory is null");
         if (!storageDir.isDirectory()) {
             throw new IllegalArgumentException("Error initializing storage: storage directory " + storageDir.getAbsolutePath() + " is not a directory");
         }
@@ -25,21 +22,12 @@ public class FileStorage extends AbstractStorage<File> {
             throw new IllegalArgumentException("Error initializing storage: storage directory " + storageDir.getAbsolutePath() + " is not readable/writable");
         }
         this.storageDir = storageDir;
-    }
-
-    protected Resume doRead(File file) throws IOException {
-        ObjectStreamSerializer objectStreamSerializer = new ObjectStreamSerializer();
-        return objectStreamSerializer.doRead(new FileInputStream(file));
-    }
-
-    protected void doWrite(Resume resume, File file) throws IOException {
-        ObjectStreamSerializer objectStreamSerializer = new ObjectStreamSerializer();
-        objectStreamSerializer.doWrite(resume, new FileOutputStream(file));
+        this.streamSerializer = streamSerializer;
     }
 
     protected Resume doGet(File file) {
         try {
-            return doRead(file);
+            return streamSerializer.doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Error reading from file ", file.getName(), e);
         }
@@ -47,21 +35,18 @@ public class FileStorage extends AbstractStorage<File> {
 
     protected void doSave(Resume resume, File file) {
         try {
-            if (file.createNewFile()) {
-                doUpdate(resume, file);
-            } else {
-                System.out.println("Error trying to create file " + file.getAbsolutePath() + ": file already exists.");
-            }
+            file.createNewFile();
         } catch (IOException e) {
-            throw new StorageException("Error trying to create file " + file.getAbsolutePath(), file.getName(), e);
+            throw new StorageException("Error trying to create file " + file.getName(), resume.getUuid(), e);
         }
+        doUpdate(resume, file);
     }
 
     protected void doUpdate(Resume resume, File file) {
         try {
-            doWrite(resume, file);
+            streamSerializer.doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("Error writing to file " + file.getAbsolutePath(), file.getName(), e);
+            throw new StorageException("Error writing to file " + file.getName(), resume.getUuid(), e);
         }
     }
 
@@ -81,10 +66,7 @@ public class FileStorage extends AbstractStorage<File> {
 
     protected List<Resume> doCopyAll() {
         List<Resume> resumes = new ArrayList<>();
-        File[] resumeArray = storageDir.listFiles();
-        if (resumeArray == null) {
-            throw new NullPointerException("Error getting directory's file list: listFiles() returned null");
-        }
+        File[] resumeArray = getFilesList();
         for (File resume : resumeArray) {
             resumes.add(doGet(resume));
         }
@@ -92,19 +74,21 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     public int size() {
-        String[] list = storageDir.list();
-        if (list == null) {
-            throw new StorageException("Error reading storage directory");
-        }
-        return list.length;
+        return getFilesList().length;
     }
 
     public void clear() {
-        File[] files = storageDir.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                doDelete(file);
-            }
+        File[] files = getFilesList();
+        for (File file : files) {
+            doDelete(file);
         }
+    }
+
+    private File[] getFilesList() {
+        File[] files = storageDir.listFiles();
+        if (files == null) {
+            throw new NullPointerException("Error getting directory's files list: listFiles() returned null");
+        }
+        return files;
     }
 }

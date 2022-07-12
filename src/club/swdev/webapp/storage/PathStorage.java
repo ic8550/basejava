@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,18 +21,10 @@ public class PathStorage extends AbstractStorage<Path> {
     private final StreamSerializer streamSerializer;
 
     protected PathStorage(String storageDir, StreamSerializer streamSerializer) {
-        if (storageDir == null) {
-            throw new StorageException("Error initializing storage: storage directory name is null");
-        }
-        if (storageDir.isEmpty()) {
-            throw new StorageException("Error initializing storage: storage directory name is an empty string");
-        }
+        Objects.requireNonNull(storageDir, "Error initializing storage: storage directory cannot be null");
         directory = Paths.get(storageDir);
-        if (!Files.isDirectory(directory)) {
-            throw new IllegalArgumentException("Error initializing storage: storage directory " + storageDir + " is not a directory");
-        }
-        if (!Files.isWritable(directory)) {
-            throw new IllegalArgumentException("Error initializing storage: storage directory " + storageDir + " is not writable");
+        if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
+            throw new IllegalArgumentException("Error initializing storage: storage directory " + storageDir + " is not a directory or is nor writable");
         }
         this.streamSerializer = streamSerializer;
     }
