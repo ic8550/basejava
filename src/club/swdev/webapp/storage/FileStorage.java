@@ -24,7 +24,7 @@ public class FileStorage extends AbstractStorage<File> {
         this.storageDir = storageDir;
         this.streamSerializer = streamSerializer;
     }
-
+    @Override
     protected Resume doGet(File file) {
         try {
             return streamSerializer.doRead(new BufferedInputStream(new FileInputStream(file)));
@@ -33,50 +33,58 @@ public class FileStorage extends AbstractStorage<File> {
         }
     }
 
+    @Override
     protected void doSave(Resume resume, File file) {
         try {
             file.createNewFile();
         } catch (IOException e) {
-            throw new StorageException("Error trying to create file " + file.getName(), resume.getUuid(), e);
+            throw new StorageException("Error trying to create file " + file.getName(), file.getName(), e);
         }
         doUpdate(resume, file);
     }
 
+    @Override
     protected void doUpdate(Resume resume, File file) {
         try {
             streamSerializer.doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("Error writing to file " + file.getName(), resume.getUuid(), e);
+            throw new StorageException("Error writing to file " + file.getName(), file.getName(), e);
         }
     }
 
+    @Override
     protected void doDelete(File file) {
         if (!file.delete()) {
             throw new StorageException("Error trying to delete file ", file.getName());
         }
     }
 
-    protected File getItemLocation(String uuid) {
-        return new File(storageDir, uuid);
+    @Override
+    protected File getItemLocation(String fileName) {
+        return new File(storageDir, fileName);
     }
 
+    @Override
     protected boolean isItemLocated(File file) {
         return file.exists();
     }
 
+    @Override
     protected List<Resume> doCopyAll() {
         List<Resume> resumes = new ArrayList<>();
-        File[] resumeArray = getFilesList();
-        for (File resume : resumeArray) {
+        File[] resumesArray = getFilesList();
+        for (File resume : resumesArray) {
             resumes.add(doGet(resume));
         }
         return resumes;
     }
 
+    @Override
     public int size() {
         return getFilesList().length;
     }
 
+    @Override
     public void clear() {
         File[] files = getFilesList();
         for (File file : files) {

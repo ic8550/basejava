@@ -3,10 +3,11 @@ package club.swdev.webapp.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class ListSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
-    private final List<String> content;
+    private List<String> content;
 
     public ListSection() {
         this.content = new ArrayList<>();
@@ -22,5 +23,25 @@ public class ListSection extends AbstractSection {
 
     public List<String> getContent() {
         return content;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        ListSection that = (ListSection) obj;
+        return (
+                Objects.equals(content, that.content)
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return content.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return content.toString();
     }
 }

@@ -7,6 +7,7 @@ import club.swdev.webapp.model.Resume;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class AbstractStorage<Location> implements Storage {
 
@@ -18,62 +19,56 @@ public abstract class AbstractStorage<Location> implements Storage {
 
     protected abstract void doDelete(Location itemLocation);
 
-    protected abstract Location getItemLocation(String uuid);
+    protected abstract Location getItemLocation(String itemId);
 
     protected abstract boolean isItemLocated(Location itemLocation);
 
     protected abstract List<Resume> doCopyAll();
 
-    public Resume get(String uuid) {
-        Location itemLocation = getExistentItemLocation(uuid);
+    public Resume get(String itemId) {
+        Location itemLocation = getExistentItemLocation(itemId);
         return doGet(itemLocation);
     }
 
     public List<Resume> getAllSorted() {
-        List<Resume> list = doCopyAll();
-        list.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
-        return list;
+        List<Resume> resumes = doCopyAll();
+        resumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+        return resumes;
     }
 
     public void save(Resume resume) {
-        if (resume == null) {
-            throw new StorageException("Error saving resume: resume object is null");
-        }
+        Objects.requireNonNull(resume, "Error saving resume: resume object is null");
         Location itemLocation = getNonexistentItemLocation(resume.getUuid());
         doSave(resume, itemLocation);
     }
 
     public void update(Resume resume) {
-        if (resume == null) {
-            throw new StorageException("Error updating resume: resume object is null");
-        }
+        Objects.requireNonNull(resume, "Error updating resume: resume object is null");
         Location itemLocation = getExistentItemLocation(resume.getUuid());
         doUpdate(resume, itemLocation);
     }
 
-    public void delete(String uuid) {
-        if (uuid == null) {
-            throw new StorageException("Error deleting resume: resume's uuid is null");
-        }
-        if (uuid.equals("")) {
+    public void delete(String itemId) {
+        Objects.requireNonNull(itemId, "Error deleting resume: resume's uuid is null");
+        if (itemId.isEmpty()) {
             throw new StorageException("Error deleting resume: resume's uuid is empty (uuid=\"\")", "");
         }
-        Location itemLocation = getExistentItemLocation(uuid);
+        Location itemLocation = getExistentItemLocation(itemId);
         doDelete(itemLocation);
     }
 
-    private Location getExistentItemLocation(String uuid) {
-        Location itemLocation = getItemLocation(uuid);
+    private Location getExistentItemLocation(String itemId) {
+        Location itemLocation = getItemLocation(itemId);
         if (!isItemLocated(itemLocation)) {
-            throw new ItemNotPresentInStorageException(uuid);
+            throw new ItemNotPresentInStorageException(itemId);
         }
         return itemLocation;
     }
 
-    private Location getNonexistentItemLocation(String uuid) {
-        Location itemLocation = getItemLocation(uuid);
+    private Location getNonexistentItemLocation(String itemId) {
+        Location itemLocation = getItemLocation(itemId);
         if (isItemLocated(itemLocation)) {
-            throw new ItemAlreadyPresentInStorageException(uuid);
+            throw new ItemAlreadyPresentInStorageException(itemId);
         }
         return itemLocation;
     }

@@ -1,20 +1,31 @@
 package club.swdev.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serial;
 import java.io.Serializable;
-import java.util.*;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Initial resume class
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Comparable<Resume>, Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    // Unique identifier
-    private final String uuid;
+    private String uuid;
     private String fullName;
 
-    private EnumMap<ContactType, String> contacts;
+    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
 
-    private EnumMap<SectionType, AbstractSection> sections;
+    public Resume() {
+    }
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -49,25 +60,25 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.fullName = fullName;
     }
 
-    public EnumMap<ContactType, String> getContacts() {
+    public Map<ContactType, String> getContacts() {
         return contacts;
     }
 
-    public void setContacts(EnumMap<ContactType, String> contacts) {
-        this.contacts = contacts;
-    }
-
-    public EnumMap<SectionType, AbstractSection> getSections() {
+    public Map<SectionType, AbstractSection> getSections() {
         return sections;
     }
 
-    public void setSections(EnumMap<SectionType, AbstractSection> sections) {
-        this.sections = sections;
+    public void addContact(ContactType type, String value) {
+        contacts.put(type, value);
+    }
+
+    public void addSection(SectionType type, AbstractSection section) {
+        sections.put(type, section);
     }
 
     @Override
     public String toString() {
-        return "full name: " + fullName + "    (uuid: " + uuid + ")";
+        return "full name: " + fullName + " (uuid: " + uuid + ")";
     }
 
     @Override
@@ -75,16 +86,22 @@ public class Resume implements Comparable<Resume>, Serializable {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Resume resume = (Resume) obj;
-        return uuid.equals(resume.uuid);
+        return (
+                Objects.equals(uuid, resume.uuid)
+                && Objects.equals(fullName, resume.fullName)
+                && Objects.equals(contacts, resume.contacts)
+                && Objects.equals(sections, resume.sections)
+        );
     }
 
     @Override
     public int hashCode() {
-        return uuid.hashCode();
+        return Objects.hash(uuid, fullName, contacts, sections);
     }
 
     @Override
-    public int compareTo(Resume obj) {
-        return uuid.compareTo(obj.uuid);
+    public int compareTo(Resume resume) {
+        int comparisonResult = fullName.compareTo(resume.fullName);
+        return comparisonResult != 0 ? comparisonResult : uuid.compareTo(resume.uuid);
     }
 }

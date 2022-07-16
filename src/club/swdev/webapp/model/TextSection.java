@@ -21,4 +21,23 @@ public class TextSection extends AbstractSection {
     public String getText() {
         return text;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        TextSection that = (TextSection) obj;
+        return text.equals(that.text);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return text.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return text;
+    }
 }

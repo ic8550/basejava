@@ -10,8 +10,10 @@ import org.junit.platform.suite.api.Suite;
                 SortedArrayStorageTest.class,
                 ListStorageTest.class,
                 MapStorageTest.class,
-                FileStorageTest.class,
-                PathStorageTest.class
+                ObjectFileStorageTest.class,
+                ObjectPathStorageTest.class,
+                XmlPathStorageTest.class,
+                JsonPathStorageTest.class
         }
 )
 

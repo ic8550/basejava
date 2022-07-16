@@ -7,12 +7,15 @@ import club.swdev.webapp.util.Resumes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("C:\\projects\\basejava\\storage");
+
     protected final Storage storage;
 
     private static final String UUID_1 = "111";
@@ -96,7 +99,7 @@ public abstract class AbstractStorageTest {
     public void update() {
         Resume newResume = Resumes.fillOut(UUID_1, "N-11");
         storage.update(newResume);
-        assertEquals(newResume, storage.get(UUID_1));
+        assertTrue(newResume.equals(storage.get(UUID_1)));
     }
 
     @Test
@@ -122,8 +125,8 @@ public abstract class AbstractStorageTest {
         assertSize(0);
     }
 
-    protected void assertGet(Resume r) {
-        assertEquals(r, storage.get(r.getUuid()));
+    protected void assertGet(Resume resume) {
+        assertEquals(resume, storage.get(resume.getUuid()));
     }
 
     protected void assertSize(int size) {

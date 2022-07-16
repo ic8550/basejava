@@ -29,6 +29,7 @@ public class PathStorage extends AbstractStorage<Path> {
         this.streamSerializer = streamSerializer;
     }
 
+    @Override
     protected Resume doGet(Path path) {
         try {
             return streamSerializer.doRead(new BufferedInputStream(Files.newInputStream(path)));
@@ -37,6 +38,7 @@ public class PathStorage extends AbstractStorage<Path> {
         }
     }
 
+    @Override
     protected void doSave(Resume resume, Path path) {
         try {
             Files.createFile(path);
@@ -46,6 +48,7 @@ public class PathStorage extends AbstractStorage<Path> {
         doUpdate(resume, path);
     }
 
+    @Override
     protected void doUpdate(Resume resume, Path path) {
         try {
             streamSerializer.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
@@ -54,6 +57,7 @@ public class PathStorage extends AbstractStorage<Path> {
         }
     }
 
+    @Override
     protected void doDelete(Path path) {
         try {
             Files.delete(path);
@@ -62,22 +66,27 @@ public class PathStorage extends AbstractStorage<Path> {
         }
     }
 
-    protected Path getItemLocation(String uuid) {
-        return directory.resolve(uuid);
+    @Override
+    protected Path getItemLocation(String fileName) {
+        return directory.resolve(fileName);
     }
 
+    @Override
     protected boolean isItemLocated(Path path) {
         return Files.isRegularFile(path);
     }
 
+    @Override
     protected List<Resume> doCopyAll() {
         return getFilesList().map(this::doGet).collect(Collectors.toList());
     }
 
+    @Override
     public int size() {
         return (int) getFilesList().count();
     }
 
+    @Override
     public void clear() {
         getFilesList().forEach(this::doDelete);
     }

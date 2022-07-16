@@ -6,7 +6,7 @@ import java.util.List;
 
 public class OrganizationSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
-    private final List<Organization> organizations;
+    private  List<Organization> organizations;
 
     public OrganizationSection() {
         this.organizations = new ArrayList<Organization>();
@@ -22,5 +22,26 @@ public class OrganizationSection extends AbstractSection {
 
     public List<Organization> getOrganizations() {
         return organizations;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        OrganizationSection that = (OrganizationSection) obj;
+
+        return organizations.equals(that.organizations);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return organizations.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return organizations.toString();
     }
 }

@@ -10,38 +10,47 @@ import java.util.Map;
 public class MapStorage extends AbstractStorage<String> {
     private final Map<String, Resume> map = new HashMap<>();
 
+    @Override
     public int size() {
         return map.size();
     }
 
+    @Override
     protected Resume doGet(String uuid) {
         return map.get(uuid);
     }
 
+    @Override
     protected List<Resume> doCopyAll() {
         return new ArrayList<>(map.values());
     }
 
+    @Override
     protected void doSave(Resume resume, String uuid) {
         map.put(resume.getUuid(), resume);
     }
 
+    @Override
     protected void doUpdate(Resume resume, String uuid) {
         map.put(uuid, resume);
     }
 
+    @Override
     protected void doDelete(String uuid) {
         map.remove(uuid);
     }
 
+    @Override
     public void clear() {
         map.clear();
     }
 
-    protected String getItemLocation(String uuid) {
-        return map.containsKey(uuid) ? uuid : null;
+    @Override
+    protected String getItemLocation(String itemId) {
+        return map.containsKey(itemId) ? itemId : null;
     }
 
+    @Override
     protected boolean isItemLocated(String itemLocation) {
         return itemLocation != null;
     }

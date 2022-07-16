@@ -31,6 +31,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
      * @return int number of contiguous nonnull Resumes of the storage[] array,
      * starting from the beginning of the storage[].
      */
+    @Override
     public int size() {
         return size;
     }
@@ -38,6 +39,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     /**
      * @return a Resume object with a given uuid or null if there is no such Resume in storage[].
      */
+    @Override
     public Resume doGet(Integer index) {
         return storage[index];
     }
@@ -45,14 +47,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     /**
      * @return an array, containing all nonnull/nonempty Resumes in storage[]
      */
+    @Override
     public List<Resume> doCopyAll() {
-        return Arrays.asList(Arrays.copyOf(storage, size));
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
     /**
      * Adds a Resume with a given uuid to the storage[],
      * provided such Resume is not there already.
      */
+    @Override
     public void doSave(Resume resume, Integer index) {
         if (size >= STORAGE_CAPACITY) {
             throw new StorageException("Storage overflow", resume.getUuid());
@@ -65,6 +69,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     /**
      * Updates a Resume with a given uuid after checking for its presence in storage[].
      */
+    @Override
     public void doUpdate(Resume resume, Integer index) {
         storage[index] = resume;
     }
@@ -73,6 +78,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
      * Removes a Resume with a given uuid while making sure that
      * the remaining nonnull Resumes are still contiguous.
      */
+    @Override
     public void doDelete(Integer index) {
         deleteElement(index);
         storage[size - 1] = null;
@@ -83,11 +89,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
      * Removes all Resumes from storage[] by replacing all nonnull Resumes in storage[]
      * with the null value.
      */
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
+    @Override
     protected boolean isItemLocated(Integer index) {
         return index >= 0;
     }
@@ -95,7 +103,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     /**
      * @return a "location" (a position in the array) of the Resume with a given uuid
      */
-    protected abstract Integer getItemLocation(String uuid);
+    @Override
+    protected abstract Integer getItemLocation(String itemId);
 
     protected abstract void insertElement(Resume resume, int index);
 

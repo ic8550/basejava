@@ -5,10 +5,10 @@ import java.io.IOException;
 
 public class MainTestFile {
     public static void main(String[] args) {
-        printDir("./src", getIndent(0), 4);
+        printDir("./src", getStringIndent(0), 4);
     }
 
-    public static void printDir(String dirPath, String indent, int indentValue) {
+    public static void printDir(String dirPath, String initialIndent, int indentValue) {
         File dir = new File(dirPath);
         File[] files = dir.listFiles();
         if (files == null) {
@@ -16,11 +16,11 @@ public class MainTestFile {
         }
         for (File inode : files) {
             if (inode.isFile()) {
-                System.out.println(indent + inode.getName());
+                System.out.println(initialIndent + inode.getName());
             } else if (inode.isDirectory()) {
-                System.out.println(indent + inode.getName() + "/");
+                System.out.println(initialIndent + inode.getName() + "/");
                 try {
-                    printDir(inode.getCanonicalPath(), indent + getIndent(indentValue), indentValue);
+                    printDir(inode.getCanonicalPath(), initialIndent + getStringIndent(indentValue), indentValue);
                 } catch (IOException e) {
                     throw new RuntimeException("Error getting directory's canonical path", e);
                 }
@@ -28,7 +28,7 @@ public class MainTestFile {
         }
     }
 
-    public static String getIndent(int indentValue) {
+    public static String getStringIndent(int indentValue) {
         char[] arrayOfChar = new char[indentValue];
         for (int i = 0; i < indentValue; i++) {
             arrayOfChar[i] = ' ';

@@ -6,8 +6,8 @@ import club.swdev.webapp.util.Resumes;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class MainTestResume {
@@ -32,12 +32,12 @@ public class MainTestResume {
         System.out.println(fullName);
     }
 
-    public static void printContacts(EnumMap<ContactType, String> contacts) {
+    public static void printContacts(Map<ContactType, String> contacts) {
         System.out.println("CONTACTS:");
         contacts.forEach((key, value) -> System.out.println("    " + key + ": " + value));
     }
 
-    public static void printSections(EnumMap<SectionType, AbstractSection> sections) {
+    public static void printSections(Map<SectionType, AbstractSection> sections) {
         sections.forEach((key, value) -> printSection(key));
     }
 
@@ -91,24 +91,23 @@ public class MainTestResume {
     }
 
     public static void printOrganization(Organization organization, String indent) {
-        String url = organization.getUrl();
-        String name = organization.getName();
+        String url = organization.getHomePage().getUrl();
+        String name = organization.getHomePage().getName();
         System.out.print(indent + name);
         if (url != null) {
             System.out.println(" (" + url + ")");
         } else {
             System.out.println();
         }
-        List<Activity> activities = organization.getActivities();
-        for (Activity activity : activities) {
+        List<Organization.Activity> activities = organization.getActivities();
+        for (Organization.Activity activity : activities) {
             printActivity(activity, indent);
         }
     }
 
-    public static void printActivity(Activity activity, String indent) {
-        Duration duration = activity.getDuration();
-        String startDateFormatted = duration.getStartDate().format(DateTimeFormatter.ofPattern("MM/yyyy"));
-        LocalDate endDate = duration.getEndDate();
+    public static void printActivity(Organization.Activity activity, String indent) {
+        String startDateFormatted = activity.getStartDate().format(DateTimeFormatter.ofPattern("MM/yyyy"));
+        LocalDate endDate = activity.getEndDate();
         String endDateFormatted = (endDate == Dates.NOW)
                 ? "по настоящее время"
                 : endDate.format(DateTimeFormatter.ofPattern("MM/yyyy"));
