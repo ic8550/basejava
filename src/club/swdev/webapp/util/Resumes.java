@@ -155,7 +155,7 @@ public class Resumes {
                                 new Organization.Activity(
                                         // "01/03/2013", "01/05/2013"),
                                         2013, Month.MARCH, 2013, Month.MAY,
-                                        "Functional Programming Principles in Scala' by Martin Odersky",
+                                        "'Functional Programming Principles in Scala' by Martin Odersky",
                                         null
                                 )
                         }
