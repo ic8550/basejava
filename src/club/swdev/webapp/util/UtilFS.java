@@ -3,7 +3,7 @@ package club.swdev.webapp.util;
 import java.io.File;
 import java.io.IOException;
 
-public class FileSystems {
+public class UtilFS {
     public static File getDirectory(String dirPath) {
         File directory = new File(dirPath);
         if (!directory.exists()) {

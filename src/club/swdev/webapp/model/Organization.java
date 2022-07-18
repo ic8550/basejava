@@ -1,6 +1,6 @@
 package club.swdev.webapp.model;
 
-import club.swdev.webapp.util.Dates;
+import club.swdev.webapp.util.UtilDates;
 import club.swdev.webapp.util.XmlLocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -79,11 +79,11 @@ public class Organization implements Serializable {
         }
 
         public Activity(int startYear, Month startMonth, String title, String description) {
-            this(Dates.of(startYear, startMonth), Dates.NOW, title, description);
+            this(UtilDates.of(startYear, startMonth), UtilDates.NOW, title, description);
         }
 
         public Activity(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
-            this(Dates.of(startYear, startMonth), Dates.of(endYear, endMonth), title, description);
+            this(UtilDates.of(startYear, startMonth), UtilDates.of(endYear, endMonth), title, description);
         }
 
         public Activity(LocalDate startDate, LocalDate endDate, String title, String description) {

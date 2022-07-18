@@ -1,20 +1,20 @@
 package club.swdev.webapp;
 
 import club.swdev.webapp.model.*;
-import club.swdev.webapp.util.Dates;
-import club.swdev.webapp.util.Resumes;
+import club.swdev.webapp.util.UtilDates;
+import club.swdev.webapp.util.UtilResumes;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class MainTestResume {
     public static Resume resume;
 
     public static void main(String[] args) {
-        resume = Resumes.fillOut(UUID.randomUUID().toString(), "Григорий Кислин");
+        // resume = UtilResumes.fillOut(UUID.randomUUID().toString(), "Григорий Кислин");
+        resume = UtilResumes.fillWithNumber(9);
 
         printResume(resume);
     }
@@ -108,7 +108,7 @@ public class MainTestResume {
     public static void printActivity(Organization.Activity activity, String indent) {
         String startDateFormatted = activity.getStartDate().format(DateTimeFormatter.ofPattern("MM/yyyy"));
         LocalDate endDate = activity.getEndDate();
-        String endDateFormatted = (endDate == Dates.NOW)
+        String endDateFormatted = (endDate == UtilDates.NOW)
                 ? "по настоящее время"
                 : endDate.format(DateTimeFormatter.ofPattern("MM/yyyy"));
         System.out.println(indent + indent + startDateFormatted + " - " + endDateFormatted);

@@ -3,7 +3,7 @@ package club.swdev.webapp.storage;
 import club.swdev.webapp.exception.ItemAlreadyPresentInStorageException;
 import club.swdev.webapp.exception.ItemNotPresentInStorageException;
 import club.swdev.webapp.model.Resume;
-import club.swdev.webapp.util.Resumes;
+import club.swdev.webapp.util.UtilResumes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,32 +18,12 @@ public abstract class AbstractStorageTest {
 
     protected final Storage storage;
 
-    private static final String UUID_1 = "111";
-    private static final String NAME_1 = "N-1";
-
-    private static final String UUID_2 = "222";
-    private static final String NAME_2 = "N-2";
-
-    private static final String UUID_3 = "333";
-    private static final String NAME_3 = "N-3";
-
-    // The next three resumes will all have the same 'fullName' field
-    // This is to test sorting by 'uuid' when 'fullName' is the same
-    private static final String UUID_4 = "444";
-    private static final String NAME_4 = "N-N";
-
-    private static final String UUID_5 = "555";
-    private static final String NAME_5 = "N-N";
-
-    private static final String UUID_6 = "666";
-    private static final String NAME_6 = "N-N";
-
-    private static final Resume RESUME_1 = Resumes.fillOut(UUID_1, NAME_1);
-    private static final Resume RESUME_2 = Resumes.fillOut(UUID_2, NAME_2);
-    private static final Resume RESUME_3 = Resumes.fillOut(UUID_3, NAME_3);
-    private static final Resume RESUME_4 = Resumes.fillOut(UUID_4, NAME_4);
-    private static final Resume RESUME_5 = Resumes.fillOut(UUID_5, NAME_5);
-    private static final Resume RESUME_6 = Resumes.fillOut(UUID_6, NAME_6);
+    private static final Resume RESUME_1 = UtilResumes.fillWithNumber(1);
+    private static final Resume RESUME_2 = UtilResumes.fillWithNumber(2);
+    private static final Resume RESUME_3 = UtilResumes.fillWithNumber(3);
+    private static final Resume RESUME_4 = UtilResumes.fillWithNumber(4);
+    private static final Resume RESUME_5 = UtilResumes.fillWithNumber(5);
+    private static final Resume RESUME_6 = UtilResumes.fillWithNumber(6);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -52,11 +32,28 @@ public abstract class AbstractStorageTest {
     @BeforeEach
     public void populateStorageForTesting() {
         storage.clear();
+
+        /**
+         * We put resumes in the storage in an order that is exactly opposite
+         * to that of a sorted storage.
+         * Besides, in order to test sorting by 'uuid' when 'fullName' is the same,
+         * we set the same 'fullName' field ("Name-N Surname-N")
+         * to resumes RESUME_4, RESUME_5, and RESUME_6.
+         */
+
+        RESUME_6.setFullName("Name-N Surname-N");
         storage.save(RESUME_6);
+
+        RESUME_5.setFullName("Name-N Surname-N");
         storage.save(RESUME_5);
+
+        RESUME_4.setFullName("Name-N Surname-N");
         storage.save(RESUME_4);
+
         storage.save(RESUME_3);
+
         storage.save(RESUME_2);
+
         storage.save(RESUME_1);
     }
 
@@ -97,21 +94,22 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = Resumes.fillOut(UUID_1, "N-11");
+        Resume newResume = UtilResumes.fillWithNumber(1);
+        newResume.setFullName("Newname-1 Newsurname-1");
         storage.update(newResume);
-        assertTrue(newResume.equals(storage.get(UUID_1)));
+        assertEquals(newResume, storage.get(newResume.getUuid()));
     }
 
     @Test
     public void updateNonexistent() {
-        assertThrows(ItemNotPresentInStorageException.class, () -> storage.update(Resumes.fillOut("foo")));
+        assertThrows(ItemNotPresentInStorageException.class, () -> storage.update(UtilResumes.fillOut("foo")));
     }
 
     @Test
     public void delete() {
-        storage.delete(UUID_1);
+        storage.delete(RESUME_1.getUuid());
         assertSize(5);
-        assertThrows(ItemNotPresentInStorageException.class, () -> storage.get(UUID_1));
+        assertThrows(ItemNotPresentInStorageException.class, () -> storage.get(RESUME_1.getUuid()));
     }
 
     @Test

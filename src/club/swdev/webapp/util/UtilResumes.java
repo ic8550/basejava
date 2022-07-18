@@ -4,7 +4,141 @@ import club.swdev.webapp.model.*;
 
 import java.time.Month;
 
-public class Resumes {
+public class UtilResumes {
+    public static Resume fillWithNumber(int num) {
+        Resume resume = new Resume(
+                "uuid-" + num,
+                "Name-" + num + " Surname-" + num
+        );
+
+        // Fill Contacts
+        resume.addContact(ContactType.PHONE, "+7 (" + num + num + num + ")" + " " + num + num + num + "-" + num + num + num + num);
+        resume.addContact(ContactType.SKYPE, "skype" + "-" + num);
+        resume.addContact(ContactType.EMAIL, "email" + "-" + num + "@domain" + "-" + num + ".me");
+        resume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/" + "name" + "-" + num + "surname" + "-" + num);
+        resume.addContact(ContactType.GITHUB, "https://github.com/" + "name" + "-" + num + "surname" + "-" + num);
+        resume.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/" + num + num + num + num + num + num);
+        resume.addContact(ContactType.HOMEPAGE, "https://" + "@domain" + "-" + num + ".me");
+
+        // Fill Objective
+        resume.addSection(SectionType.OBJECTIVE, new TextSection("Objective-" + num));
+
+        // Fill Personal
+        resume.addSection(SectionType.PERSONAL, new TextSection("Personal-Feature-" + num));
+
+        // Fill Achievements
+        ListSection achievementsSection = new ListSection(new String[]{
+                "Achievement-" + num + "-" + 1,
+                "Achievement-" + num + "-" + 2,
+                "Achievement-" + num + "-" + 3
+        });
+        resume.addSection(SectionType.ACHIEVEMENTS, achievementsSection);
+
+        // Fill QUALIFICATIONS
+        ListSection qualificationsSection = new ListSection(new String[]{
+                "Qualification-" + num + "-" + 1,
+                "Qualification-" + num + "-" + 2,
+                "Qualification-" + num + "-" + 3
+        });
+        resume.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
+
+        // Fill EXPERIENCE
+        Organization[] experienceOrganizations = {
+                new Organization("Employer-" + num + "-" + 1, "https://employmer" + "-" + num + "-" + 1 + ".com/",
+                        new Organization.Activity[]{
+                                new Organization.Activity(
+                                        2022, Month.JANUARY,
+                                        "Org-" + num + "-1" + "-Employment-Activity-1" + "-Title",
+                                        "Org-" + num + "-1" + "-Employment-Activity-1" + "-Description"
+                                ),
+                                new Organization.Activity(
+                                        2021, Month.JANUARY, 2021, Month.DECEMBER,
+                                        "Org-" + num + "-1" + "-Employment-Activity-2" + "-Title",
+                                        "Org-" + num + "-1" + "-Employment-Activity-2" + "-Description"
+                                )
+                        }
+                ),
+                new Organization("Employer-" + num + "-" + 2,null,
+                        new Organization.Activity[]{
+                                new Organization.Activity(
+                                        2020, Month.JANUARY, 2020, Month.DECEMBER,
+                                        "Org-" + num + "-2" + "-Employment-Activity-1" + "-Title",
+                                        "Org-" + num + "-2" + "-Employment-Activity-1" + "-Description"
+                                ),
+                                new Organization.Activity(
+                                        2019, Month.JANUARY, 2019, Month.DECEMBER,
+                                        "Org-" + num + "-2" + "-Employment-Activity-2" + "-Title",
+                                        "Org-" + num + "-2" + "-Employment-Activity-2" + "-Description"
+                                )
+                        }
+                ),
+                new Organization("Employer-" + num + "-" + 3, "https://employmer" + "-" + num + "-" + 3 + ".com/",
+                        new Organization.Activity[]{
+                                new Organization.Activity(
+                                        2018, Month.JANUARY, 2018, Month.DECEMBER,
+                                        "Org-" + num + "-3" + "-Employment-Activity-1" + "-Title",
+                                        "Org-" + num + "-3" + "-Employment-Activity-1" + "-Description"
+                                ),
+                                new Organization.Activity(
+                                        2017, Month.JANUARY, 2017, Month.DECEMBER,
+                                        "Org-" + num + "-3" + "-Employment-Activity-2" + "-Title",
+                                        "Org-" + num + "-3" + "-Employment-Activity-2" + "-Description"
+                                )
+                        }
+                )
+        };
+        resume.addSection(SectionType.EXPERIENCE, new OrganizationSection(experienceOrganizations));
+
+        // Fill Education
+        Organization[] educationOrganizations = new Organization[]{
+                new Organization("Educational-Institution-" + num + "-" + 1, "https://educational-institution" + "-" + num + "-" + 1 + ".edu/",
+                        new Organization.Activity[]{
+                                new Organization.Activity(
+                                        2020, Month.SEPTEMBER, 2020, Month.OCTOBER,
+                                        "Org-" + num + "-1" + "-Education-Activity-1" + "-Title",
+                                        null
+                                ),
+                                new Organization.Activity(
+                                        2020, Month.MARCH, 2020, Month.APRIL,
+                                        "Org-" + num + "-1" + "-Education-Activity-2" + "-Title",
+                                        null
+                                )
+                        }
+                ),
+                new Organization("Educational-Institution-" + num + "-" + 2,null,
+                        new Organization.Activity[]{
+                                new Organization.Activity(
+                                        2018, Month.SEPTEMBER, 2018, Month.OCTOBER,
+                                        "Org-" + num + "-2" + "-Education-Activity-1" + "-Title",
+                                        null
+                                ),
+                                new Organization.Activity(
+                                        2018, Month.MARCH, 2018, Month.APRIL,
+                                        "Org-" + num + "-2" + "-Education-Activity-2" + "-Title",
+                                        null
+                                )
+                        }
+                ),
+                new Organization("Educational-Institution-" + num + "-" + 3, "https://educational-institution" + "-" + num + "-" + 3 + ".edu/",
+                        new Organization.Activity[]{
+                                new Organization.Activity(
+                                        2016, Month.SEPTEMBER, 2016, Month.OCTOBER,
+                                        "Org-" + num + "-3" + "-Education-Activity-1" + "-Title",
+                                        null
+                                ),
+                                new Organization.Activity(
+                                        2016, Month.MARCH, 2016, Month.APRIL,
+                                        "Org-" + num + "-3" + "-Education-Activity-2" + "-Title",
+                                        null
+                                )
+                        }
+                )
+        };
+        resume.addSection(SectionType.EDUCATION, new OrganizationSection(educationOrganizations));
+
+        return resume;
+    }
+
     public static Resume fillOut(String uuid) {
         return fillOut(uuid, "FooName FooSurname");
     }
