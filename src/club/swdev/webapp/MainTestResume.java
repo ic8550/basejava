@@ -21,7 +21,7 @@ public class MainTestResume {
 
     public static void printResume(Resume resume) {
         System.out.println();
-        printFullName(resume.getFullName());
+        printFullName(resume.toString());
         System.out.println();
         printContacts(resume.getContacts());
         System.out.println();

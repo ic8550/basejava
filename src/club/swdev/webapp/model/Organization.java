@@ -79,11 +79,20 @@ public class Organization implements Serializable {
         }
 
         public Activity(int startYear, Month startMonth, String title, String description) {
-            this(UtilDates.of(startYear, startMonth), UtilDates.NOW, title, description);
+            this(UtilDates.of(startYear, startMonth, 1), UtilDates.NOW, title, description);
         }
 
         public Activity(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
-            this(UtilDates.of(startYear, startMonth), UtilDates.of(endYear, endMonth), title, description);
+            int lastDayOfMonth = switch (endMonth.getValue()) {
+                case 2 -> 28;
+                case 4, 6, 9, 11 -> 30;
+                default -> 31;
+            };
+            this.startDate = UtilDates.of(startYear, startMonth, 1);
+            this.endDate = UtilDates.of(endYear, endMonth, lastDayOfMonth);
+            this.title = title;
+            this.description = (description == null) ? "" : description;
+
         }
 
         public Activity(LocalDate startDate, LocalDate endDate, String title, String description) {
@@ -93,7 +102,7 @@ public class Organization implements Serializable {
             this.startDate = startDate;
             this.endDate = endDate;
             this.title = title;
-            this.description = description;
+            this.description = (description == null) ? "" : description;
         }
 
         public LocalDate getStartDate() {
@@ -132,7 +141,7 @@ public class Organization implements Serializable {
 
         @Override
         public String toString() {
-            return "Activity(" + startDate + ',' + endDate + ',' + title + ',' + description + ')';
+            return "Activity(" + startDate.toString() + ',' + endDate.toString() + ',' + title + ',' + description + ')';
         }
     }
 }

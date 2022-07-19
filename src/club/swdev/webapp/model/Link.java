@@ -23,7 +23,7 @@ public class Link implements Serializable {
             throw new RuntimeException("Link name cannot be empty");
         }
         this.name = name;
-        this.url = url;
+        this.url = (url == null) ? "" : url;
     }
 
     public String getName() {
@@ -43,7 +43,6 @@ public class Link implements Serializable {
 
         if (!name.equals(link.name)) return false;
         return Objects.equals(url, link.url);
-
     }
 
     @Override

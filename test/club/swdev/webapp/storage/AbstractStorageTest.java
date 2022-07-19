@@ -33,14 +33,13 @@ public abstract class AbstractStorageTest {
     public void populateStorageForTesting() {
         storage.clear();
 
-        /**
-         * We put resumes in the storage in an order that is exactly opposite
-         * to that of a sorted storage.
+        /*
+         * We put resumes in the storage in an "unsorted" order (6, 5, 4, 3, 2, 1)
+         * that is exactly the opposite to that of a sorted storage (1, 2, 3, 4, 5, 6).
          * Besides, in order to test sorting by 'uuid' when 'fullName' is the same,
-         * we set the same 'fullName' field ("Name-N Surname-N")
-         * to resumes RESUME_4, RESUME_5, and RESUME_6.
+         * we set the 'fullName' field of the resumes RESUME_4, RESUME_5, and RESUME_6
+         * to the same value of "Name-N Surname-N".
          */
-
         RESUME_6.setFullName("Name-N Surname-N");
         storage.save(RESUME_6);
 
@@ -64,7 +63,24 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        assertGet(RESUME_4); // try getting a random resume out of the six previously saved
+        assertGet(RESUME_6); // try getting a random resume out of the six previously saved
+        /* The commented-out code below is for debugging */
+        // assertEquals(RESUME_6.getFullName(), storage.get(RESUME_6.getUuid()).getFullName());
+        // assertEquals(RESUME_6.getUuid(), storage.get(RESUME_6.getUuid()).getUuid());
+        // assertEquals(RESUME_6.getContacts(), storage.get(RESUME_6.getUuid()).getContacts());
+        // assertEquals(RESUME_6.getSections(), storage.get(RESUME_6.getUuid()).getSections());
+        // assertEquals(RESUME_6.getSections().get(SectionType.OBJECTIVE), storage.get(RESUME_6.getUuid()).getSections().get(SectionType.OBJECTIVE));
+        // assertEquals(RESUME_6.getSections().get(SectionType.PERSONAL), storage.get(RESUME_6.getUuid()).getSections().get(SectionType.PERSONAL));
+        // assertEquals(RESUME_6.getSections().get(SectionType.ACHIEVEMENTS), storage.get(RESUME_6.getUuid()).getSections().get(SectionType.ACHIEVEMENTS));
+        // assertEquals(RESUME_6.getSections().get(SectionType.QUALIFICATIONS), storage.get(RESUME_6.getUuid()).getSections().get(SectionType.QUALIFICATIONS));
+        // assertEquals(RESUME_6.getSections().get(SectionType.EXPERIENCE), storage.get(RESUME_6.getUuid()).getSections().get(SectionType.EXPERIENCE));
+        // assertEquals(RESUME_6.getSections().get(SectionType.EDUCATION), storage.get(RESUME_6.getUuid()).getSections().get(SectionType.EDUCATION));
+        // assertEquals(
+        //         ((OrganizationSection) RESUME_6.getSections().get(EXPERIENCE)).getOrganizations()
+        //                 .get(0),
+        //         ((OrganizationSection) storage.get(RESUME_6.getUuid()).getSections().get(EXPERIENCE)).getOrganizations()
+        //                 .get(0)
+        // );
     }
 
     @Test
