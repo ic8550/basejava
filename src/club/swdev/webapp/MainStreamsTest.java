@@ -1,5 +1,6 @@
 package club.swdev.webapp;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,8 +16,8 @@ public class MainStreamsTest {
         System.out.println(minValue(9, 8));
         System.out.println(minValue(8, 9));
 
-        int[] oddSumInts = {1, 2, 3, 4, 5};
-        int[] evenSumInts = {1, 2, 3, 4, 5, 6, 7};
+        int[] oddSumInts = {1, 2, 3, 4, 5, 6};
+        int[] evenSumInts = {1, 2, 3, 4, 5, 7};
 
         List<Integer> oddSumIntegers = IntStream.of(oddSumInts)
                 .boxed()
@@ -24,9 +25,9 @@ public class MainStreamsTest {
         List<Integer> evenSumIntegers = IntStream.of(evenSumInts)
                 .boxed()
                 .collect(Collectors.toList());
-
-        System.out.println(oddOrEven(oddSumIntegers));
-        System.out.println(oddOrEven(evenSumIntegers));
+        System.out.println();
+        System.out.println(Arrays.toString(oddSumInts) + " - cумма нечетная, удаляем все нечетные: " + oddOrEven(oddSumIntegers));
+        System.out.println(Arrays.toString(evenSumInts) + " - cумма четная, удаляем все четные: " + oddOrEven(evenSumIntegers));
     }
 
     /*
@@ -67,11 +68,11 @@ public class MainStreamsTest {
     public static List<Integer> oddOrEven(List<Integer> integers) {
         int sum = integers.stream()
                 .reduce(0, Integer::sum);
-        if (sum % 2 == 0) {
-            return integers.stream().filter((item) -> (item % 2 != 0))
+        if (sum % 2 != 0) {
+            return integers.stream().filter((item) -> (item % 2 == 0))
                     .collect(Collectors.toList());
         } else {
-            return integers.stream().filter((item) -> (item % 2 == 0))
+            return integers.stream().filter((item) -> (item % 2 != 0))
                     .collect(Collectors.toList());
         }
     }
