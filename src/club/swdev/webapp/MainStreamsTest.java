@@ -36,10 +36,11 @@ public class MainStreamsTest {
      */
     public static int minValue(int... values) {
         AtomicInteger positionCount = new AtomicInteger(0);
-        return IntStream.of(values).distinct()
+        return IntStream.of(values)
+                .distinct()
                 .boxed()
-                .sorted(Comparator.reverseOrder()).
-                reduce(0, ((sum, item) -> {
+                .sorted(Comparator.reverseOrder())
+                .reduce(0, ((sum, item) -> {
                     int positionInIntNumber = positionCount.getAndIncrement();
                     return sum + item * tenPoweredTo(positionInIntNumber);
                 }));
@@ -63,12 +64,12 @@ public class MainStreamsTest {
     public static List<Integer> oddOrEven(List<Integer> integers) {
         int sum = integers.stream().reduce(0, Integer::sum);
         if (sum % 2 != 0) {
-            return integers.stream().
-                    filter((item) -> (item % 2 == 0))
+            return integers.stream()
+                    .filter((item) -> (item % 2 == 0))
                     .collect(Collectors.toList());
         } else {
-            return integers.stream().
-                    filter((item) -> (item % 2 != 0))
+            return integers.stream()
+                    .filter((item) -> (item % 2 != 0))
                     .collect(Collectors.toList());
         }
     }
