@@ -19,15 +19,11 @@ public class MainStreamsTest {
         int[] oddSumInts = {1, 2, 3, 4, 5, 6};
         int[] evenSumInts = {1, 2, 3, 4, 5, 7};
 
-        List<Integer> oddSumIntegers = IntStream.of(oddSumInts)
-                .boxed()
-                .collect(Collectors.toList());
-        List<Integer> evenSumIntegers = IntStream.of(evenSumInts)
-                .boxed()
-                .collect(Collectors.toList());
+        List<Integer> oddSumIntegers = IntStream.of(oddSumInts).boxed().collect(Collectors.toList());
+        List<Integer> evenSumIntegers = IntStream.of(evenSumInts).boxed().collect(Collectors.toList());
         System.out.println();
-        System.out.println(Arrays.toString(oddSumInts) + " - cумма: " + Arrays.stream(oddSumInts).sum() + ", нечетная, удаляем все нечетные: " + oddOrEven(oddSumIntegers));
-        System.out.println(Arrays.toString(evenSumInts) + " - cумма: " + Arrays.stream(evenSumInts).sum() + ", четная, удаляем все четные: " + oddOrEven(evenSumIntegers));
+        System.out.println(Arrays.toString(oddSumInts) + " - сумма: " + Arrays.stream(oddSumInts).sum() + ", нечетная, удаляем все нечетные: " + oddOrEven(oddSumIntegers));
+        System.out.println(Arrays.toString(evenSumInts) + " - сумма: " + Arrays.stream(evenSumInts).sum() + ", четная, удаляем все четные: " + oddOrEven(evenSumIntegers));
     }
 
     /*
@@ -40,11 +36,10 @@ public class MainStreamsTest {
      */
     public static int minValue(int... values) {
         AtomicInteger positionCount = new AtomicInteger(0);
-        return IntStream.of(values)
-                .distinct()
+        return IntStream.of(values).distinct()
                 .boxed()
-                .sorted(Comparator.reverseOrder())
-                .reduce(0, ((sum, item) -> {
+                .sorted(Comparator.reverseOrder()).
+                reduce(0, ((sum, item) -> {
                     int positionInIntNumber = positionCount.getAndIncrement();
                     return sum + item * tenPoweredTo(positionInIntNumber);
                 }));
@@ -66,14 +61,17 @@ public class MainStreamsTest {
         Optional - решение в один стрим.
      */
     public static List<Integer> oddOrEven(List<Integer> integers) {
-        int sum = integers.stream()
-                .reduce(0, Integer::sum);
+        int sum = integers.stream().reduce(0, Integer::sum);
         if (sum % 2 != 0) {
-            return integers.stream().filter((item) -> (item % 2 == 0))
+            return integers.stream().
+                    filter((item) -> (item % 2 == 0))
                     .collect(Collectors.toList());
         } else {
-            return integers.stream().filter((item) -> (item % 2 != 0))
+            return integers.stream().
+                    filter((item) -> (item % 2 != 0))
                     .collect(Collectors.toList());
         }
     }
 }
+
+
