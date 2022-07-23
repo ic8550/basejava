@@ -26,8 +26,8 @@ public class MainStreamsTest {
                 .boxed()
                 .collect(Collectors.toList());
         System.out.println();
-        System.out.println(Arrays.toString(oddSumInts) + " - cумма нечетная, удаляем все нечетные: " + oddOrEven(oddSumIntegers));
-        System.out.println(Arrays.toString(evenSumInts) + " - cумма четная, удаляем все четные: " + oddOrEven(evenSumIntegers));
+        System.out.println(Arrays.toString(oddSumInts) + " - cумма: " + Arrays.stream(oddSumInts).sum() + ", нечетная, удаляем все нечетные: " + oddOrEven(oddSumIntegers));
+        System.out.println(Arrays.toString(evenSumInts) + " - cумма: " + Arrays.stream(evenSumInts).sum() + ", четная, удаляем все четные: " + oddOrEven(evenSumIntegers));
     }
 
     /*
