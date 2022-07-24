@@ -63,15 +63,9 @@ public class MainStreamsTest {
      */
     public static List<Integer> oddOrEven(List<Integer> integers) {
         int sum = integers.stream().reduce(0, Integer::sum);
-        if (sum % 2 != 0) {
-            return integers.stream()
-                    .filter((item) -> (item % 2 == 0))
-                    .collect(Collectors.toList());
-        } else {
-            return integers.stream()
-                    .filter((item) -> (item % 2 != 0))
-                    .collect(Collectors.toList());
-        }
+        return integers.stream()
+                .filter((item) -> sum % 2 != 0 ? (item % 2 == 0) : (item % 2 != 0))
+                .collect(Collectors.toList());
     }
 }
 
