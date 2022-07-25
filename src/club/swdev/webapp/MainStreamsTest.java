@@ -9,12 +9,19 @@ import java.util.stream.IntStream;
 
 public class MainStreamsTest {
     public static void main(String[] args) {
-        System.out.println(minValue(5, 5, 4, 4, 3, 3, 2, 2, 1, 1));
-        System.out.println(minValue(1, 1, 2, 2, 3, 3, 4, 4, 5, 5));
-        System.out.println(minValue(2, 1, 2, 1, 5, 3, 4, 4, 5, 3));
-        System.out.println(minValue(3, 1, 3, 1, 2, 5, 4, 5, 2, 4));
-        System.out.println(minValue(9, 8));
-        System.out.println(minValue(8, 9));
+//        System.out.println(minValue(5, 5, 4, 4, 3, 3, 2, 2, 1, 1));
+//        System.out.println(minValue(1, 1, 2, 2, 3, 3, 4, 4, 5, 5));
+//        System.out.println(minValue(2, 1, 2, 1, 5, 3, 4, 4, 5, 3));
+//        System.out.println(minValue(3, 1, 3, 1, 2, 5, 4, 5, 2, 4));
+//        System.out.println(minValue(9, 8));
+//        System.out.println(minValue(8, 9));
+
+        System.out.println(minValue2(5, 5, 4, 4, 3, 3, 2, 2, 1, 1));
+        System.out.println(minValue2(1, 1, 2, 2, 3, 3, 4, 4, 5, 5));
+        System.out.println(minValue2(2, 1, 2, 1, 5, 3, 4, 4, 5, 3));
+        System.out.println(minValue2(3, 1, 3, 1, 2, 5, 4, 5, 2, 4));
+        System.out.println(minValue2(9, 8));
+        System.out.println(minValue2(8, 9));
 
         int[] oddSumInts = {1, 2, 3, 4, 5, 6};
         int[] evenSumInts = {1, 2, 3, 4, 5, 7};
@@ -44,6 +51,13 @@ public class MainStreamsTest {
                     int positionInIntNumber = positionCount.getAndIncrement();
                     return sum + item * tenPoweredTo(positionInIntNumber);
                 }));
+    }
+
+    public static int minValue2(int... values) {
+        return IntStream.of(values)
+                .distinct()
+                .sorted()
+                .reduce(0, ((sum, item) -> (sum * 10 + item)));
     }
 
     public static int tenPoweredTo(int factor) {
