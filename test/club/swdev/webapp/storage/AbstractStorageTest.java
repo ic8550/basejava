@@ -1,5 +1,6 @@
 package club.swdev.webapp.storage;
 
+import club.swdev.webapp.Config;
 import club.swdev.webapp.exception.ItemAlreadyPresentInStorageException;
 import club.swdev.webapp.exception.ItemNotPresentInStorageException;
 import club.swdev.webapp.model.Resume;
@@ -14,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File("C:\\projects\\basejava\\storage");
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
     protected final Storage storage;
 
