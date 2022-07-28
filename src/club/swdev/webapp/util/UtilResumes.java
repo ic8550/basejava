@@ -5,11 +5,15 @@ import club.swdev.webapp.model.*;
 import java.time.Month;
 
 public class UtilResumes {
-    public static Resume fillWithNumber(int num) {
-        Resume resume = new Resume(
-                "uuid-" + num,
+    public static Resume fillWithNumberUuidName(int num) {
+        return new Resume(
+                "uuid-------------------------------" + num,
                 "Name-" + num + " Surname-" + num
         );
+    }
+
+    public static Resume fillWithNumberContacts(int num) {
+        Resume resume = fillWithNumberUuidName(num);
 
         // Fill Contacts
         resume.addContact(ContactType.PHONE, "+7 (" + num + num + num + ")" + " " + num + num + num + "-" + num + num + num + num);
@@ -19,6 +23,12 @@ public class UtilResumes {
         resume.addContact(ContactType.GITHUB, "https://github.com/" + "name" + "-" + num + "surname" + "-" + num);
         resume.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/" + num + num + num + num + num + num);
         resume.addContact(ContactType.HOMEPAGE, "https://" + "@domain" + "-" + num + ".me");
+
+        return resume;
+    }
+
+    public static Resume fillWithNumber(int num) {
+        Resume resume = fillWithNumberContacts(num);
 
         // Fill Objective
         resume.addSection(SectionType.OBJECTIVE, new TextSection("Objective-" + num));
@@ -58,7 +68,7 @@ public class UtilResumes {
                                 )
                         }
                 ),
-                new Organization("Employer-" + num + "-" + 2,null,
+                new Organization("Employer-" + num + "-" + 2, null,
                         new Organization.Activity[]{
                                 new Organization.Activity(
                                         2020, Month.JANUARY, 2020, Month.DECEMBER,
@@ -105,7 +115,7 @@ public class UtilResumes {
                                 )
                         }
                 ),
-                new Organization("Educational-Institution-" + num + "-" + 2,null,
+                new Organization("Educational-Institution-" + num + "-" + 2, null,
                         new Organization.Activity[]{
                                 new Organization.Activity(
                                         2018, Month.SEPTEMBER, 2018, Month.OCTOBER,
@@ -137,10 +147,6 @@ public class UtilResumes {
         resume.addSection(SectionType.EDUCATION, new OrganizationSection(educationOrganizations));
 
         return resume;
-    }
-
-    public static Resume fillOut(String uuid) {
-        return fillOut(uuid, "FooName FooSurname");
     }
 
     public static Resume fillOut(String uuid, String fullName) {
@@ -355,5 +361,9 @@ public class UtilResumes {
         resume.addSection(SectionType.EDUCATION, new OrganizationSection(educationOrganizations));
 
         return resume;
+    }
+
+    public static Resume fillOut(String uuid) {
+        return fillOut(uuid, "FooName FooSurname");
     }
 }
