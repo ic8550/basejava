@@ -26,13 +26,19 @@ public abstract class AbstractStorageTest {
     // private static final Resume RESUME_5 = UtilResumes.fillWithNumber(5);
     // private static final Resume RESUME_6 = UtilResumes.fillWithNumber(6);
 
-    private static final Resume RESUME_1 = UtilResumes.fillWithNumberUuidName(1);
-    private static final Resume RESUME_2 = UtilResumes.fillWithNumberUuidName(2);
-    private static final Resume RESUME_3 = UtilResumes.fillWithNumberUuidName(3);
-    private static final Resume RESUME_4 = UtilResumes.fillWithNumberUuidName(4);
-    private static final Resume RESUME_5 = UtilResumes.fillWithNumberUuidName(5);
-    private static final Resume RESUME_6 = UtilResumes.fillWithNumberUuidName(6);
+    // private static final Resume RESUME_1 = UtilResumes.fillWithNumberUuidName(1);
+    // private static final Resume RESUME_2 = UtilResumes.fillWithNumberUuidName(2);
+    // private static final Resume RESUME_3 = UtilResumes.fillWithNumberUuidName(3);
+    // private static final Resume RESUME_4 = UtilResumes.fillWithNumberUuidName(4);
+    // private static final Resume RESUME_5 = UtilResumes.fillWithNumberUuidName(5);
+    // private static final Resume RESUME_6 = UtilResumes.fillWithNumberUuidName(6);
 
+    private static final Resume RESUME_1 = UtilResumes.fillWithNumberContacts(1);
+    private static final Resume RESUME_2 = UtilResumes.fillWithNumberContacts(2);
+    private static final Resume RESUME_3 = UtilResumes.fillWithNumberContacts(3);
+    private static final Resume RESUME_4 = UtilResumes.fillWithNumberContacts(4);
+    private static final Resume RESUME_5 = UtilResumes.fillWithNumberContacts(5);
+    private static final Resume RESUME_6 = UtilResumes.fillWithNumberContacts(6);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;

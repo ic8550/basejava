@@ -1,5 +1,6 @@
 package club.swdev.webapp.sql;
 
+import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.util.UtilExceptions;
 
 import java.sql.Connection;
@@ -13,12 +14,32 @@ public class SqlHelper {
         this.connectionFactory = connectionFactory;
     }
 
-    public <T> T executeSqlStatement(String sqlStatement, SqlExecutor<T> sqlExecutor) {
+    public void executeSql(String sqlText) {
+        this.executeSql(sqlText, PreparedStatement::execute);
+    }
+
+    public <T> T executeSql(String sqlText, SqlExecutor<T> sqlExecutor) {
         try (Connection dbConn = connectionFactory.getConnection();
-             PreparedStatement preparedSqlStatement = dbConn.prepareStatement(sqlStatement)) {
+             PreparedStatement preparedSqlStatement = dbConn.prepareStatement(sqlText)) {
             return sqlExecutor.executeSql(preparedSqlStatement);
         } catch (SQLException e) {
             throw UtilExceptions.getStorageException(e);
+        }
+    }
+
+    public <T> T executeTransaction(SqlTransaction<T> transactionExecutor) {
+        try (Connection dbConn = connectionFactory.getConnection()) {
+            try {
+                dbConn.setAutoCommit(false);
+                T res = transactionExecutor.executeTransaction(dbConn);
+                dbConn.commit();
+                return res;
+            } catch (SQLException e) {
+                dbConn.rollback();
+                throw UtilExceptions.getStorageException(e);
+            }
+        } catch (SQLException e) {
+            throw new StorageException(e);
         }
     }
 }
