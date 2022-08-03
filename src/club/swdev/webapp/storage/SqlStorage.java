@@ -52,7 +52,8 @@ public class SqlStorage implements Storage {
                 "LEFT JOIN contact c ON r.uuid = c.resume_uuid\n" +
                 "ORDER BY full_name, uuid", preparedSql -> {
             ResultSet queryResult = preparedSql.executeQuery();
-            Map<String, Resume> resumeMap = new HashMap<>();
+            // Map<String, Resume> resumeMap = new HashMap<>();
+            Map<String, Resume> resumeMap = new LinkedHashMap<>();
             while (queryResult.next()) {
                 String uuid = queryResult.getString("uuid");
                 Resume resume = resumeMap.get(uuid);
@@ -62,9 +63,10 @@ public class SqlStorage implements Storage {
                 }
                 addContact(queryResult, resume);
             }
-            List<Resume> resumes = new ArrayList<>(resumeMap.values());
-            resumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
-            return resumes;
+            return  new ArrayList<>(resumeMap.values());
+            // List<Resume> resumes = new ArrayList<>(resumeMap.values());
+            // resumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+            // return resumes;
         });
     }
 
