@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = AppConfig.getAppConfig().getStorageDir();
+    protected static final File STORAGE_DIR = AppConfig.getConfigInstance().getStorageDir();
 
     protected final Storage storage;
 
@@ -33,12 +33,19 @@ public abstract class AbstractStorageTest {
     // private static final Resume RESUME_5 = UtilResumes.fillWithNumberUuidName(5);
     // private static final Resume RESUME_6 = UtilResumes.fillWithNumberUuidName(6);
 
-    private static final Resume RESUME_1 = UtilResumes.fillWithNumberContacts(1);
-    private static final Resume RESUME_2 = UtilResumes.fillWithNumberContacts(2);
-    private static final Resume RESUME_3 = UtilResumes.fillWithNumberContacts(3);
-    private static final Resume RESUME_4 = UtilResumes.fillWithNumberContacts(4);
-    private static final Resume RESUME_5 = UtilResumes.fillWithNumberContacts(5);
-    private static final Resume RESUME_6 = UtilResumes.fillWithNumberContacts(6);
+    // private static final Resume RESUME_1 = UtilResumes.fillWithNumberContacts(1);
+    // private static final Resume RESUME_2 = UtilResumes.fillWithNumberContacts(2);
+    // private static final Resume RESUME_3 = UtilResumes.fillWithNumberContacts(3);
+    // private static final Resume RESUME_4 = UtilResumes.fillWithNumberContacts(4);
+    // private static final Resume RESUME_5 = UtilResumes.fillWithNumberContacts(5);
+    // private static final Resume RESUME_6 = UtilResumes.fillWithNumberContacts(6);
+
+    private static final Resume RESUME_1 = UtilResumes.fillWithAllButOrganization(1);
+    private static final Resume RESUME_2 = UtilResumes.fillWithAllButOrganization(2);
+    private static final Resume RESUME_3 = UtilResumes.fillWithAllButOrganization(3);
+    private static final Resume RESUME_4 = UtilResumes.fillWithAllButOrganization(4);
+    private static final Resume RESUME_5 = UtilResumes.fillWithAllButOrganization(5);
+    private static final Resume RESUME_6 = UtilResumes.fillWithAllButOrganization(6);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -131,7 +138,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = UtilResumes.fillWithNumberUuidName(1);
+        Resume newResume = UtilResumes.fillWithAllButOrganization(1);
         newResume.setFullName("Newname-1 Newsurname-1");
         storage.update(newResume);
         assertEquals(newResume, storage.get(newResume.getUuid()));

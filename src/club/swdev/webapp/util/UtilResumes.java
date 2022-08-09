@@ -27,7 +27,36 @@ public class UtilResumes {
         return resume;
     }
 
-    public static Resume fillWithNumber(int num) {
+
+    public static Resume fillWithAllButOrganization(int num) {
+        Resume resume = fillWithNumberContacts(num);
+
+        // Fill Objective
+        resume.addSection(SectionType.OBJECTIVE, new TextSection("Objective-" + num));
+
+        // Fill Personal
+        resume.addSection(SectionType.PERSONAL, new TextSection("Personal-Feature-" + num));
+
+        // Fill Achievements
+        ListSection achievementsSection = new ListSection(new String[]{
+                "Achievement-" + num + "-" + 1,
+                "Achievement-" + num + "-" + 2,
+                "Achievement-" + num + "-" + 3
+        });
+        resume.addSection(SectionType.ACHIEVEMENTS, achievementsSection);
+
+        // Fill QUALIFICATIONS
+        ListSection qualificationsSection = new ListSection(new String[]{
+                "Qualification-" + num + "-" + 1,
+                "Qualification-" + num + "-" + 2,
+                "Qualification-" + num + "-" + 3
+        });
+        resume.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
+
+        return resume;
+    }
+
+        public static Resume fillWithNumber(int num) {
         Resume resume = fillWithNumberContacts(num);
 
         // Fill Objective

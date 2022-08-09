@@ -5,6 +5,6 @@ import club.swdev.webapp.AppConfig;
 public class SqlStorageTest extends AbstractStorageTest {
 
     public SqlStorageTest() {
-        super(AppConfig.getAppConfig().getStorage());
+        super(AppConfig.getConfigInstance().getStorage());
     }
 }
