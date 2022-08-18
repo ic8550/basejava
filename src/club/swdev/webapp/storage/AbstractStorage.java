@@ -23,7 +23,7 @@ public abstract class AbstractStorage<Location> implements Storage {
 
     protected abstract boolean isItemLocated(Location itemLocation);
 
-    protected abstract List<Resume> doCopyAll();
+    protected abstract List<Resume> doGetAll();
 
     public Resume get(String itemId) {
         Location itemLocation = getExistentItemLocation(itemId);
@@ -31,7 +31,7 @@ public abstract class AbstractStorage<Location> implements Storage {
     }
 
     public List<Resume> getAllSorted() {
-        List<Resume> resumes = doCopyAll();
+        List<Resume> resumes = doGetAll();
         resumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
         return resumes;
     }

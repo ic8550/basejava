@@ -70,7 +70,7 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected List<Resume> doCopyAll() {
+    protected List<Resume> doGetAll() {
         List<Resume> resumes = new ArrayList<>();
         File[] resumesArray = getFilesList();
         for (File resume : resumesArray) {

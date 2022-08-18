@@ -48,7 +48,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
      * @return an array, containing all nonnull/nonempty Resumes in storage[]
      */
     @Override
-    public List<Resume> doCopyAll() {
+    public List<Resume> doGetAll() {
         return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 

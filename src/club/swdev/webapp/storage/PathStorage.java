@@ -77,7 +77,7 @@ public class PathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    protected List<Resume> doCopyAll() {
+    protected List<Resume> doGetAll() {
         return getFilesList().map(this::doGet).collect(Collectors.toList());
     }
 
