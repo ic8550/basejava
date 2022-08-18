@@ -1,8 +1,8 @@
 package club.swdev.webapp.storage;
 
 import club.swdev.webapp.AppConfig;
-import club.swdev.webapp.exception.ItemAlreadyPresentInStorageException;
-import club.swdev.webapp.exception.ItemNotPresentInStorageException;
+import club.swdev.webapp.exception.ItemAlreadyPresentException;
+import club.swdev.webapp.exception.ItemNotPresentException;
 import club.swdev.webapp.model.Resume;
 import club.swdev.webapp.util.UtilResumes;
 import org.junit.jupiter.api.BeforeEach;
@@ -107,7 +107,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getNonexistent() {
-        assertThrows(ItemNotPresentInStorageException.class, () -> storage.get("foo"));
+        assertThrows(ItemNotPresentException.class, () -> storage.get("foo"));
     }
 
     @Test
@@ -133,7 +133,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void saveExistent() {
-        assertThrows(ItemAlreadyPresentInStorageException.class, () -> storage.save(RESUME_1));
+        assertThrows(ItemAlreadyPresentException.class, () -> storage.save(RESUME_1));
     }
 
     @Test
@@ -146,19 +146,19 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void updateNonexistent() {
-        assertThrows(ItemNotPresentInStorageException.class, () -> storage.update(UtilResumes.fillOut("foo")));
+        assertThrows(ItemNotPresentException.class, () -> storage.update(UtilResumes.fillOut("foo")));
     }
 
     @Test
     public void delete() {
         storage.delete(RESUME_1.getUuid());
         assertSize(5);
-        assertThrows(ItemNotPresentInStorageException.class, () -> storage.get(RESUME_1.getUuid()));
+        assertThrows(ItemNotPresentException.class, () -> storage.get(RESUME_1.getUuid()));
     }
 
     @Test
     public void deleteNonexistent() {
-        assertThrows(ItemNotPresentInStorageException.class, () -> storage.delete("foo"));
+        assertThrows(ItemNotPresentException.class, () -> storage.delete("foo"));
     }
 
     @Test

@@ -1,6 +1,6 @@
 package club.swdev.webapp.storage;
 
-import club.swdev.webapp.exception.ItemNotPresentInStorageException;
+import club.swdev.webapp.exception.ItemNotPresentException;
 import club.swdev.webapp.model.AbstractSection;
 import club.swdev.webapp.model.ContactType;
 import club.swdev.webapp.model.Resume;
@@ -42,7 +42,7 @@ public class SqlStorage implements Storage {
                 preparedSql.setString(1, uuid);
                 ResultSet queryResult = preparedSql.executeQuery();
                 if (!queryResult.next()) {
-                    throw new ItemNotPresentInStorageException(uuid);
+                    throw new ItemNotPresentException(uuid);
                 }
                 resume = new Resume(uuid, queryResult.getString("full_name"));
             }
@@ -122,7 +122,7 @@ public class SqlStorage implements Storage {
                 preparedSql.setString(1, resume.getFullName());
                 preparedSql.setString(2, resume.getUuid());
                 if (preparedSql.executeUpdate() != 1) {
-                    throw new ItemNotPresentInStorageException(resume.getUuid());
+                    throw new ItemNotPresentException(resume.getUuid());
                 }
             }
             deleteContacts(dbConn, resume);
@@ -138,7 +138,7 @@ public class SqlStorage implements Storage {
         sqlHelper.executeSql("DELETE FROM resume WHERE uuid=?", preparedSql -> {
             preparedSql.setString(1, uuid);
             if (preparedSql.executeUpdate() == 0) {
-                throw new ItemNotPresentInStorageException(uuid);
+                throw new ItemNotPresentException(uuid);
             }
             return null;
         });

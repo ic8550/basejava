@@ -1,6 +1,6 @@
 package club.swdev.webapp.util;
 
-import club.swdev.webapp.exception.ItemAlreadyPresentInStorageException;
+import club.swdev.webapp.exception.ItemAlreadyPresentException;
 import club.swdev.webapp.exception.StorageException;
 import org.postgresql.util.PSQLException;
 
@@ -18,7 +18,7 @@ public class UtilExceptions {
              * 23505 unique_violation
              */
             if (e.getSQLState().equals("23505")) {
-                return new ItemAlreadyPresentInStorageException(null);
+                return new ItemAlreadyPresentException(null);
             }
         }
         return new StorageException(e);

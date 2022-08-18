@@ -1,7 +1,7 @@
 package club.swdev.webapp.storage;
 
-import club.swdev.webapp.exception.ItemAlreadyPresentInStorageException;
-import club.swdev.webapp.exception.ItemNotPresentInStorageException;
+import club.swdev.webapp.exception.ItemAlreadyPresentException;
+import club.swdev.webapp.exception.ItemNotPresentException;
 import club.swdev.webapp.exception.StorageException;
 import club.swdev.webapp.model.Resume;
 
@@ -60,7 +60,7 @@ public abstract class AbstractStorage<Location> implements Storage {
     private Location getExistentItemLocation(String itemId) {
         Location itemLocation = getItemLocation(itemId);
         if (!isItemLocated(itemLocation)) {
-            throw new ItemNotPresentInStorageException(itemId);
+            throw new ItemNotPresentException(itemId);
         }
         return itemLocation;
     }
@@ -68,7 +68,7 @@ public abstract class AbstractStorage<Location> implements Storage {
     private Location getNonexistentItemLocation(String itemId) {
         Location itemLocation = getItemLocation(itemId);
         if (isItemLocated(itemLocation)) {
-            throw new ItemAlreadyPresentInStorageException(itemId);
+            throw new ItemAlreadyPresentException(itemId);
         }
         return itemLocation;
     }
