@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class AppConfig {
     // private static final File APP_PROPS_FILE = new File("C:\\Users\\Igor\\Documents\\Topics\\Programming\\Projects\\grigory-kislin\\basejava\\config\\app.properties");
-    private static final File APP_PROPS_FILE = new File(getAppConfigFileBaseDir(), "config/app.properties");
+    private static final File APP_PROPS_FILE = new File(AppConfig.getAppConfigBaseDir(), "config/app.properties");
     private static final AppConfig APP_CONFIG_INSTANCE = new AppConfig();
 
     private final File storageDir;
@@ -40,12 +40,12 @@ public class AppConfig {
         return storage;
     }
 
-    private static File getAppConfigFileBaseDir() {
+    private static File getAppConfigBaseDir() {
         String appProp = System.getProperty("appConfigFileBaseDir");
-        File homeDir = new File(appProp == null ? "." : appProp);
-        if (!homeDir.isDirectory()) {
-            throw new IllegalStateException(homeDir + " is not directory");
+        File baseDir = new File(appProp == null ? "." : appProp);
+        if (!baseDir.isDirectory()) {
+            throw new IllegalStateException(baseDir + " is not directory");
         }
-        return homeDir;
+        return baseDir;
     }
 }
