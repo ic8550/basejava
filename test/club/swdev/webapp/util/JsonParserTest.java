@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonParserTest {
-    private final Resume RESUME_7 = UtilResumes.fillWithAllButOrganization(7);
+    private final Resume RESUME_7 = UtilResumes.fillWithNumber(7);
 
     @Test
     public void testResume() throws Exception {
@@ -19,10 +19,10 @@ public class JsonParserTest {
 
     @Test
     public void write() throws Exception {
-        AbstractSection section1 = new TextSection("Objective1");
-        String json = JsonParser.write(section1, AbstractSection.class);
+        AbstractSection originalSection = new TextSection("Objective1");
+        String json = JsonParser.write(originalSection, AbstractSection.class);
         System.out.println(json);
-        AbstractSection section2 = JsonParser.read(json, AbstractSection.class);
-        assertEquals(section1, section2);
+        AbstractSection convertedToThenRestoredFromJson = JsonParser.read(json, AbstractSection.class);
+        assertEquals(originalSection, convertedToThenRestoredFromJson);
     }
 }

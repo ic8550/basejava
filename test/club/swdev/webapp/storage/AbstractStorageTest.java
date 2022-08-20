@@ -19,12 +19,12 @@ public abstract class AbstractStorageTest {
 
     protected final Storage storage;
 
-    // private static final Resume RESUME_1 = UtilResumes.fillWithNumber(1);
-    // private static final Resume RESUME_2 = UtilResumes.fillWithNumber(2);
-    // private static final Resume RESUME_3 = UtilResumes.fillWithNumber(3);
-    // private static final Resume RESUME_4 = UtilResumes.fillWithNumber(4);
-    // private static final Resume RESUME_5 = UtilResumes.fillWithNumber(5);
-    // private static final Resume RESUME_6 = UtilResumes.fillWithNumber(6);
+    private static final Resume RESUME_1 = UtilResumes.fillWithNumber(1);
+    private static final Resume RESUME_2 = UtilResumes.fillWithNumber(2);
+    private static final Resume RESUME_3 = UtilResumes.fillWithNumber(3);
+    private static final Resume RESUME_4 = UtilResumes.fillWithNumber(4);
+    private static final Resume RESUME_5 = UtilResumes.fillWithNumber(5);
+    private static final Resume RESUME_6 = UtilResumes.fillWithNumber(6);
 
     // private static final Resume RESUME_1 = UtilResumes.fillWithNumberUuidName(1);
     // private static final Resume RESUME_2 = UtilResumes.fillWithNumberUuidName(2);
@@ -40,12 +40,12 @@ public abstract class AbstractStorageTest {
     // private static final Resume RESUME_5 = UtilResumes.fillWithNumberContacts(5);
     // private static final Resume RESUME_6 = UtilResumes.fillWithNumberContacts(6);
 
-    private static final Resume RESUME_1 = UtilResumes.fillWithAllButOrganization(1);
-    private static final Resume RESUME_2 = UtilResumes.fillWithAllButOrganization(2);
-    private static final Resume RESUME_3 = UtilResumes.fillWithAllButOrganization(3);
-    private static final Resume RESUME_4 = UtilResumes.fillWithAllButOrganization(4);
-    private static final Resume RESUME_5 = UtilResumes.fillWithAllButOrganization(5);
-    private static final Resume RESUME_6 = UtilResumes.fillWithAllButOrganization(6);
+    // private static final Resume RESUME_1 = UtilResumes.fillWithAllButOrganization(1);
+    // private static final Resume RESUME_2 = UtilResumes.fillWithAllButOrganization(2);
+    // private static final Resume RESUME_3 = UtilResumes.fillWithAllButOrganization(3);
+    // private static final Resume RESUME_4 = UtilResumes.fillWithAllButOrganization(4);
+    // private static final Resume RESUME_5 = UtilResumes.fillWithAllButOrganization(5);
+    // private static final Resume RESUME_6 = UtilResumes.fillWithAllButOrganization(6);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -138,7 +138,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = UtilResumes.fillWithAllButOrganization(1);
+        Resume newResume = UtilResumes.fillWithNumber(1);
         newResume.setFullName("Newname-1 Newsurname-1");
         storage.update(newResume);
         assertEquals(newResume, storage.get(newResume.getUuid()));
