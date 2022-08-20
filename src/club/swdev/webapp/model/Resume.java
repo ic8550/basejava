@@ -18,9 +18,19 @@ import java.util.UUID;
 public class Resume implements Comparable<Resume>, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+    public static final Resume EMPTY = new Resume();
+
+    static {
+        EMPTY.addSection(SectionType.OBJECTIVE, TextSection.EMPTY);
+        EMPTY.addSection(SectionType.PERSONAL, TextSection.EMPTY);
+        EMPTY.addSection(SectionType.ACHIEVEMENTS, ListSection.EMPTY);
+        EMPTY.addSection(SectionType.QUALIFICATIONS, ListSection.EMPTY);
+        EMPTY.addSection(SectionType.EXPERIENCE, new OrganizationSection(Organization.EMPTY));
+        EMPTY.addSection(SectionType.EDUCATION, new OrganizationSection(Organization.EMPTY));
+    }
+
     private String uuid;
     private String fullName;
-
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
 
@@ -32,18 +42,8 @@ public class Resume implements Comparable<Resume>, Serializable {
     }
 
     public Resume(String uuid, String fullName) {
-        if (uuid == null) {
-            throw new RuntimeException("uuid cannot be 'null'");
-        }
-        if (uuid.equals("")) {
-            throw new RuntimeException("uuid cannot be an empty string");
-        }
-        if (fullName == null) {
-            throw new RuntimeException("fullName cannot be 'null'");
-        }
-        if (fullName.equals("")) {
-            throw new RuntimeException("fullName cannot be an empty string");
-        }
+        Objects.requireNonNull(uuid, "uuid cannot be null");
+        Objects.requireNonNull(fullName, "fullName cannot be null");
         this.uuid = uuid;
         this.fullName = fullName;
     }
@@ -68,16 +68,24 @@ public class Resume implements Comparable<Resume>, Serializable {
         return sections;
     }
 
-    public void addContact(ContactType type, String value) {
-        contacts.put(type, value);
+    public String getContact(ContactType contactType) {
+        return contacts.get(contactType);
     }
 
-    public String getContact(ContactType type) {
-        return contacts.get(type);
+    public void addContact(ContactType contactType, String value) {
+        contacts.put(contactType, value);
     }
 
-    public void addSection(SectionType type, AbstractSection section) {
-        sections.put(type, section);
+    public void setContact(ContactType contactType, String value) {
+        contacts.put(contactType, value);
+    }
+
+    public AbstractSection getSection(SectionType sectionType) {
+        return sections.get(sectionType);
+    }
+
+     public void addSection(SectionType sectionType, AbstractSection section) {
+        sections.put(sectionType, section);
     }
 
     @Override

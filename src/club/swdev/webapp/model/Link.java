@@ -19,9 +19,6 @@ public class Link implements Serializable {
 
     public Link(String name, String url) {
         Objects.requireNonNull(name, "Link name cannot be null");
-        if (name.isBlank()) {
-            throw new RuntimeException("Link name cannot be empty");
-        }
         this.name = name;
         this.url = (url == null) ? "" : url;
     }

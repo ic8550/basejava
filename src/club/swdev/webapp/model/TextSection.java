@@ -1,20 +1,19 @@
 package club.swdev.webapp.model;
 
+import java.io.Serial;
+import java.util.Objects;
+
 public class TextSection extends AbstractSection {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private final String text;
+    private String text;
+    public static final TextSection EMPTY = new TextSection("");
 
     public TextSection() {
-        this.text = "";
     }
 
     public TextSection(String text) {
-        if (text == null) {
-            throw new RuntimeException("TextSection's text content cannot be 'null'");
-        }
-        if (text.equals("")) {
-            throw new RuntimeException("TextSection's text content cannot be an empty string");
-        }
+        Objects.requireNonNull("TextSection's text content cannot be 'null'");
         this.text = text;
     }
 

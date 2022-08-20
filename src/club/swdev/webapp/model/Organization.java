@@ -6,6 +6,7 @@ import club.swdev.webapp.util.XmlLocalDateAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,11 +20,16 @@ import java.util.Objects;
 public class Organization implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    public static final Organization EMPTY = new Organization("", "", Activity.EMPTY);
     private Link homePage;
     private List<Activity> activities = new ArrayList<>();
 
     public Organization() {
+    }
 
+    public Organization(String name, String url, Activity... activities) {
+        this(new Link(name, url), Arrays.asList(activities));
     }
 
     public Organization(Link homePage, List<Activity> activities) {
@@ -35,9 +41,6 @@ public class Organization implements Serializable {
         this(new Link(name, url), activities);
     }
 
-    public Organization(String name, String url, Activity[] activities) {
-        this(new Link(name, url), (activities == null) ? new ArrayList<>() : Arrays.asList(activities));
-    }
 
     public Link getHomePage() {
         return homePage;
@@ -68,6 +71,9 @@ public class Organization implements Serializable {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Activity implements Serializable {
+        @Serial
+        private static final long serialVersionUID = 1L;
+        public static final Activity EMPTY = new Activity();
         @XmlJavaTypeAdapter(XmlLocalDateAdapter.class)
         private LocalDate startDate;
         @XmlJavaTypeAdapter(XmlLocalDateAdapter.class)

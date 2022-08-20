@@ -1,10 +1,12 @@
 package club.swdev.webapp.model;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class OrganizationSection extends AbstractSection {
+    @Serial
     private static final long serialVersionUID = 1L;
     private  List<Organization> organizations;
 
@@ -16,8 +18,8 @@ public class OrganizationSection extends AbstractSection {
         this.organizations = organizations;
     }
 
-    public OrganizationSection(Organization[] organizations) {
-        this.organizations = Arrays.asList(organizations);
+    public OrganizationSection(Organization... organizations) {
+        this(Arrays.asList(organizations));
     }
 
     public List<Organization> getOrganizations() {

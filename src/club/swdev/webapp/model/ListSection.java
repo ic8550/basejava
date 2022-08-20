@@ -1,6 +1,5 @@
 package club.swdev.webapp.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -8,17 +7,17 @@ import java.util.Objects;
 public class ListSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
     private List<String> content;
+    public static final ListSection EMPTY = new ListSection("");
 
     public ListSection() {
-        this.content = new ArrayList<>();
+    }
+
+    public ListSection(String... items) {
+        this(Arrays.asList(items));
     }
 
     public ListSection(List<String> content) {
         this.content = content;
-    }
-
-    public ListSection(String[] content) {
-        this.content = Arrays.asList(content);
     }
 
     public List<String> getContent() {
