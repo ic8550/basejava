@@ -147,21 +147,23 @@ public class ResumeServlet extends HttpServlet {
                         case EXPERIENCE, EDUCATION -> {
                             // Turn the existing organization section into the one that is nearly
                             // the same as the original, except for:
-                            // 1) it has an empty organization as a first organization of the organizations list;
-                            // 2) it has an empty activity as a first activity of the activities list
-                            // for each organization of the organizations list.
+                            //   1) an empty organization is added at the beginning
+                            //      of the section's organizations list;
+                            //   2) for each organization on the section's organizations list
+                            //      an empty activity is added at the beginning
+                            //      of the organization's activities list.
+                            List<Organization> orgListWithEmptyFirstOrganization = new ArrayList<>();
+                            orgListWithEmptyFirstOrganization.add(Organization.EMPTY);
                             OrganizationSection orgSection = (OrganizationSection) section;
-                            List<Organization> orgListWithFirstOrgEmpty = new ArrayList<>();
-                            orgListWithFirstOrgEmpty.add(Organization.EMPTY);
                             if (orgSection != null) {
                                 for (Organization org : orgSection.getOrganizations()) {
-                                    List<Organization.Activity> activityListWithFirstActivityEmpty = new ArrayList<>();
-                                    activityListWithFirstActivityEmpty.add(Organization.Activity.EMPTY);
-                                    activityListWithFirstActivityEmpty.addAll(org.getActivities());
-                                    orgListWithFirstOrgEmpty.add(new Organization(org.getHomePage(), activityListWithFirstActivityEmpty));
+                                    List<Organization.Activity> activityListWithEmptyFirstActivity = new ArrayList<>();
+                                    activityListWithEmptyFirstActivity.add(Organization.Activity.EMPTY);
+                                    activityListWithEmptyFirstActivity.addAll(org.getActivities());
+                                    orgListWithEmptyFirstOrganization.add(new Organization(org.getHomePage(), activityListWithEmptyFirstActivity));
                                 }
                             }
-                            section = new OrganizationSection(orgListWithFirstOrgEmpty);
+                            section = new OrganizationSection(orgListWithEmptyFirstOrganization);
                         }
                     }
                     r.addSection(sectionType, section);
